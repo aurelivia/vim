@@ -1,0 +1,60 @@
+[submodule "packages/CamelCaseMotion"]
+	path = packages/CamelCaseMotion
+	url = https://github.com/bkad/CamelCaseMotion.git
+[submodule "packages/ctrlp.vim"]
+	path = packages/ctrlp.vim
+	url = https://github.com/kien/ctrlp.vim
+[submodule "packages/nerdcommenter"]
+	path = packages/nerdcommenter
+	url = https://github.com/preservim/nerdcommenter
+[submodule "packages/nerdtree"]
+	path = packages/nerdtree
+	url = https://github.com/preservim/nerdtree
+[submodule "packages/onedark.vim"]
+	path = packages/onedark.vim
+	url = https://github.com/joshdick/onedark.vim
+[submodule "packages/rust.vim"]
+	path = packages/rust.vim
+	url = https://github.com/rust-lang/rust.vim
+[submodule "packages/haskell-vim"]
+	path = packages/haskell-vim
+	url = https://github.com/neovimhaskell/haskell-vim
+[submodule "packages/vim-airline"]
+	path = packages/vim-airline
+	url = https://github.com/vim-airline/vim-airline
+[submodule "packages/vim-better-whitespace"]
+	path = packages/vim-better-whitespace
+	url = https://github.com/ntpeters/vim-better-whitespace
+[submodule "packages/vim-commentary"]
+	path = packages/vim-commentary
+	url = https://github.com/tpope/vim-commentary
+[submodule "packages/vim-elixir"]
+	path = packages/vim-elixir
+	url = https://github.com/elixir-editors/vim-elixir
+[submodule "packages/vim-fugitive"]
+	path = packages/vim-fugitive
+	url = https://github.com/tpope/vim-fugitive
+[submodule "packages/vim-HiLinkTrace"]
+	path = packages/vim-HiLinkTrace
+	url = https://github.com/gerw/vim-HiLinkTrace
+[submodule "packages/vim-javascript"]
+	path = packages/vim-javascript
+	url = https://github.com/pangloss/vim-javascript
+[submodule "packages/vim-pug"]
+	path = packages/vim-pug
+	url = https://github.com/digitaltoad/vim-pug
+[submodule "packages/vim-sayonara"]
+	path = packages/vim-sayonara
+	url = https://github.com/mhinz/vim-sayonara
+[submodule "packages/vim-stylus"]
+	path = packages/vim-stylus
+	url = https://github.com/wavded/vim-stylus
+[submodule "packages/vim-surround"]
+	path = packages/vim-surround
+	url = https://github.com/tpope/vim-surround
+[submodule "packages/vim-svelte"]
+	path = packages/vim-svelte
+	url = https://github.com/evanleck/vim-svelte
+[submodule "packages/vim-vue"]
+	path = packages/vim-vue
+	url = https://github.com/posva/vim-vue
