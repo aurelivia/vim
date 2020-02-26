@@ -1,8 +1,9 @@
 set nocompatible
 filetype plugin on
 filetype indent on
-let s:vim_path = '/Dropbox/.vim/'
-execute pathogen#infect($HOME . s:vim_path . 'packages/{}')
+let s:vim_path = $HOME . '/.vim/'
+execute pathogen#infect(s:vim_path . 'packages/{}')
+let s:vimrc = s:vim_path . '.vimrc'
 
 syntax enable
 set number
@@ -35,6 +36,8 @@ set clipboard=unnamedplus
 
 autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 let g:NERDSpaceDelims = 1
+let g:NERDTreeWinSize = 40
+let g:tagbar_left = 1
 
 let g:vim_svelte_plugin_use_pug = 1
 
@@ -77,7 +80,8 @@ noremap <C-l> :bnext<CR>
 noremap <C-Right> :bnext<CR>
 
 nnoremap <C-\> :NERDTreeToggle<CR>
-nnoremap <C-D> :NERDTreeToggle<CR>
+nnoremap <C-d> :NERDTreeToggle<CR>
+nnoremap <C-f> :TagbarToggle<CR>
 
 nnoremap <CR> i
 nnoremap c<CR> ciw
@@ -86,8 +90,9 @@ inoremap <CR> <ESC>
 inoremap <F12> <CR>
 nnoremap <Space><Space> :
 
-command! Evimrc :e ~/Dropbox/.vim/.vimrc
-command! Svimrc :so ~/Dropbox/.vim/.vimrc
+" command! Evimrc :e '' . s:vimrc
+command! Evimrc execute 'e ' . s:vimrc
+command! Svimrc execute 'so ' . s:vimrc
 command! Eawesome :e ~/.config/awesome/rc.lua | :e ~/.config/awesome/theme.lua
 
 nnoremap c' ci'

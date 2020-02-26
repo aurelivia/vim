@@ -58,3 +58,6 @@
 [submodule "packages/vim-vue"]
 	path = packages/vim-vue
 	url = https://github.com/posva/vim-vue
+[submodule "packages/tagbar"]
+	path = packages/tagbar
+	url = https://github.com/majutsushi/tagbar
