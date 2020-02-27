@@ -4,12 +4,6 @@
 [submodule "packages/ctrlp.vim"]
 	path = packages/ctrlp.vim
 	url = https://github.com/kien/ctrlp.vim
-[submodule "packages/nerdcommenter"]
-	path = packages/nerdcommenter
-	url = https://github.com/preservim/nerdcommenter
-[submodule "packages/nerdtree"]
-	path = packages/nerdtree
-	url = https://github.com/preservim/nerdtree
 [submodule "packages/onedark.vim"]
 	path = packages/onedark.vim
 	url = https://github.com/joshdick/onedark.vim
@@ -70,3 +64,6 @@
 [submodule "packages/vim-misc"]
 	path = packages/vim-misc
 	url = https://github.com/xolox/vim-misc
+[submodule "packages/vim-dirvish"]
+	path = packages/vim-dirvish
+	url = https://github.com/justinmk/vim-dirvish

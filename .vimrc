@@ -96,11 +96,20 @@ noremap <S-Right> $
 noremap <silent> <C-l> :bnext<CR>
 noremap <silent> <C-Right> :bnext<CR>
 
-nnoremap <silent> <C-\> :NERDTreeToggle<CR>
-nnoremap <silent> <C-d> :NERDTreeToggle<CR>
+nnoremap s <C-w>
 nnoremap <silent> <C-f> :TagbarToggle<CR>
+" nnoremap <silent> <C-\> :NERDTreeToggle<CR>
+" nnoremap <silent> <C-d> :NERDTreeToggle<CR>
+nmap <C-d> <Plug>(dirvish_up)
+augroup dirvish_config
+  autocmd!
+  autocmd FileType dirvish nmap <buffer> <Left> <Plug>(dirvish_up)
+  autocmd FileType dirvish nmap <buffer> <Right> <CR>
+  autocmd FileType dirvish nmap <buffer> <C-d> <Plug>(dirvish_quit)
+augroup END
 
 nnoremap <CR> i
+nnoremap U <C-r>
 nnoremap c<CR> ciw
 nnoremap <Leader>c ciw
 inoremap <CR> <ESC>
@@ -126,9 +135,6 @@ nnoremap x "_x
 nnoremap X "_X
 vnoremap x "_x
 vnoremap X "_X
-
-nnoremap s vy
-nnoremap sr vp
 
 vnoremap / y/<C-R>"<CR>
 nnoremap <silent> <Leader><CR> :let @/=''<CR>
