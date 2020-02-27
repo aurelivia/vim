@@ -23,7 +23,8 @@ set listchars=eol:¬,trail:~,extends:>,precedes:<,space:·,tab:->
 set nolist
 
 let g:strip_white_space_on_save = 1
-let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+let g:ctrlp_use_caching = 0
 let g:sayonara_confirm_quit = 1
 let g:session_directory = g:vim_path . 'sessions'
 let g:session_lock_enabled = 0
