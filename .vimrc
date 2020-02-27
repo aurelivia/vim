@@ -25,6 +25,8 @@ let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclu
 let g:sayonara_confirm_quit = 1
 let g:session_directory = g:vim_path . 'sessions'
 let g:session_lock_enabled = 0
+let g:session_autosave = 'yes'
+let g:session_autoload = 'yes'
 
 set backspace=indent,eol,start
 set tabstop=2 shiftwidth=2 expandtab autoindent smartindent formatoptions-=t
