@@ -64,3 +64,6 @@
 [submodule "packages/ctrlsf.vim"]
 	path = packages/ctrlsf.vim
 	url = https://github.com/dyng/ctrlsf.vim
+[submodule "packages/vim-session"]
+	path = packages/vim-session
+	url = https://github.com/xolox/vim-session

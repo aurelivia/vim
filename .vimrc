@@ -21,10 +21,11 @@ set hidden noshowmode shortmess=F noshowcmd
 set incsearch " hlsearch
 
 let g:strip_white_space_on_save = 1
-let g:workspace_session_directory = g:vim_path . 'sessions/'
-let g:workspace_undodir = g:vim_path . 'sessions/.undodir'
-let g:workspace_session_disable_on_args = 1
-let g:workspace_autosave = 0
+let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+let g:sayonara_confirm_quit = 1
+set sessionoptions-=buffers
+let g:session_directory = $HOME . '/.vim/sessions'
+let g:session_lock_enabled = 0
 
 set backspace=indent,eol,start
 set tabstop=2 shiftwidth=2 expandtab autoindent smartindent formatoptions-=t
@@ -39,7 +40,6 @@ autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 let g:NERDSpaceDelims = 1
 let g:NERDTreeWinSize = 40
 let g:tagbar_left = 1
-let g:qf_mapping_ack_style = 1
 
 let g:vim_svelte_plugin_use_pug = 1
 
@@ -131,9 +131,10 @@ vnoremap / y/<C-R>"<CR>
 nnoremap <Leader><CR> :let @/=''<CR>
 nnoremap <Leader>\ :StripWhitespace<CR>
 " nnoremap <Leader>s :ToggleWorkspace<CR>
-nnoremap <Leader>s :mksession!<CR>
+" nnoremap <Leader>s :mksession!<CR>
 " nnoremap <Leader>rs :!rm ~/Dropbox/.vim/sessions/*<CR>
-nnoremap <Leader>rs :silent !rm Session.vim<CR>:redraw!<CR>
+" nnoremap <Leader>rs :silent !rm Session.vim | :redraw!<CR>
+nnoremap <Leader>s
 
 inoremap <C-b> <Left><CR><CR><ESC>ki<Tab>
 
