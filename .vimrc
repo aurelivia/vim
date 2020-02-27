@@ -19,6 +19,8 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 set hidden noshowmode shortmess=F noshowcmd
 set incsearch " hlsearch
+set listchars=eol:¬,trail:~,extends:>,precedes:<,space:·,tab:->
+set nolist
 
 let g:strip_white_space_on_save = 1
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
@@ -60,43 +62,43 @@ function! GetRange()
 endfunction
 
 nnoremap Q q
-nnoremap qq :NERDTreeClose<CR>:Sayonara<CR>
-nnoremap qr :NERDTreeClose<CR>:Sayonara<CR>:NERDTreeToggle<CR>
-nnoremap qa :NERDTreeClose<CR>:q!<CR>
-nnoremap Z :silent :w!<CR>
+nnoremap <silent> qq :NERDTreeClose<CR>:Sayonara<CR>
+nnoremap <silent> qr :NERDTreeClose<CR>:Sayonara<CR>:NERDTreeToggle<CR>
+nnoremap <silent> qa :NERDTreeClose<CR>:q!<CR>
+nnoremap <silent> Z :w!<CR>
 
 noremap H ^
 noremap <S-Left> ^
 " noremap <C-h> :bprevious<CR>
-noremap <C-Left> :bprevious<CR>
+noremap <silent> <C-Left> :bprevious<CR>
 nmap <BS> <NOP>
 
 " noremap J 5j
 noremap <S-Down> 5j
 noremap <C-j> <C-d>
 noremap <C-Down> <C-d>
-noremap <A-j> :m+1<CR>
-noremap <A-Down> :m+1<CR>
-vnoremap <A-j> :m '>+1<CR>gv
-vnoremap <A-Down> :m '>+1<CR>gv
+noremap <silent> <A-j> :m+1<CR>
+noremap <silent> <A-Down> :m+1<CR>
+vnoremap <silent> <A-j> :m '>+1<CR>gv
+vnoremap <silent> <A-Down> :m '>+1<CR>gv
 
 noremap K 5k
 noremap <S-Up> 5k
 noremap <C-k> <C-u>
 noremap <C-Up> <C-u>
-noremap <A-k> :m-2<CR>
-noremap <A-Up> :m-2<CR>
-vnoremap <A-k> :m '<-2<CR>gv
-vnoremap <A-Down> :m '<-2<CR>gv
+noremap <silent> <A-k> :m-2<CR>
+noremap <silent> <A-Up> :m-2<CR>
+vnoremap <silent> <A-k> :m '<-2<CR>gv
+vnoremap <silent> <A-Down> :m '<-2<CR>gv
 
 noremap L $
 noremap <S-Right> $
-noremap <C-l> :bnext<CR>
-noremap <C-Right> :bnext<CR>
+noremap <silent> <C-l> :bnext<CR>
+noremap <silent> <C-Right> :bnext<CR>
 
-nnoremap <C-\> :NERDTreeToggle<CR>
-nnoremap <C-d> :NERDTreeToggle<CR>
-nnoremap <C-f> :TagbarToggle<CR>
+nnoremap <silent> <C-\> :NERDTreeToggle<CR>
+nnoremap <silent> <C-d> :NERDTreeToggle<CR>
+nnoremap <silent> <C-f> :TagbarToggle<CR>
 
 nnoremap <CR> i
 nnoremap c<CR> ciw
@@ -129,8 +131,8 @@ nnoremap s vy
 nnoremap sr vp
 
 vnoremap / y/<C-R>"<CR>
-nnoremap <Leader><CR> :let @/=''<CR>
-nnoremap <Leader>\ :StripWhitespace<CR>
+nnoremap <silent> <Leader><CR> :let @/=''<CR>
+nnoremap <silent> <Leader>\ :StripWhitespace<CR>
 " nnoremap <Leader>s :ToggleWorkspace<CR>
 " nnoremap <Leader>s :mksession!<CR>
 " nnoremap <Leader>rs :!rm ~/Dropbox/.vim/sessions/*<CR>
