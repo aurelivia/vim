@@ -61,3 +61,6 @@
 [submodule "packages/tagbar"]
 	path = packages/tagbar
 	url = https://github.com/majutsushi/tagbar
+[submodule "packages/ctrlsf.vim"]
+	path = packages/ctrlsf.vim
+	url = https://github.com/dyng/ctrlsf.vim

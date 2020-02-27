@@ -1,9 +1,10 @@
 set nocompatible
 filetype plugin on
 filetype indent on
-let s:vim_path = $HOME . '/.vim/'
-execute pathogen#infect(s:vim_path . 'packages/{}')
-let s:vimrc = s:vim_path . '.vimrc'
+let g:vim_path = $HOME . '/.vim/'
+let g:vimrc = g:vim_path . '.vimrc'
+execute pathogen#infect(g:vim_path . 'packages/{}')
+Helptags
 
 syntax enable
 set number
@@ -20,8 +21,8 @@ set hidden noshowmode shortmess=F noshowcmd
 set incsearch " hlsearch
 
 let g:strip_white_space_on_save = 1
-let g:workspace_session_directory = $HOME . s:vim_path . 'sessions/'
-let g:workspace_undodir = $HOME . s:vim_path . 'sessions/.undodir'
+let g:workspace_session_directory = g:vim_path . 'sessions/'
+let g:workspace_undodir = g:vim_path . 'sessions/.undodir'
 let g:workspace_session_disable_on_args = 1
 let g:workspace_autosave = 0
 
@@ -38,11 +39,24 @@ autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 let g:NERDSpaceDelims = 1
 let g:NERDTreeWinSize = 40
 let g:tagbar_left = 1
+let g:qf_mapping_ack_style = 1
 
 let g:vim_svelte_plugin_use_pug = 1
 
 set mouse=a
 let mapleader = ' '
+
+function! GetRange()
+    let [line_start, column_start] = getpos("'<")[1:2]
+    let [line_end, column_end] = getpos("'>")[1:2]
+    let lines = getline(line_start, line_end)
+    if len(lines) == 0
+        return ''
+    endif
+    let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
+    let lines[0] = lines[0][column_start - 1:]
+    return join(lines, "\n")
+endfunction
 
 nnoremap Q q
 nnoremap qq :NERDTreeClose<CR>:Sayonara<CR>
@@ -90,9 +104,8 @@ inoremap <CR> <ESC>
 inoremap <F12> <CR>
 nnoremap <Space><Space> :
 
-" command! Evimrc :e '' . s:vimrc
-command! Evimrc execute 'e ' . s:vimrc
-command! Svimrc execute 'so ' . s:vimrc
+command! Evimrc execute 'e ' . g:vimrc
+command! Svimrc execute 'so ' . g:vimrc
 command! Eawesome :e ~/.config/awesome/rc.lua | :e ~/.config/awesome/theme.lua
 
 nnoremap c' ci'
@@ -146,6 +159,15 @@ xmap <silent> iw <Plug>CamelCaseMotion_iw
 xmap <silent> iw <Plug>CamelCaseMotion_iw
 xmap <silent> iw <Plug>CamelCaseMotion_iw
 xmap <silent> iw <Plug>CamelCaseMotion_iw
+
+let g:ctrlsf_mapping = {
+  \ 'openb': ['<CR>', 'o'],
+  \ 'open': ['O', '<2-LeftMouse>'],
+  \ 'next': 'n',
+  \ 'prev': 'N',
+\ }
+" {'chgmode': 'M', 'popenf': 'P', 'open': ['<CR>', 'o', '<2-LeftMouse>'], 'pquit': 'q', 'vsplit': '', 'openb': 'O', 'stop': '<C-C>', 'quit': 'q', 'next': '<C-J>', 'split': '<C-O>', 'prev': '<C-K>', 'tabb': 'T', 'loclist': '', 'popen': 'p', 'tab': 't'}
+
 
 com! FormatJSON :call FormatJSON()
 function! FormatJSON()
