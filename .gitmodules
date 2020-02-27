@@ -67,3 +67,6 @@
 [submodule "packages/vim-session"]
 	path = packages/vim-session
 	url = https://github.com/xolox/vim-session
+[submodule "packages/vim-misc"]
+	path = packages/vim-misc
+	url = https://github.com/xolox/vim-misc

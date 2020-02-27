@@ -23,8 +23,7 @@ set incsearch " hlsearch
 let g:strip_white_space_on_save = 1
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
 let g:sayonara_confirm_quit = 1
-set sessionoptions-=buffers
-let g:session_directory = $HOME . '/.vim/sessions'
+let g:session_directory = g:vim_path . 'sessions'
 let g:session_lock_enabled = 0
 
 set backspace=indent,eol,start
@@ -134,7 +133,6 @@ nnoremap <Leader>\ :StripWhitespace<CR>
 " nnoremap <Leader>s :mksession!<CR>
 " nnoremap <Leader>rs :!rm ~/Dropbox/.vim/sessions/*<CR>
 " nnoremap <Leader>rs :silent !rm Session.vim | :redraw!<CR>
-nnoremap <Leader>s
 
 inoremap <C-b> <Left><CR><CR><ESC>ki<Tab>
 
