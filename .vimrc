@@ -40,9 +40,6 @@ augroup END
 set virtualedit=onemore
 set clipboard=unnamedplus
 
-autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-let g:NERDSpaceDelims = 1
-let g:NERDTreeWinSize = 40
 let g:tagbar_left = 1
 
 let g:vim_svelte_plugin_use_pug = 1
@@ -63,9 +60,9 @@ function! GetRange()
 endfunction
 
 nnoremap Q q
-nnoremap <silent> qq :NERDTreeClose<CR>:Sayonara<CR>
-nnoremap <silent> qr :NERDTreeClose<CR>:Sayonara<CR>:NERDTreeToggle<CR>
-nnoremap <silent> qa :NERDTreeClose<CR>:q!<CR>
+nnoremap <silent> qq :Sayonara<CR>
+nnoremap <silent> qr :Sayonara<CR>
+nnoremap <silent> qa :q!<CR>
 nnoremap <silent> Z :w!<CR>
 
 noremap H ^
@@ -90,7 +87,7 @@ noremap <C-Up> <C-u>
 noremap <silent> <A-k> :m-2<CR>
 noremap <silent> <A-Up> :m-2<CR>
 vnoremap <silent> <A-k> :m '<-2<CR>gv
-vnoremap <silent> <A-Down> :m '<-2<CR>gv
+vnoremap <silent> <A-Up> :m '<-2<CR>gv
 
 noremap L $
 noremap <S-Right> $
@@ -99,8 +96,6 @@ noremap <silent> <C-Right> :bnext<CR>
 
 nnoremap s <C-w>
 nnoremap <silent> <C-f> :TagbarToggle<CR>
-" nnoremap <silent> <C-\> :NERDTreeToggle<CR>
-" nnoremap <silent> <C-d> :NERDTreeToggle<CR>
 nmap <C-d> <Plug>(dirvish_up)
 augroup dirvish_config
   autocmd!
@@ -140,6 +135,7 @@ vnoremap X "_X
 vnoremap / y/<C-R>"<CR>
 nnoremap <silent> <Leader><CR> :let @/=''<CR>
 nnoremap <silent> <Leader>\ :StripWhitespace<CR>
+nnoremap <silent> \ :set list!<CR>
 " nnoremap <Leader>s :ToggleWorkspace<CR>
 " nnoremap <Leader>s :mksession!<CR>
 " nnoremap <Leader>rs :!rm ~/Dropbox/.vim/sessions/*<CR>

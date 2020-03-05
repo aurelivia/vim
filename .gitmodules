@@ -67,3 +67,6 @@
 [submodule "packages/vim-dirvish"]
 	path = packages/vim-dirvish
 	url = https://github.com/justinmk/vim-dirvish
+[submodule "packages/vim-eunuch"]
+	path = packages/vim-eunuch
+	url = https://github.com/tpope/vim-eunuch
