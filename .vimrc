@@ -40,6 +40,9 @@ augroup END
 set virtualedit=onemore
 set clipboard=unnamedplus
 
+set autoread
+au FocusGained,BufEnter * :checktime
+
 let g:tagbar_left = 1
 
 let g:vim_svelte_plugin_use_pug = 1
