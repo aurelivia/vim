@@ -28,20 +28,18 @@ let g:ctrlp_use_caching = 0
 let g:sayonara_confirm_quit = 1
 let g:session_directory = g:vim_path . 'sessions'
 let g:session_lock_enabled = 0
-let g:session_autosave = 'yes'
-let g:session_autoload = 'yes'
+let g:session_autosave = 'no'
+let g:session_autoload = 'no'
 
 set backspace=indent,eol,start
-set tabstop=2 shiftwidth=2 expandtab autoindent smartindent formatoptions-=t
-augroup shiftybehaviour
-  autocmd!
-  autocmd InsertLeave * :normal `^
-augroup END
+set tabstop=2 shiftwidth=2 expandtab autoindent smartindent formatoptions-=t nostartofline
+au InsertLeave * :normal `^
 set virtualedit=onemore
 set clipboard=unnamedplus
 
 set autoread
 au FocusGained,BufEnter * :checktime
+au BufEnter *.txt if &buftype == 'help' | wincmd L | endif
 
 let g:tagbar_left = 1
 
@@ -139,6 +137,7 @@ vnoremap / y/<C-R>"<CR>
 nnoremap <silent> <Leader><CR> :let @/=''<CR>
 nnoremap <silent> <Leader>\ :StripWhitespace<CR>
 nnoremap <silent> \ :set list!<CR>
+nnoremap <Leader>s :SaveSession<CR>
 " nnoremap <Leader>s :ToggleWorkspace<CR>
 " nnoremap <Leader>s :mksession!<CR>
 " nnoremap <Leader>rs :!rm ~/Dropbox/.vim/sessions/*<CR>
