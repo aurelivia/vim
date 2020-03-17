@@ -19,9 +19,6 @@
 [submodule "packages/vim-better-whitespace"]
 	path = packages/vim-better-whitespace
 	url = https://github.com/ntpeters/vim-better-whitespace
-[submodule "packages/vim-commentary"]
-	path = packages/vim-commentary
-	url = https://github.com/tpope/vim-commentary
 [submodule "packages/vim-elixir"]
 	path = packages/vim-elixir
 	url = https://github.com/elixir-editors/vim-elixir
@@ -73,3 +70,6 @@
 [submodule "packages/vim-tmux-focus-events"]
 	path = packages/vim-tmux-focus-events
 	url = https://github.com/tmux-plugins/vim-tmux-focus-events
+[submodule "packages/tcomment"]
+	path = packages/tcomment
+	url = https://github.com/tomtom/tcomment_vim

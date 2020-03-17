@@ -43,7 +43,7 @@ au BufEnter *.txt if &buftype == 'help' | wincmd L | endif
 
 let g:tagbar_left = 1
 
-let g:vim_svelte_plugin_use_pug = 1
+let g:vue_pre_processors = []
 
 set mouse=a
 let mapleader = ' '
