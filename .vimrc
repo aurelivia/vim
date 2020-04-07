@@ -61,7 +61,7 @@ function! GetRange()
 endfunction
 
 nnoremap Q q
-nnoremap <silent> qq :Sayonara<CR>
+nnoremap <silent> qq :Sayonara!<CR>
 nnoremap <silent> qr :Sayonara<CR>
 nnoremap <silent> qa :q!<CR>
 nnoremap <silent> Z :w!<CR>
@@ -71,6 +71,8 @@ noremap <S-Left> ^
 " noremap <C-h> :bprevious<CR>
 noremap <silent> <C-Left> :bprevious<CR>
 nmap <BS> <NOP>
+nmap <S-CR> <NOP>
+vmap <S-CR> <NOP>
 
 " noremap J 5j
 noremap <S-Down> 5j
@@ -105,13 +107,15 @@ augroup dirvish_config
   autocmd FileType dirvish nmap <buffer> <C-d> <Plug>(dirvish_quit)
 augroup END
 
+command! -nargs=1 E execute 'e %:p:h/' . '<args>'
+
 nnoremap <CR> i
 nnoremap U <C-r>
 nnoremap c<CR> ciw
 nnoremap <Leader>c ciw
 inoremap <CR> <ESC>
 inoremap <F12> <CR>
-nnoremap <Space><Space> :
+nnoremap <Space><Space> @:
 
 command! Evimrc execute 'e ' . g:vimrc
 command! Svimrc execute 'so ' . g:vimrc
@@ -125,6 +129,8 @@ nnoremap c( ci(
 nnoremap c<Space> F<Space>lct<Space>
 nnoremap p P
 nnoremap P p
+nnoremap <Leader>o o<ESC>
+nnoremap <Leader>O O<ESC>
 
 nnoremap dd "_dd
 nnoremap dy dd
