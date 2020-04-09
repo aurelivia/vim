@@ -73,3 +73,6 @@
 [submodule "packages/tcomment"]
 	path = packages/tcomment
 	url = https://github.com/tomtom/tcomment_vim
+[submodule "packages/vim-jsx-pretty"]
+	path = packages/vim-jsx-pretty
+	url = https://github.com/MaxMEllon/vim-jsx-pretty

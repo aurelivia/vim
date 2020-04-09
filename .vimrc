@@ -7,8 +7,6 @@ execute pathogen#infect(g:vim_path . 'packages/{}')
 Helptags
 
 syntax enable
-set number
-set relativenumber
 set enc=utf-8 fileencodings=utf-8
 colorscheme onedark
 let g:onedark_hide_endofbuffer = 1
@@ -40,6 +38,14 @@ set clipboard=unnamedplus
 set autoread
 au FocusGained,BufEnter * :checktime
 au BufEnter *.txt if &buftype == 'help' | wincmd L | endif
+
+set number
+set relativenumber
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
 
 let g:tagbar_left = 1
 
@@ -151,7 +157,7 @@ nnoremap <Leader>s :SaveSession<CR>
 
 inoremap <C-b> <Left><CR><CR><ESC>ki<Tab>
 
-autocmd FileType javascript inoremap <buffer> <C-f> <ESC>F<Space>i<Space>=><Space>{<CR><CR>}<ESC>ki<Tab>
+autocmd FileType javascript inoremap <buffer> <C-f> <Space>=><Space>{<CR><CR>}<ESC>ki<Tab>
 
 " CamelCaseMotion Bindings
 map <silent> w <Plug>CamelCaseMotion_w
