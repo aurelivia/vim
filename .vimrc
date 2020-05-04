@@ -120,6 +120,7 @@ nnoremap U <C-r>
 nnoremap c<CR> ciw
 nnoremap <Leader>c ciw
 inoremap <CR> <ESC>
+vnoremap <CR> <ESC>
 inoremap <F12> <CR>
 nnoremap <Space><Space> @:
 
@@ -144,6 +145,7 @@ nnoremap x "_x
 nnoremap X "_X
 vnoremap x "_x
 vnoremap X "_X
+vnoremap p "_dP
 
 vnoremap / y/<C-R>"<CR>
 nnoremap <silent> <Leader><CR> :let @/=''<CR>
