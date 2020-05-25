@@ -122,6 +122,7 @@ nnoremap <Leader>c ciw
 inoremap <CR> <ESC>
 vnoremap <CR> <ESC>
 inoremap <F12> <CR>
+nnoremap <silent> <F11> :syntax sync fromstart<CR>
 nnoremap <Space><Space> @:
 
 command! Evimrc execute 'e ' . g:vimrc
