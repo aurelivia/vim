@@ -31,6 +31,7 @@ let g:session_autoload = 'no'
 
 set backspace=indent,eol,start
 set tabstop=2 shiftwidth=2 expandtab autoindent smartindent formatoptions-=t nostartofline
+au Filetype yaml setlocal noai nocin nosi inde=
 au InsertLeave * :normal `^
 set virtualedit=onemore
 set clipboard=unnamedplus
