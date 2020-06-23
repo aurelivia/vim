@@ -38,6 +38,8 @@ hi def link csFuncCall Function
 
 syn keyword csType bool byte char decimal double float int long object sbyte short string T uint ulong ushort void dynamic
 syn keyword csModifier abstract const extern internal override private protected public readonly sealed static var virtual volatile
+syn keyword csThis this display
+hi def link csThis Identifier
 hi! def link csConstant Boolean
 hi! def link csGenericBraces Operator
 call s:h('csModifier', { 'fg': s:colors.purple })
