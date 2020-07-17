@@ -30,9 +30,48 @@ let g:session_autosave = 'no'
 let g:session_autoload = 'no'
 
 set backspace=indent,eol,start
-set tabstop=2 shiftwidth=2 expandtab autoindent smartindent formatoptions-=t nostartofline
-command! -nargs=1 Tabs setlocal tabstop=<args> shiftwidth=<args>
-au Filetype yaml setlocal noai nocin nosi inde=
+set tabstop=2 softtabstop=2 shiftwidth=2 noexpandtab autoindent smartindent formatoptions-=t nostartofline
+let g:tabmode = 0
+let g:tabwidth = 2
+let g:session_persist_globals = ['&tabstop', '&softtabstop', '&shiftwidth', '&expandtab']
+au Filetype yaml setlocal noai nocin nosi expandtab inde=
+command! -nargs=1 Tabs call <SID>SizeTabs(<args>)
+command! -nargs=1 Tabspaces let g:tabspaces=<args>
+function! <SID>SizeTabs(...)
+	if a:0
+		let l:width = a:1
+	else
+		let l:width = g:tabwidth
+	endif
+	if g:tabmode == 1
+		execute 'silent! %s/' . repeat(' ', g:tabwidth) . '/' . repeat(' ', l:width) . '/g'
+		execute "''"
+	endif
+	execute 'silent! set tabstop=' . l:width . ' softtabstop=' . l:width . ' shiftwidth=' . l:width
+	execute 'silent! setlocal tabstop< softabstop< shiftwidth<'
+	let g:tabwidth = l:width
+endfunction
+function! <SID>ExTabs()
+	let g:tabmode = 1
+	set expandtab
+	execute 'silent! %s/\t/' . repeat(' ', g:tabwidth) . '/g'
+	execute 'silent! set tabstop=' . g:tabwidth . ' softtabstop=' . g:tabwidth . ' shiftwidth=' . g:tabwidth
+	execute 'silent! setlocal tabstop< softabstop< shiftwidth<'
+	echo 'Spaces'
+	execute "''"
+endfunction
+function! <SID>NoExTabs()
+	let g:tabmode = 0
+	set noexpandtab
+	execute 'silent! %s/' . repeat(' ', g:tabwidth) . '/\t/g'
+	execute 'silent! set tabstop=' . g:tabwidth . ' softtabstop=' . g:tabwidth . ' shiftwidth=' . g:tabwidth
+	execute 'silent! setlocal tabstop< softabstop< shiftwidth<'
+	echo 'Tabs'
+	execute "''"
+endfunction
+nnoremap <F5> :call <SID>NoExTabs()<CR>
+nnoremap <F6> :call <SID>ExTabs()<CR>
+
 au InsertLeave * :normal `^
 set virtualedit=onemore
 set clipboard=unnamedplus
@@ -41,31 +80,49 @@ set autoread
 au FocusGained,BufEnter * :checktime
 au BufEnter *.txt if &buftype == 'help' | wincmd L | endif
 
+set scrolloff=10
 set number
 set relativenumber
-augroup numbertoggle
-  autocmd!
-  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
-augroup END
+let g:nummode = 0
+function! <SID>AutoNumbers(...)
+	if g:nummode == 0
+		if a:0
+			set relativenumber
+		else
+			set norelativenumber
+		endif
+	endif
+endfunction
+function! <SID>ManualNumbers()
+	if g:nummode == 0
+		let g:nummode = 1
+		set norelativenumber
+	else
+		let g:nummode = 0
+		set relativenumber
+	endif
+endfunction
+au BufEnter,FocusGained,InsertLeave * call <SID>AutoNumbers(1)
+au BufLeave,FocusLost,InsertEnter * call <SID>AutoNumbers()
+nnoremap <silent> <F8> :call <SID>ManualNumbers()<CR>
 
 let g:tagbar_left = 1
 
 let g:vue_pre_processors = []
 
-set mouse=a
+set mouse=
 let mapleader = ' '
 
 function! GetRange()
-    let [line_start, column_start] = getpos("'<")[1:2]
-    let [line_end, column_end] = getpos("'>")[1:2]
-    let lines = getline(line_start, line_end)
-    if len(lines) == 0
-        return ''
-    endif
-    let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
-    let lines[0] = lines[0][column_start - 1:]
-    return join(lines, "\n")
+	let [line_start, column_start] = getpos("'<")[1:2]
+	let [line_end, column_end] = getpos("'>")[1:2]
+	let lines = getline(line_start, line_end)
+	if len(lines) == 0
+		return ''
+	endif
+	let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
+	let lines[0] = lines[0][column_start - 1:]
+	return join(lines, "\n")
 endfunction
 
 nnoremap Q q
@@ -74,45 +131,53 @@ nnoremap <silent> qr :Sayonara<CR>
 nnoremap <silent> qa :q!<CR>
 nnoremap <silent> Z :w!<CR>
 
-noremap H ^
-noremap <S-Left> ^
+nnoremap H ^
+nnoremap <S-Left> ^
 " noremap <C-h> :bprevious<CR>
-noremap <silent> <C-Left> :bprevious<CR>
+nnoremap <silent> <C-Left> :bprevious<CR>
 nmap <BS> <NOP>
 nmap <S-CR> <NOP>
 vmap <S-CR> <NOP>
 
-" noremap J 5j
-noremap <S-Down> 5j
-noremap <C-j> <C-d>
-noremap <C-Down> <C-d>
-noremap <silent> <A-j> :m+1<CR>
-noremap <silent> <A-Down> :m+1<CR>
-vnoremap <silent> <A-j> :m '>+1<CR>gv
-vnoremap <silent> <A-Down> :m '>+1<CR>gv
-
-noremap K 5k
-noremap <S-Up> 5k
-noremap <C-k> <C-u>
-noremap <C-Up> <C-u>
-noremap <silent> <A-k> :m-2<CR>
-noremap <silent> <A-Up> :m-2<CR>
+" noremap K 5k
+nnoremap - gj
+vnoremap - gj
+nnoremap <kPlus> gk
+vnoremap <kPlus> gk
+nnoremap <S-Up> 15<C-y>15k
+nnoremap <C-k> <C-u>zz
+nnoremap <C-Up> <C-u>zz
+nnoremap <silent> <A-k> :m-2<CR>
+nnoremap <silent> <A-Up> :m-2<CR>
 vnoremap <silent> <A-k> :m '<-2<CR>gv
 vnoremap <silent> <A-Up> :m '<-2<CR>gv
 
-noremap L $
-noremap <S-Right> $
-noremap <silent> <C-l> :bnext<CR>
-noremap <silent> <C-Right> :bnext<CR>
+" noremap J 5j
+nnoremap = gk
+vnoremap = gk
+nnoremap <k0> gj
+vnoremap <k0> gj
+nnoremap <S-Down> 15<C-e>15j
+nnoremap <C-j> <C-d>zz
+nnoremap <C-Down> <C-d>zz
+nnoremap <silent> <A-j> :m+1<CR>
+nnoremap <silent> <A-Down> :m+1<CR>
+vnoremap <silent> <A-j> :m '>+1<CR>gv
+vnoremap <silent> <A-Down> :m '>+1<CR>gv
+
+nnoremap L $
+nnoremap <S-Right> $
+nnoremap <silent> <C-l> :bnext<CR>
+nnoremap <silent> <C-Right> :bnext<CR>
 
 nnoremap s <C-w>
 nnoremap <silent> <C-f> :TagbarToggle<CR>
 nmap <C-d> <Plug>(dirvish_up)
 augroup dirvish_config
-  autocmd!
-  autocmd FileType dirvish nmap <buffer> <Left> <Plug>(dirvish_up)
-  autocmd FileType dirvish nmap <buffer> <Right> <CR>
-  autocmd FileType dirvish nmap <buffer> <C-d> <Plug>(dirvish_quit)
+	autocmd!
+	autocmd FileType dirvish nmap <buffer> <Left> <Plug>(dirvish_up)
+	autocmd FileType dirvish nmap <buffer> <Right> <CR>
+	autocmd FileType dirvish nmap <buffer> <C-d> <Plug>(dirvish_quit)
 augroup END
 
 command! -nargs=1 E execute 'e %:p:h/' . '<args>'
@@ -142,12 +207,10 @@ nnoremap P p
 nnoremap <Leader>o o<ESC>
 nnoremap <Leader>O O<ESC>
 
+noremap d "_d
 nnoremap dd "_dd
-nnoremap dy dd
-nnoremap x "_x
-nnoremap X "_X
-vnoremap x "_x
-vnoremap X "_X
+noremap x d
+noremap xx dd
 vnoremap p "_dP
 
 vnoremap / y/<C-R>"<CR>
@@ -155,6 +218,7 @@ nnoremap <silent> <Leader><CR> :let @/=''<CR>
 nnoremap <silent> <Leader>\ :StripWhitespace<CR>
 nnoremap <silent> \ :set list!<CR>
 nnoremap <Leader>s :SaveSession<CR>
+nnoremap <Leader>o :OpenSession<CR>
 " nnoremap <Leader>s :ToggleWorkspace<CR>
 " nnoremap <Leader>s :mksession!<CR>
 " nnoremap <Leader>rs :!rm ~/Dropbox/.vim/sessions/*<CR>
@@ -186,16 +250,16 @@ xmap <silent> iw <Plug>CamelCaseMotion_iw
 xmap <silent> iw <Plug>CamelCaseMotion_iw
 
 let g:ctrlsf_mapping = {
-  \ 'openb': ['<CR>', 'o'],
-  \ 'open': ['O', '<2-LeftMouse>'],
-  \ 'next': 'n',
-  \ 'prev': 'N',
+	\ 'openb': ['<CR>', 'o'],
+	\ 'open': ['O', '<2-LeftMouse>'],
+	\ 'next': 'n',
+	\ 'prev': 'N',
 \ }
 " {'chgmode': 'M', 'popenf': 'P', 'open': ['<CR>', 'o', '<2-LeftMouse>'], 'pquit': 'q', 'vsplit': '', 'openb': 'O', 'stop': '<C-C>', 'quit': 'q', 'next': '<C-J>', 'split': '<C-O>', 'prev': '<C-K>', 'tabb': 'T', 'loclist': '', 'popen': 'p', 'tab': 't'}
 
 
 com! FormatJSON :call FormatJSON()
 function! FormatJSON()
-  %!python -c "import json, sys, collections;print(json.dumps(json.load(sys.stdin, object_pairs_hook=collections.OrderedDict), indent=2))"
-  %s/\\u\(\x\{4\}\)/\=nr2char('0x'.submatch(1),1)/g
+	%!python -c "import json, sys, collections;print(json.dumps(json.load(sys.stdin, object_pairs_hook=collections.OrderedDict), indent=2))"
+	%s/\\u\(\x\{4\}\)/\=nr2char('0x'.submatch(1),1)/g
 endfunction
