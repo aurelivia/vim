@@ -76,3 +76,6 @@
 [submodule "packages/vim-jsx-pretty"]
 	path = packages/vim-jsx-pretty
 	url = https://github.com/MaxMEllon/vim-jsx-pretty
+[submodule "packages/vim-vp4"]
+	path = packages/vim-vp4
+	url = https://github.com/ngemily/vim-vp4
