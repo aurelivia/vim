@@ -27,7 +27,7 @@ au InsertLeave * :normal `^
 set virtualedit=onemore
 set clipboard=unnamedplus
 
-set autoread
+set autoread noswapfile
 au FocusGained,BufEnter * :checktime
 au BufEnter *.txt if &buftype == 'help' | wincmd L | endif
 
@@ -50,14 +50,14 @@ let g:ctrlsf_mapping = {
 \ }
 " {'chgmode': 'M', 'popenf': 'P', 'open': ['<CR>', 'o', '<2-LeftMouse>'], 'pquit': 'q', 'vsplit': '', 'openb': 'O', 'stop': '<C-C>', 'quit': 'q', 'next': '<C-J>', 'split': '<C-O>', 'prev': '<C-K>', 'tabb': 'T', 'loclist': '', 'popen': 'p', 'tab': 't'}
 
-set backspace=indent,eol,start
+set backspace=indent,eol,start wrap linebreak
 set tabstop=2 softtabstop=2 shiftwidth=2 noexpandtab autoindent smartindent formatoptions-=t nostartofline
 let g:tabmode = 0
 let g:tabwidth = 2
 let g:session_persist_globals = ['&tabstop', '&softtabstop', '&shiftwidth', '&expandtab']
 au Filetype yaml setlocal noai nocin nosi expandtab inde=
 command! -nargs=1 Tabs call <SID>SizeTabs(<args>)
-command! -nargs=1 FSp execute 'silent! %s/' . repeat(' ', <args>) . '/\t/g' | :''
+command! -nargs=1 Fsp execute 'silent! %s/' . repeat(' ', <args>) . '/\t/g' | :''
 function! <SID>SizeTabs(...)
 	if a:0
 		let l:width = a:1
@@ -145,7 +145,7 @@ command! Eawesome :e ~/.config/awesome/rc.lua | :e ~/.config/awesome/theme.lua
 
 " Editing
 nn <CR> i
-nn i <Insert>
+" nn i <Insert>
 ino <CR> <ESC>
 vn <CR> <ESC>
 nm <BS> <NOP>
@@ -163,6 +163,8 @@ no d "_d
 nn dd "_dd
 no x d
 no xx dd
+nn p P
+nn P p
 vn p "_dP
 
 nn <silent> <A-Up> :m-2<CR>
@@ -174,7 +176,9 @@ nm <C-d> <Plug>(dirvish_up)
 augroup dirvish_config
 	autocmd!
 	autocmd FileType dirvish nmap <buffer> <Left> <Plug>(dirvish_up)
+	autocmd FileType dirvish nmap <buffer> h <Plug>(dirvish_up)
 	autocmd FileType dirvish nmap <buffer> <Right> <CR>
+	autocmd FileType dirvish nmap <buffer> l <CR>
 	autocmd FileType dirvish nmap <buffer> <C-d> <Plug>(dirvish_quit)
 augroup END
 
@@ -194,9 +198,18 @@ map <silent> ge <Plug>CamelCaseMotion_ge
 " omap <silent> ie <Plug>CamelCaseMotion_ie
 " xmap <silent> ie <Plug>CamelCaseMotion_ie
 
+" Letter Motions
+no k gk
+no j gj
+no <C-j> J
+no J 10gj
+no K 10gk
+no H <Plug>CamelCaseMotion_b
+no L <Plug>CamelCaseMotion_w
+
 " Arrow Motions
-no <Up> gk
-no <Down> gj
+map <Up> gk
+map <Down> gj
 " no <S-Up> 10gk
 " no <S-Down> 10gj
 no <S-Up> 10<C-y>10k
@@ -226,8 +239,10 @@ no <silent> <kMultiply> :bnext<CR>
 no <silent> <Home> :bprevious<CR>
 no <silent> <End> :bnext<CR>
 
-
+nn <silent> \ :set list!<CR>
+nn <silent> <Leader>\ :StripWhitespace<CR>
 nnoremap <Space><Space> @:
+
 
 " vnoremap / y/<C-R>"<CR>
 " nnoremap <silent> <Leader><CR> :let @/=''<CR>
