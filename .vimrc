@@ -208,14 +208,23 @@ no H <Plug>CamelCaseMotion_b
 no L <Plug>CamelCaseMotion_w
 
 " Arrow Motions
-map <Up> gk
-map <Down> gj
+" NYET
+map <Up> <NOP>
+map! <Up> <NOP>
+map <Down> <NOP>
+map! <Down> <NOP>
+map <Left> <NOP>
+map! <Left> <NOP>
+map <Right> <NOP>
+map! <Right> <NOP>
+" map <Up> gk
+" map <Down> gj
 " no <S-Up> 10gk
 " no <S-Down> 10gj
-no <S-Up> 10<C-y>10k
-no <S-Down> 10<C-e>10j
-no <C-Up> zz<C-u>
-no <C-Down> zz<C-d>
+" no <S-Up> 10<C-y>10k
+" no <S-Down> 10<C-e>10j
+" no <C-Up> zz<C-u>
+" no <C-Down> zz<C-d>
 
 map <silent> <S-Left> <Plug>CamelCaseMotion_b
 map <silent> <S-Right> <Plug>CamelCaseMotion_w
