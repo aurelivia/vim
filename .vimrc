@@ -56,9 +56,16 @@ let g:tabmode = 0
 let g:tabwidth = 2
 let g:session_persist_globals = ['&tabstop', '&softtabstop', '&shiftwidth', '&expandtab']
 au Filetype yaml setlocal noai nocin nosi expandtab inde=
-command! -nargs=1 Tabs call <SID>SizeTabs(<args>)
-command! -nargs=1 Fsp execute 'silent! %s/' . repeat(' ', <args>) . '/\t/g' | :''
-function! <SID>SizeTabs(...)
+function! FixTabs()
+	if g:tabmode == 1
+		execute 'silent! %s/\t/' . repeat(' ', g:tabwidth) . '/g'
+	else
+		execute 'silent! %s/' . repeat(' ', g:tabwidth) . '/\t/g'
+	end
+	execute "''"
+endfunction
+command! FixTabs call FixTabs()
+function! SizeTabs(...)
 	if a:0
 		let l:width = a:1
 	else
@@ -72,26 +79,33 @@ function! <SID>SizeTabs(...)
 	execute 'silent! setlocal tabstop< softabstop< shiftwidth<'
 	let g:tabwidth = l:width
 endfunction
-function! <SID>ExTabs()
+command! -nargs=1 SizeTabs call SizeTabs(<args>)
+function! ExTabs(...)
+	if a:0
+		let l:width = a:1
+	else
+		let l:width = g:tabwidth
+	endif
 	let g:tabmode = 1
 	set expandtab
-	execute 'silent! %s/\t/' . repeat(' ', g:tabwidth) . '/g'
-	execute 'silent! set tabstop=' . g:tabwidth . ' softtabstop=' . g:tabwidth . ' shiftwidth=' . g:tabwidth
+	execute 'silent! set tabstop=' . l:width . ' softtabstop=' . l:width . ' shiftwidth=' . l:width
 	execute 'silent! setlocal tabstop< softabstop< shiftwidth<'
 	echo 'Spaces'
-	execute "''"
 endfunction
-function! <SID>NoExTabs()
+command! ExTabs call ExTabs()
+function! NoExTabs(...)
+	if a:0
+		let l:width = a:1
+	else
+		let l:width = g:tabwidth
+	endif
 	let g:tabmode = 0
 	set noexpandtab
-	execute 'silent! %s/' . repeat(' ', g:tabwidth) . '/\t/g'
-	execute 'silent! set tabstop=' . g:tabwidth . ' softtabstop=' . g:tabwidth . ' shiftwidth=' . g:tabwidth
+	execute 'silent! set tabstop=' . l:width . ' softtabstop=' . l:width . ' shiftwidth=' . l:width
 	execute 'silent! setlocal tabstop< softabstop< shiftwidth<'
 	echo 'Tabs'
-	execute "''"
 endfunction
-nnoremap <F5> :call <SID>NoExTabs()<CR>
-nnoremap <F6> :call <SID>ExTabs()<CR>
+command! NoExTabs call NoExTabs()
 
 set scrolloff=10
 set number
@@ -167,11 +181,6 @@ nn p P
 nn P p
 vn p "_dP
 
-nn <silent> <A-Up> :m-2<CR>
-vn <silent> <A-Up> :m '<-2<CR>gv
-nn <silent> <A-Down> :m+1<CR>
-vn <silent> <A-Down> :m '>+1<CR>gv
-
 nm <C-d> <Plug>(dirvish_up)
 augroup dirvish_config
 	autocmd!
@@ -206,6 +215,11 @@ no J 10gj
 no K 10gk
 no H <Plug>CamelCaseMotion_b
 no L <Plug>CamelCaseMotion_w
+
+nn <silent> <A-k> :m-2<CR>
+vn <silent> <A-k> :m '<-2<CR>gv
+nn <silent> <A-j> :m+1<CR>
+vn <silent> <A-j> :m '>+1<CR>gv
 
 " Arrow Motions
 " NYET
