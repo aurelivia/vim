@@ -172,7 +172,7 @@ nn qa :q!<CR>
 nn s <C-w>
 nn U <C-r>
 
-nn c<CR> ciw
+" nn c<CR> ciw
 no d "_d
 nn dd "_dd
 no x d
@@ -193,19 +193,15 @@ augroup END
 
 nn <silent> <F11> :syntax sync fromstart<CR>
 
-call camelcasemotion#CreateMotionMappings('<Leader>')
-map <silent> w <Plug>CamelCaseMotion_w
-map <silent> b <Plug>CamelCaseMotion_b
-map <silent> e <Plug>CamelCaseMotion_e
-map <silent> ge <Plug>CamelCaseMotion_ge
-" omap <silent> iw <Plug>CamelCaseMotion_iw
-" xmap <silent> iw <Plug>CamelCaseMotion_iw
-" omap i<Leader>w iw
-" xmap i<Leader>w iw
-" omap <silent> ib <Plug>CamelCaseMotion_ib
-" xmap <silent> ib <Plug>CamelCaseMotion_ib
-" omap <silent> ie <Plug>CamelCaseMotion_ie
-" xmap <silent> ie <Plug>CamelCaseMotion_ie
+let g:wordmotion_nomap = 1
+map <silent> w <Plug>WordMotion_w
+map <silent> b <Plug>WordMotion_b
+map <silent> e <Plug>WordMotion_e
+map <silent> ge <Plug>WordMotion_ge
+omap <silent> iw <Plug>WordMotion_iw
+xmap <silent> iw <Plug>WordMotion_iw
+omap <silent> aw <Plug>WordMotion_aw
+xmap <silent> aw <Plug>WordMotion_aw
 
 " Letter Motions
 no k gk
@@ -213,8 +209,8 @@ no j gj
 no <C-j> J
 no J 10gj
 no K 10gk
-no H <Plug>CamelCaseMotion_b
-no L <Plug>CamelCaseMotion_w
+no H <Plug>WordMotion_b
+no L <Plug>WordMotion_w
 
 nn <silent> <A-k> :m-2<CR>
 vn <silent> <A-k> :m '<-2<CR>gv
@@ -223,25 +219,47 @@ vn <silent> <A-j> :m '>+1<CR>gv
 
 " Arrow Motions
 " NYET
-map <Up> <NOP>
-map! <Up> <NOP>
-map <Down> <NOP>
-map! <Down> <NOP>
-map <Left> <NOP>
-map! <Left> <NOP>
-map <Right> <NOP>
-map! <Right> <NOP>
-" map <Up> gk
-" map <Down> gj
-" no <S-Up> 10gk
-" no <S-Down> 10gj
-" no <S-Up> 10<C-y>10k
-" no <S-Down> 10<C-e>10j
-" no <C-Up> zz<C-u>
-" no <C-Down> zz<C-d>
+let s:arrowsenabled = 1
+function! s:ToggleArrowsFn()
+	if s:arrowsenabled == 0
+		let s:arrowsenabled = 1
+		map <Up> gk
+		unmap! <Up>
+		map <Down> gj
+		unmap! <Down>
+		unmap <Left>
+		unmap! <Left>
+		unmap <Right>
+		unmap! <Right>
+		map <S-Up> 10gk
+		map <S-Down> 10gj
+		" map <C-Up> zz<C-u>
+		" map <C-Down> zz<C-d>
+		map <silent> <S-Left> <Plug>WordMotion_b
+		map <silent> <S-Right> <Plug>WordMotion_w
+	else
+		let s:arrowsenabled = 0
+		map <Up> <NOP>
+		map! <Up> <NOP>
+		map <Down> <NOP>
+		map! <Down> <NOP>
+		map <Left> <NOP>
+		map! <Left> <NOP>
+		map <Right> <NOP>
+		map! <Right> <NOP>
+		map <S-Up> <NOP>
+		map <S-Down> <NOP>
+		map <S-Left> <NOP>
+		map <S-Right> <NOP>
+		map <C-Up> <NOP>
+		map <C-Down> <NOP>
+		map <C-Left> <NOP>
+		map <C-Right> <NOP>
+	endif
+endfunction
+command! ToggleArrows call s:ToggleArrowsFn()
+call s:ToggleArrowsFn()
 
-map <silent> <S-Left> <Plug>CamelCaseMotion_b
-map <silent> <S-Right> <Plug>CamelCaseMotion_w
 " no <silent> <C-Left> :bprevious<CR>
 " no <silent> <C-Right> :bnext<CR>
 
@@ -298,14 +316,3 @@ nnoremap <Space><Space> @:
 "
 " " push word under cursor to the right
 " nnoremap <silent> <Leader><Right> "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><C-o>/\w\+\_W\+<CR><C-l>
-"
-" omap <silent> iw <Plug>CamelCaseMotion_iw
-" xmap <silent> iw <Plug>CamelCaseMotion_iw
-" omap <silent> ib <Plug>CamelCaseMotion_ib
-" xmap <silent> ib <Plug>CamelCaseMotion_ib
-" omap <silent> ie <Plug>CamelCaseMotion_ie
-" xmap <silent> ie <Plug>CamelCaseMotion_ie
-" xmap <silent> iw <Plug>CamelCaseMotion_iw
-" xmap <silent> iw <Plug>CamelCaseMotion_iw
-" xmap <silent> iw <Plug>CamelCaseMotion_iw
-" xmap <silent> iw <Plug>CamelCaseMotion_iw
