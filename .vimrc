@@ -92,7 +92,7 @@ function! ExTabs(...)
 	execute 'silent! setlocal tabstop< softabstop< shiftwidth<'
 	echo 'Spaces'
 endfunction
-command! ExTabs call ExTabs()
+command! -nargs=1 ExTabs call ExTabs(<args>)
 function! NoExTabs(...)
 	if a:0
 		let l:width = a:1
@@ -105,7 +105,7 @@ function! NoExTabs(...)
 	execute 'silent! setlocal tabstop< softabstop< shiftwidth<'
 	echo 'Tabs'
 endfunction
-command! NoExTabs call NoExTabs()
+command! -nargs=1 NoExTabs call NoExTabs(<args>)
 
 set scrolloff=10
 set number
@@ -151,6 +151,8 @@ function! FormatJSON()
 	%s/\\u\(\x\{4\}\)/\=nr2char('0x'.submatch(1),1)/g
 endfunction
 
+command! Folds setlocal foldmethod=syntax
+
 command! -nargs=1 E execute 'e %:p:h/' . '<args>'
 
 command! Evimrc execute 'e ' . g:vimrc
@@ -173,6 +175,7 @@ nn s <C-w>
 nn U <C-r>
 
 " nn c<CR> ciw
+nn c<CR> <NOP>
 no d "_d
 nn dd "_dd
 no x d
@@ -224,13 +227,13 @@ function! s:ToggleArrowsFn()
 	if s:arrowsenabled == 0
 		let s:arrowsenabled = 1
 		map <Up> gk
-		unmap! <Up>
+		iunmap <Up>
 		map <Down> gj
-		unmap! <Down>
+		iunmap <Down>
 		unmap <Left>
-		unmap! <Left>
+		iunmap <Left>
 		unmap <Right>
-		unmap! <Right>
+		iunmap <Right>
 		map <S-Up> 10gk
 		map <S-Down> 10gj
 		" map <C-Up> zz<C-u>
@@ -240,13 +243,13 @@ function! s:ToggleArrowsFn()
 	else
 		let s:arrowsenabled = 0
 		map <Up> <NOP>
-		map! <Up> <NOP>
+		imap <Up> <NOP>
 		map <Down> <NOP>
-		map! <Down> <NOP>
+		imap <Down> <NOP>
 		map <Left> <NOP>
-		map! <Left> <NOP>
+		imap <Left> <NOP>
 		map <Right> <NOP>
-		map! <Right> <NOP>
+		imap <Right> <NOP>
 		map <S-Up> <NOP>
 		map <S-Down> <NOP>
 		map <S-Left> <NOP>
