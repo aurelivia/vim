@@ -56,15 +56,20 @@ let g:tabmode = 0
 let g:tabwidth = 2
 let g:session_persist_globals = ['&tabstop', '&softtabstop', '&shiftwidth', '&expandtab']
 au Filetype yaml setlocal noai nocin nosi expandtab inde=
-function! FixTabs()
-	if g:tabmode == 1
-		execute 'silent! %s/\t/' . repeat(' ', g:tabwidth) . '/g'
+function! FixTabs(...)
+	if a:0
+		let l:width = a:1
 	else
-		execute 'silent! %s/' . repeat(' ', g:tabwidth) . '/\t/g'
+		let l:width = g:tabwidth
+	endif
+	if g:tabmode == 1
+		execute 'silent! %s/\t/' . repeat(' ', l:width) . '/g'
+	else
+		execute 'silent! %s/' . repeat(' ', l:width) . '/\t/g'
 	end
 	execute "''"
 endfunction
-command! FixTabs call FixTabs()
+command! -nargs=1 FixTabs call FixTabs(<args>)
 function! SizeTabs(...)
 	if a:0
 		let l:width = a:1
@@ -92,7 +97,7 @@ function! ExTabs(...)
 	execute 'silent! setlocal tabstop< softabstop< shiftwidth<'
 	echo 'Spaces'
 endfunction
-command! -nargs=1 ExTabs call ExTabs(<args>)
+command! -nargs=1 Spaces call ExTabs(<args>)
 function! NoExTabs(...)
 	if a:0
 		let l:width = a:1
@@ -105,7 +110,7 @@ function! NoExTabs(...)
 	execute 'silent! setlocal tabstop< softabstop< shiftwidth<'
 	echo 'Tabs'
 endfunction
-command! -nargs=1 NoExTabs call NoExTabs(<args>)
+command! -nargs=1 Tabs call NoExTabs(<args>)
 
 set scrolloff=10
 set number
