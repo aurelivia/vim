@@ -1,1 +1,1 @@
-hi! def link jsFuncParens Operator
+syntax keyword jsCustomConstant Root Signal Effect Computed

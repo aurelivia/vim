@@ -25,9 +25,6 @@
 [submodule "packages/vim-HiLinkTrace"]
 	path = packages/vim-HiLinkTrace
 	url = https://github.com/gerw/vim-HiLinkTrace
-[submodule "packages/vim-javascript"]
-	path = packages/vim-javascript
-	url = https://github.com/pangloss/vim-javascript
 [submodule "packages/vim-pug"]
 	path = packages/vim-pug
 	url = https://github.com/digitaltoad/vim-pug
@@ -70,9 +67,6 @@
 [submodule "packages/tcomment"]
 	path = packages/tcomment
 	url = https://github.com/tomtom/tcomment_vim
-[submodule "packages/vim-jsx-pretty"]
-	path = packages/vim-jsx-pretty
-	url = https://github.com/MaxMEllon/vim-jsx-pretty
 [submodule "packages/vim-vp4"]
 	path = packages/vim-vp4
 	url = https://github.com/ngemily/vim-vp4
