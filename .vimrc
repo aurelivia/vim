@@ -50,10 +50,19 @@ let g:ctrlsf_mapping = {
 \ }
 " {'chgmode': 'M', 'popenf': 'P', 'open': ['<CR>', 'o', '<2-LeftMouse>'], 'pquit': 'q', 'vsplit': '', 'openb': 'O', 'stop': '<C-C>', 'quit': 'q', 'next': '<C-J>', 'split': '<C-O>', 'prev': '<C-K>', 'tabb': 'T', 'loclist': '', 'popen': 'p', 'tab': 't'}
 
-set backspace=indent,eol,start wrap linebreak
-set tabstop=2 softtabstop=2 shiftwidth=2 noexpandtab autoindent smartindent formatoptions-=t nostartofline
-let g:tabmode = 0
-let g:tabwidth = 2
+set backspace=indent,eol,start wrap linebreak autoindent smartindent formatoptions-=t nostartofline
+if exists("g:tabmode")
+	execute 'silent! set tabstop='. g:tabwidth . ' softtabstop=' . g:tabwidth . ' shiftwidth=' . g:tabwidth
+	if g:tabmode == 1
+		set expandtab
+	else
+		set noexpandtab
+	endif
+else
+	let g:tabmode = 0
+	let g:tabwidth = 2
+	set tabstop=2 softtabstop=2 shiftwidth=2
+endif
 let g:session_persist_globals = ['&tabstop', '&softtabstop', '&shiftwidth', '&expandtab']
 au Filetype yaml setlocal noai nocin nosi expandtab inde=
 function! FixTabs(...)
