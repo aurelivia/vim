@@ -14,6 +14,8 @@ let g:onedark_termcolors = 256
 let g:onedark_terminal_italics = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#whitespace#mixed_indent_algo = 2
+let g:airline#extensions#whitespace#checks = [ 'indent', 'trailing', 'long', 'conflicts' ]
 
 set hidden noshowmode shortmess=F noshowcmd
 set incsearch " hlsearch
