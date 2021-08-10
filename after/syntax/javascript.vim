@@ -1,1 +1,1 @@
-syntax keyword jsCustomConstant Root Signal Effect Computed
+syntax keyword jsCustomConstant Root Signal Effect Computed Cleanup

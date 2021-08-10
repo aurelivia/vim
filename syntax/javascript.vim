@@ -23,12 +23,14 @@ syntax region jsParen matchgroup=jsParens start=/(/ end=/)/ contains=@jsExpressi
 syntax region jsBracket matchgroup=jsBrackets start=/\[/ end=/\]/ contains=@jsExpression,jsSpread extend
 
 " Variables
-syntax match jsType /\<\u\k*/
 syntax match jsPlain contained /\<\K\k*/
-syntax match jsApply /\<[a-z_\$]\k*\ze\s*(/
+syntax match jsType /\<\u\k*/
+syntax match jsApply /\<[a-z_\$]\k*\ze\s*(/ nextgroup=jsAppliedContents
+syntax match jsAppliedProp contained /\<\K\k*\ze\s*(/ nextgroup=jsAppliedContents
+syntax region jsAppliedContents contained matchgroup=jsParens start=/(/ end=/)/ contains=@jsExpression extend
 " syntax region jsApply start=/\<\K\k*\ze\s*\[/ end=/\ze\]\s*(/ contains=jsAppliedProp extend
 " syntax region jsAppliedProp contained matchgroup=jsBracketsApply start=/\[/ end=/\]/ contains=@jsExpression skipwhite skipempty nextgroup=jsAppliedProp extend
-syntax match jsDot /\./ skipwhite skipempty nextgroup=jsApply,jsTag,jsProto,jsPlain
+syntax match jsDot /\./ skipwhite skipempty nextgroup=jsAppliedProp,jsTag,jsProto,jsPlain
 syntax keyword jsProto contained prototype __proto__
 
 syntax keyword jsOperator delete instanceof typeof void in of skipwhite skipempty nextgroup=@jsExpression
@@ -67,9 +69,9 @@ syntax match jsRegExpMod contained /\v\(\?[:=!>]/lc=1
 
 " Objects
 syntax region jsObject contained matchgroup=jsBraces start=/{/ end=/}/ contains=jsObjectVariable,jsObjectKey,jsObjectKeyString,jsObjectkeyExpression,jsObjectFunction,jsSpread extend fold
-" syntax region jsObjectValue contained start=/:/ end=/[,}]\&/ contains=@jsExpression extend
+syntax region jsObjectValue contained start=/:/ end=/[,}]\&/ contains=@jsExpression extend
 syntax match jsObjectVariable contained /\k*\ze\s*[,}]/
-syntax match jsObjectKey contained /\<\k*\s*:/ contains=jsEvents skipwhite skipempty nextgroup=@jsExpression " nextgroup=jsObjectValue
+syntax match jsObjectKey contained /\<\k*\s*\ze\s*:/ contains=jsEvents skipwhite skipempty nextgroup=jsObjectValue
 syntax region jsObjectKeyString contained start=`\z(["']\)` skip=`\\\%(\z1\|$\)` end=`\z1\|$` contains=jsEscaped,@Spell skipwhite skipempty nextgroup=jsObjectValue
 syntax region jsObjectKeyExpression contained matchgroup=jsBrackets start=/\[/ end=/\]/ contains=@jsExpression skipwhite skipempty nextgroup=jsObjectValue
 syntax match jsObjectFunction contained /\<\K\k*\ze\_s*(/ skipwhite skipempty nextgroup=jsArguments
@@ -85,7 +87,7 @@ syntax region jsDestructureAssignment contained start=/:/ end=/[,}=]\&/ contains
 syntax region jsDestructureDefault contained start=/=/ end=/[,}\]]\&/ contains=@jsExpression extend
 
 " Statements
-syntax keyword jsDefinition const var let skipwhite skipempty nextgroup=jsObjectDestructure,jsArrayDestructure,jsPlain,jsType
+syntax keyword jsDefinition const var let skipwhite skipempty nextgroup=jsObjectDestructure,jsArrayDestructure,jsType,jsPlain
 syntax keyword jsAsyncAwait async await
 syntax match jsLabel /\<\K\k*\s*::\@!/ contains=jsNoise
 syntax match jsLabelKey contained /\<\K\k*\ze\s*\_[;]/
@@ -128,7 +130,7 @@ syntax match jsArrowFunction /\<\K\k*\s*=>/ contains=jsOperator skipwhite skipem
 syntax match jsArrowFunction /([^()]*)\s*=>/ contains=jsArguments,jsOperator extend skipwhite skipempty nextgroup=jsBlock,@jsNotObject
 highlight jsArrowFunction NONE
 
-syntax keyword jsGlobals console document fetch window module exports global process __dirname __filename decodeURI decodeURIComponent encodeURI encodeURIComponent eval isFinite isNaN parseFloat parseInt Error EvalError InternalError RangeError ReferenceError StopIteration SyntaxError TypeError URIError
+syntax keyword jsGlobals arguments console document fetch window module exports global process __dirname __filename decodeURI decodeURIComponent encodeURI encodeURIComponent eval isFinite isNaN parseFloat parseInt Error EvalError InternalError RangeError ReferenceError StopIteration SyntaxError TypeError URIError
 
 syntax match jsEvents /\<on\k*/
 
@@ -139,6 +141,7 @@ syntax region jsComment start=/\%^#!/ end=/$/ display
 if !exists("jsSyntaxInit")
 	hi def link jsApply Function
 	hi def link jsApplyBrackets Function
+	hi def link jsAppliedProp jsApply
 	hi def link jsArgumentComma jsFunction
 	hi def link jsArgumentParens jsFunction
 	hi def link jsAsyncAwait Keyword
