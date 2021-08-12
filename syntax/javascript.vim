@@ -68,7 +68,7 @@ syntax match jsRegExpOr contained /|/
 syntax match jsRegExpMod contained /\v\(\?[:=!>]/lc=1
 
 " Objects
-syntax region jsObject contained matchgroup=jsBraces start=/{/ end=/}/ contains=jsObjectVariable,jsObjectKey,jsObjectKeyString,jsObjectkeyExpression,jsObjectFunction,jsSpread extend fold
+syntax region jsObject contained matchgroup=jsBraces start=/{/ end=/}/ contains=jsObjectVariable,jsObjectKey,jsObjectKeyString,jsObjectkeyExpression,jsObjectFunction,jsSpread,jsComment extend fold
 syntax region jsObjectValue contained start=/:/ end=/[,}]\&/ contains=@jsExpression extend
 syntax match jsObjectVariable contained /\k*\ze\s*[,}]/
 syntax match jsObjectKey contained /\<\k*\s*\ze\s*:/ contains=jsEvents skipwhite skipempty nextgroup=jsObjectValue
