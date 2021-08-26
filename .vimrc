@@ -182,11 +182,14 @@ ino <CR> <ESC>
 vn <CR> <ESC>
 nm <BS> <NOP>
 map <S-CR> <NOP>
+nn i i <ESC>hr
 
 nn <silent> Z :w<CR>
 nn <silent> qq :Sayonara!<CR>
 nn <silent> qr :Sayonara<CR>
 nn qa :q!<CR>
+nn q <NOP>
+nn <C-@> q
 nn s <C-w>
 nn U <C-r>
 
