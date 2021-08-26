@@ -12,7 +12,7 @@ endif
 syntax sync fromstart
 syntax case match
 
-syntax cluster jsNotObject contains=jsParen,jsBracket,jsType,jsVariable,jsApply,jsDot,jsOperator,jsTernary,jsBoolean,jsString,jsTemplateLiteral,jsTag,jsNumber,jsFloat,jsNull,jsThis,jsRegExp,jsFunction,jsArrowFunction,jsGlobals,jsComment,jsCustomConstant
+syntax cluster jsNotObject contains=jsParen,jsBracket,jsType,jsVariable,jsApply,jsDot,jsOperator,jsTernary,jsBoolean,jsString,jsTemplateLiteral,jsTag,jsNumber,jsFloat,jsNull,jsThis,jsRegExp,jsFunction,jsArrowFunction,jsGlobals,jsComment,jsCustomConstant,jsClass
 syntax cluster jsExpression contains=@jsNotObject,jsObject
 syntax cluster jsBlockContains contains=@jsNotObject,jsBlock,jsDefinition,jsAsyncAwait,jsStatement,jsLabel,jsConditional,jsLoop,jsThrow,jsTry
 syntax cluster jsAny contains=@jsBlockContains,jsObject
@@ -68,13 +68,24 @@ syntax match jsRegExpOr contained /|/
 syntax match jsRegExpMod contained /\v\(\?[:=!>]/lc=1
 
 " Objects
-syntax region jsObject contained matchgroup=jsBraces start=/{/ end=/}/ contains=jsObjectVariable,jsObjectKey,jsObjectKeyString,jsObjectkeyExpression,jsObjectFunction,jsSpread,jsComment extend fold
+syntax region jsObject contained matchgroup=jsBraces start=/{/ end=/}/ contains=jsObjectVariable,jsObjectKey,jsObjectKeyString,jsObjectKeyExpression,jsSpread,jsComment,jsMethodKeyword,jsMethod,jsComputedMethod extend fold
 syntax region jsObjectValue contained start=/:/ end=/[,}]\&/ contains=@jsExpression extend
 syntax match jsObjectVariable contained /\k*\ze\s*[,}]/
 syntax match jsObjectKey contained /\<\k*\s*\ze\s*:/ contains=jsEvents skipwhite skipempty nextgroup=jsObjectValue
 syntax region jsObjectKeyString contained start=`\z(["']\)` skip=`\\\%(\z1\|$\)` end=`\z1\|$` contains=jsEscaped,@Spell skipwhite skipempty nextgroup=jsObjectValue
 syntax region jsObjectKeyExpression contained matchgroup=jsBrackets start=/\[/ end=/\]/ contains=@jsExpression skipwhite skipempty nextgroup=jsObjectValue
-syntax match jsObjectFunction contained /\<\K\k*\ze\_s*(/ skipwhite skipempty nextgroup=jsArguments
+syntax match jsMethodKeyword contained /\%(get|set|async\)\ze\_s*/ skipwhite skipempty nextgroup=jsFunctionGenerator,jsFunctionIdentifier,jsComputedMethod
+syntax match jsMethod contained /\<\K\k*\ze\_s*(/ skipwhite skipempty nextgroup=jsArguments
+" syntax region jsComputedMethod contained matchgroup=jsBrackets start=/\[/ end=/\]\ze\_s*(/ contains=@jsExpression skipwhite skipempty nextgroup=jsArguments
+
+" Classes
+syntax keyword jsClass class skipwhite skipempty nextgroup=jsClassBody,jsClassName,jsClassExtends
+syntax match jsClassName contained /\<\K\k*/ skipwhite skipempty nextgroup=jsClassExtends,jsClassBody
+syntax keyword jsClassExtends contained extends skipwhite skipempty nextgroup=jsExtendsName
+syntax match jsExtendsName contained /\<\K\k*/ skipwhite skipempty nextgroup=jsClassBody
+syntax region jsClassBody contained matchgroup=jsBraces start=/{/ end=/}/ contains=jsPrivateField,jsClassKeyword,jsMethodKeyword,jsMethod,jsComputedMethod,@jsExpression
+syntax keyword jsClassKeyword contained static
+syntax match jsPrivateField contained /#\k*/ skipwhite skipempty nextgroup=jsArguments
 
 " Destructuring
 syntax region jsObjectDestructure contained matchgroup=jsBraces start=/{/ end=/}/ extend contains=jsDestructureProp,jsDestructureExpression
@@ -149,6 +160,10 @@ if !exists("jsSyntaxInit")
 	hi def link jsBraces Noise
 	hi def link jsBracketsApply jsApply
 	hi def link jsCatch jsTry
+	hi def link jsClass Statement
+	hi def link jsClassExtends jsClass
+	hi def link jsClassKeyword Keyword
+	hi def link jsClassName jsType
 	hi def link jsComment Comment
 	hi def link jsConditional Conditional
 	" hi def link jsDefinition StorageClass
@@ -156,6 +171,7 @@ if !exists("jsSyntaxInit")
 	hi def link jsDefinition jsStorageClass
 	hi def link jsEscaped Special
 	hi def link jsEvents Constant
+	hi def link jsExtendsName jsClassName
 	hi def link jsFinally jsTry
 	hi def link jsFloat jsNumber
 	hi def link jsFunction Statement
@@ -164,6 +180,8 @@ if !exists("jsSyntaxInit")
 	hi def link jsLabel Keyword
 	hi def link jsLabelKey jsLabel
 	hi def link jsLoop Repeat
+	hi def link jsMethod jsFunctionIdentifier
+	hi def link jsMethodKeyword Keyword
 	" hi def link jsModule Include
 	hi def link jsModule jsModules
 	hi def link jsModuleAny Noise
@@ -179,6 +197,7 @@ if !exists("jsSyntaxInit")
 	hi def link jsObjectFunction Function
 	hi def link jsOperator Operator
 	hi def link jsParens Noise
+	hi def link jsPrivateField Special
 	hi def link jsProto Constant
 	hi def link jsRegExp String
 	hi def link jsRegExpBackref SpecialChar
