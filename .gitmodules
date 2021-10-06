@@ -1,6 +1,3 @@
-[submodule "packages/ctrlp.vim"]
-	path = packages/ctrlp.vim
-	url = https://github.com/kien/ctrlp.vim
 [submodule "packages/onedark.vim"]
 	path = packages/onedark.vim
 	url = https://github.com/joshdick/onedark.vim
