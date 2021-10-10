@@ -1,0 +1,1 @@
+cmd /c "C:\Programs\cmder\vendor\init.bat && %*"

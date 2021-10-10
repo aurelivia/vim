@@ -1,3 +1,7 @@
+set shell=\"C:\Users\Myrdd\.vim\win-cmd.bat\"
+set shellquote=
+set shellxquote=(
+set shellcmdflag=
 source ~/.vim/.vimrc
 au BufRead,BufNewFile .winrc set filetype=vim
 set runtimepath-=~/vimfiles

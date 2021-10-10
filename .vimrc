@@ -1,16 +1,51 @@
 set nocompatible
-filetype plugin on
-filetype indent on
 
 " Paths
-let g:vim_path = $HOME . '/.vim/'
+let s:iswin = has('win32')
+if s:iswin
+	let g:vim_path = $HOME . '\.vim\'
+	let g:coc_config_home = g:vim_path . 'coc\config'
+	let g:coc_data_home = g:vim_path . 'coc\data'
+else
+	let g:vim_path = $HOME . '/.vim/'
+	let g:coc_config_home = g:vim_path . 'coc/config'
+	let g:coc_data_home = g:vim_path . 'coc/data'
+endif
 let g:vimrc = g:vim_path . '.vimrc'
-let g:coc_config_home = g:vim_path . 'coc/config'
-let g:coc_data_home = g:vim_path . 'coc/data'
 
-execute pathogen#infect(g:vim_path . 'packages/{}')
-Helptags
+call plug#begin(g:vim_path . 'packages')
 
+" Visuals
+Plug 'git@github.com:vim-airline/vim-airline'
+Plug 'git@github.com:joshdick/onedark.vim'
+
+" Presumably something is depending on this
+Plug 'git@github.com:xolox/vim-misc'
+
+" Quality of Life
+Plug 'git@github.com:mhinz/vim-sayonara'
+Plug 'git@github.com:justinmk/vim-dirvish'
+Plug 'git@github.com:chaoren/vim-wordmotion'
+Plug 'git@github.com:tomtom/tcomment_vim'
+Plug 'git@github.com:ntpeters/vim-better-whitespace'
+Plug 'git@github.com:tpope/vim-surround'
+Plug 'git@github.com:tmux-plugins/vim-tmux-focus-events'
+" Plug 'git@github.com:tpope/vim-fugitive'
+" Plug 'git@github.com:ngemily/vim-vp4'
+
+" Lang Plugins
+Plug 'git@github.com:neoclide/coc.nvim', { 'branch': 'release' }
+Plug 'git@github.com:rust-lang/rust.vim', { 'for': 'rust' }
+Plug 'git@github.com:neovimhaskell/haskell-vim', { 'for': 'haskell' }
+Plug 'git@github.com:elixir-editors/vim-elixir', { 'for': 'elixir' }
+Plug 'git@github.com:posva/vim-vue', { 'for': 'vue' }
+Plug 'git@github.com:wavded/vim-stylus', { 'for': 'stylus' }
+Plug 'git@github.com:digitaltoad/vim-pug', { 'for': 'pug' }
+
+call plug#end()
+
+filetype plugin on
+filetype indent on
 syntax enable
 set enc=utf-8 fileencodings=utf-8
 colorscheme onedark
@@ -346,6 +381,11 @@ nnoremap <Space><Space> @:
 " nnoremap <silent> <Leader><Right> "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><C-o>/\w\+\_W\+<CR><C-l>
 
 " CoC Stuff
+if s:iswin
+	execute 'silent!cd ' . g:vim_path . 'coc\data\extensions && pnpm install'
+else
+	execute 'silent!cd ' . g:vim_path . 'coc/data/extensions; pnpm install'
+endif
 function! s:check_prev() abort
 	let col = col('.') - 1
 	return !col || getline('.')[col - 1] =~# '\s'
