@@ -1,0 +1,9 @@
+{
+    "suggest": {
+        "autoTrigger": "none"
+    },
+    "signature": {
+        "enable": true,
+        "preferShownAbove": false
+    }
+}

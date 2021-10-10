@@ -1,8 +1,13 @@
 set nocompatible
 filetype plugin on
 filetype indent on
+
+" Paths
 let g:vim_path = $HOME . '/.vim/'
 let g:vimrc = g:vim_path . '.vimrc'
+let g:coc_config_home = g:vim_path . 'coc/config'
+let g:coc_data_home = g:vim_path . 'coc/data'
+
 execute pathogen#infect(g:vim_path . 'packages/{}')
 Helptags
 
@@ -123,6 +128,7 @@ function! NoExTabs(...)
 endfunction
 command! -nargs=1 Tabs call NoExTabs(<args>)
 
+set updatetime=300
 set scrolloff=10
 set number
 set relativenumber
@@ -338,3 +344,21 @@ nnoremap <Space><Space> @:
 "
 " " push word under cursor to the right
 " nnoremap <silent> <Leader><Right> "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><C-o>/\w\+\_W\+<CR><C-l>
+
+" CoC Stuff
+function! s:check_prev() abort
+	let col = col('.') - 1
+	return !col || getline('.')[col - 1] =~# '\s'
+endfunction
+
+inoremap <silent> <expr> <Tab>
+	\ pumvisible() ? "\<C-n>"
+	\ : <SID>check_prev() ? "\<Tab>"
+	\ : coc#refresh()
+
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+nn <silent> <nowait> gd :call CocAction('jumpDefinition')<CR>
+nn <silent> <nowait> <C-h> :call CocAction("doHover")<CR>
+ino <silent> <nowait> <C-c> <C-o>:call coc#float#close_all()<CR>
+ino <silent> <nowait> <C-s> <C-o>:call CocActionAsync("showSignatureHelp")<CR>
