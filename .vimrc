@@ -36,7 +36,7 @@ Plug 'git@github.com:gerw/vim-HiLinkTrace', { 'on': 'HLT' }
 " Plug 'git@github.com:ngemily/vim-vp4'
 
 " Lang Plugins
-Plug 'git@github.com:neoclide/coc.nvim', { 'branch': 'release' }
+Plug 'git@github.com:neoclide/coc.nvim', { 'branch': 'master', 'do': 'yarn install --frozen-lockfile' }
 Plug 'git@github.com:rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'git@github.com:neovimhaskell/haskell-vim', { 'for': 'haskell' }
 Plug 'git@github.com:elixir-editors/vim-elixir', { 'for': 'elixir' }
@@ -389,7 +389,7 @@ nnoremap <Space><Space> @:
 
 " CoC Stuff
 if s:iswin
-	execute 'silent!cd ' . g:vim_path . 'coc\data\extensions && pnpm install'
+	execute 'silent!cd ' . g:vim_path . 'coc\\data\\extensions && pnpm install'
 else
 	execute 'silent!cd ' . g:vim_path . 'coc/data/extensions; pnpm install'
 endif
