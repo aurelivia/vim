@@ -30,6 +30,8 @@ Plug 'git@github.com:tomtom/tcomment_vim'
 Plug 'git@github.com:ntpeters/vim-better-whitespace'
 Plug 'git@github.com:tpope/vim-surround'
 Plug 'git@github.com:tmux-plugins/vim-tmux-focus-events'
+Plug 'git@github.com:tpope/vim-eunuch'
+Plug 'git@github.com:gerw/vim-HiLinkTrace', { 'on': 'HLT' }
 " Plug 'git@github.com:tpope/vim-fugitive'
 " Plug 'git@github.com:ngemily/vim-vp4'
 
@@ -252,6 +254,10 @@ augroup dirvish_config
 	autocmd FileType dirvish nmap <buffer> <Right> <CR>
 	autocmd FileType dirvish nmap <buffer> l <CR>
 	autocmd FileType dirvish nmap <buffer> <C-d> <Plug>(dirvish_quit)
+	autocmd FileType dirvish nmap <buffer> <ESC> <Plug>(dirvish_quit)
+
+	autocmd FileType dirvish nmap <buffer> <kDivide> <Plug>(dirvish_up)
+	autocmd FileType dirvish nmap <buffer> <kMultiply> <CR>
 augroup END
 
 nn <silent> <F11> :syntax sync fromstart<CR>
@@ -329,6 +335,7 @@ call s:ToggleArrowsFn()
 " Numpad Motions
 no <kPlus> gk
 no <kEnter> gj
+no <kMinus> gg
 no = gk
 no - gj
 no <S-kPlus> 10gk
@@ -402,3 +409,5 @@ nn <silent> <nowait> gd :call CocAction('jumpDefinition')<CR>
 nn <silent> <nowait> <C-h> :call CocAction("doHover")<CR>
 ino <silent> <nowait> <C-c> <C-o>:call coc#float#close_all()<CR>
 ino <silent> <nowait> <C-s> <C-o>:call CocActionAsync("showSignatureHelp")<CR>
+nmap <silent> gh <Plug>(coc-diagnostic-prev)
+nmap <silent> gl <Plug>(coc-diagnostic-next)
