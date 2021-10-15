@@ -35,7 +35,7 @@ syntax region jstsClassBody contained matchgroup=jstsBraces start=/{/ end=/}/ co
 syntax keyword jstsFunction function skipwhite skipempty nextgroup=jstsFunctionGenerator,jstsFunctionIdentifier,jstsArguments
 syntax match jstsFunctionGenerator contained /\*/ skipwhite skipempty nextgroup=jstsFunctionIdentifier,jstsArguments
 syntax match jstsFunctionIdentifier contained /\<\K\k*/ skipwhite skipempty nextgroup=jstsArguments
-syntax region jstsArguments contained matchgroup=jstsArgumentParens start=/(/ end=/)/ extend contains=@jstsArgumentContains
+syntax region jstsArguments contained matchgroup=jstsArgumentParens start=/(/ end=/)/ extend contains=@jstsArgumentContains skipwhite skipempty nextgroup=jstsBlock
 syntax match jsArgument contained /\<\K\k*/ skipwhite skipempty nextgroup=jsArgumentDefault
 syntax match jsArgumentDefault contained /=/ skipwhite skipempty nextgroup=@jstsExpression
 hi def link jsArgumentDefault jstsOperator
