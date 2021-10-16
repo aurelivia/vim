@@ -15,6 +15,7 @@ set cpo&vim
 syntax sync fromstart
 syntax case match
 
+syntax cluster jstsNotObject contains=@jstsDefaultNotObject
 syntax cluster jstsExpression contains=@jstsNotObject,jstsObject,jstsType
 syntax cluster jstsBlockContains contains=@jstsDefaultBlockContains,jstsType
 syntax cluster jstsArgumentContains contains=jsArgument,jstsArgumentComma,jstsType

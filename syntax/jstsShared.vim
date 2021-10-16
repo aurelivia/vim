@@ -1,5 +1,5 @@
 syntax cluster jstsPrimitive contains=jstsBoolean,jstsString,jstsTemplateLiteral,jstsNumber,jstsFloat,jstsNull
-syntax cluster jstsNotObject contains=@jstsPrimitive,jstsRegExp,jstsParen,jstsBracket,jstsApply,jstsOperator,jstsTernary,jstsThis,jstsFunction,jstsArrowFunction,jstsGlobals,jstsComment,jstsClass
+syntax cluster jstsDefaultNotObject contains=@jstsPrimitive,jstsRegExp,jstsParen,jstsBracket,jstsApply,jstsOperator,jstsTernary,jstsThis,jstsFunction,jstsArrowFunction,jstsGlobals,jstsComment,jstsClass
 syntax cluster jstsDefaultBlockContains contains=@jstsNotObject,jstsBlock,jstsDefinition,jstsAsyncAwait,jstsStatement,jstsLabel,jstsConditional,jstsLoop,jstsThrow,jstsTry,jstsDelete
 syntax cluster jstsDefaultExportable contains=jstsDefinition,jstsObject,jstsAsyncAwait,jstsFunction,jstsClass
 
@@ -25,7 +25,7 @@ syntax keyword jstsThis this
 " Operators
 syntax keyword jstsOperator instanceof typeof in of new skipwhite skipempty nextgroup=@jstsExpression
 syntax match jstsOperator /new\.target/
-syntax match jstsOperator "[-!|&+<>=%/*~^:]" skipwhite skipempty nextgroup=@jstsExpression
+syntax match jstsOperator "[-!|&+<>=%/*~^]" skipwhite skipempty nextgroup=@jstsExpression
 syntax region jstsTernary matchgroup=jstsTernaries start=/?\ze[^?:.]/ end=/:/ contains=@jstsExpression extend skipwhite skipempty nextgroup=@jstsExpression
 syntax match jstsOperator /?\.\ze\D/
 syntax match jstsOperator /??/ skipwhite skipempty nextgroup=@jstsExpression
@@ -99,12 +99,13 @@ syntax match jstsExtendsName contained /\<\K\k*/ skipwhite skipempty nextgroup=j
 
 " Modules
 syntax keyword jstsModule import skipwhite skipempty nextgroup=jstsModuleAny,jstsModuleIdentifier,jstsModuleObject
-syntax keyword jstsModule export skipwhite skipempty nextgroup=@jstsExportable,jstsModuleAny,jstsModuleIdentifier,jstsModuleObject
+syntax keyword jstsModule export skipwhite skipempty nextgroup=@jstsExportable,jstsModuleDefault,jstsModuleAny,jstsModuleIdentifier,jstsModuleObject
+syntax match jstsModuleIdentifier contained /\<\K\k*/ skipwhite skipempty nextgroup=jstsModuleAs,jstsModuleFrom
 syntax match jstsModuleAny contained /\*/ skipwhite skipempty nextgroup=jstsModuleAs,jstsModuleFrom
 syntax keyword jstsModuleAs contained as skipwhite skipempty nextgroup=jstsModuleIdentifier
 syntax keyword jstsModuleFrom contained from
 syntax keyword jstsModuleDefault contained default skipwhite skipempty nextgroup=@jstsExpression,jstsObject
-syntax match jstsModuleIdentifier contained /\<\K\k*/ skipwhite skipempty nextgroup=jstsModuleAs,jstsModuleFrom
+hi def link jstsModuleDefault Keyword
 syntax region jstsModuleObject contained matchgroup=jstsBraces start=/{/ end=/}/ extend fold contains=jstsModuleIdentifier,jstsComment skipwhite skipempty nextgroup=jstsModuleFrom
 
 " Globals
@@ -114,6 +115,7 @@ syntax keyword jstsGlobals arguments console document fetch window module export
 syntax region jstsComment start='//' end=/$/ contains=@Spell extend keepend
 syntax region jstsComment start='/\*' end='\*/' contains=@Spell extend keepend fold
 syntax region jstsComment start=/\%^#!/ end=/$/ display
+hi def link jstsComment Comment
 
 
 
@@ -133,7 +135,6 @@ hi def link jstsClass Statement
 hi def link jstsClassExtends jstsClass
 hi def link jstsClassKeyword Keyword
 hi def link jstsClassName jstsType
-hi def link jstsComment Comment
 hi def link jstsConditional Conditional
 hi def link jstsCustomConstant Constant
 hi def link jstsDefinition Statement
@@ -156,8 +157,6 @@ hi def link jstsModule Statement
 hi def link jstsModuleAny Noise
 hi def link jstsModuleAs jstsModule
 hi def link jstsModuleComma Noise
-hi def link jstsModuleDefault jstsModule
-hi def link jstsModuleDefaultObject jstsModuleDefault
 hi def link jstsModuleFrom jstsModule
 hi def link jstsNoise Noise
 hi def link jstsNull Boolean

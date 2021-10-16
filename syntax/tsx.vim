@@ -15,30 +15,33 @@ set cpo&vim
 syntax sync fromstart
 syntax case match
 
-syntax cluster jstsExpression contains=@tsExpression,tsxTag,tsxEndTag
+syntax cluster jstsNotObject contains=@jstsDefaultNotObject,tsxTag
+syntax cluster jstsExpression contains=@tsExpression
 syntax cluster jstsBlockContains contains=@tsBlockContains
 
 source <sfile>:h/tsShared.vim
 
-syntax region tsxTag matchgroup=tsxTagCarets start=/<\ze\%(\/\?>\|\%(\%(\K\|{\)[^<;]\{-}\/\?>\)\)\%(\s*(\)\@!/ end=/\/\?>/ keepend contains=tsxComponent,tsxTagName
+syntax region tsxTag matchgroup=tsxTagCarets start=/<\ze\z(\K\k*\)\%(\/\@1<!>\|\s.*\/\@1<!>\)/ end=/<\/\ze\z1>/ extend contains=tsxTagName,tsxComponent,tsxBody skipwhite skipempty nextgroup=tsxEndTagName,tsxEndTagComponent
+syntax region tsxInlineTag matchgroup=tsxTagCarets start=/<\ze\z(\K\k*\)\%(\/>\|\s.*\/>\)/ end=/\/>/ extend contains=tsxTagName,tsxComponent
 hi def link tsxTagCarets Comment
-syntax match tsxComponent contained /\u\k*\ze\%(\s\|\/\|>\)/ skipwhite skipempty nextgroup=tsxProp
-hi def link tsxComponent Function
-syntax match tsxTagName contained /[a-z]\k*\ze\%(\s\|\/\|>\)/ skipwhite skipempty nextgroup=tsxProp
+syntax match tsxTagName contained /\<\l\k*/ skipwhite skipempty nextgroup=tsxProp
 hi def link tsxTagName Keyword
-syntax match tsxProp contained /\<\K\k*\ze\s*=/ skipwhite skipempty nextgroup=tsxPropEquals
+syntax match tsxComponent contained /\<\u\k*/ skipwhite skipempty nextgroup=tsxProp
+hi def link tsxComponent Constant
+syntax match tsxProp contained /\<\K\k*/ skipwhite skipempty nextgroup=tsxPropEquals,tsxProp
 hi def link tsxProp Boolean
 syntax match tsxPropEquals contained /=/ skipwhite skipempty nextgroup=tsxExpression,@jstsPrimitive
-hi def link tsxPropEquals jstsOperator
-syntax region tsxExpression contained matchgroup=jstsBraces start=/{/ end=/}/ extend contains=@jstsExpression
-syntax match tsxEndSlash contained /\//
-hi def link tsxEndSlash tsxTagCarets
+hi def link tsxPropEquals Operator
 
-syntax region tsxEndTag matchgroup=tsxTagCarets start=/<\// end=/>/ keepend contains=tsxEndComponent,tsxEndTagName
-syntax match tsxEndComponent contained /\u\k*/
-hi def link tsxEndComponent tsxComponent
-syntax match tsxEndTagName contained /\[a-z]\k*/
-hi def link tsxEndTagName tsxTagName
+syntax region tsxBody contained matchgroup=tsxTagCarets start=/\/\@1<!>/ end=/\ze<\// extend contains=tsxTag,tsxInlineTag,tsxExpression
+syntax region tsxExpression contained matchgroup=jstsBraces start=/{/ end=/}/ extend contains=@jstsExpression
+
+syntax match tsxEndTagName contained /\<\l\k*/ skipwhite skipempty nextgroup=tsxEndEndTag
+hi def link tsxEndTagName Keyword
+syntax match tsxEndTagComponent contained /\<\u\k*/ skipwhite skipempty nextgroup=tsxEndEndTag
+hi def link tsxEndTagComponent Constant
+syntax match tsxEndEndTag contained />/
+hi def link tsxEndEndTag Comment
 
 let b:current_syntax = "tsx"
 if main_syntax == 'tsx'

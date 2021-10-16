@@ -1,14 +1,16 @@
 source <sfile>:h/jstsShared.vim
 
 syntax cluster tsExpression contains=@jstsNotObject,tsGenericArrow,tsObject,tsAppliedType,tsNamespace
-syntax cluster tsBlockContains contains=@jstsDefaultBlockContains,tsAppliedType,tsNamespace
+syntax cluster tsBlockContains contains=@jstsDefaultBlockContains,tsAppliedType,tsNamespace,tsAbstract
 syntax cluster jstsArgumentContains contains=tsArgument,jstsArgumentComma
-syntax cluster jstsExportable contains=@jstsDefaultExportable,tsTypedef,tsInterface,tsNamespace,tsDeclare
+syntax cluster jstsExportable contains=@jstsDefaultExportable,tsTypedef,tsInterface,tsNamespace,tsDeclare,tsAbstract
 
 syntax keyword jstsBoolean any
 syntax keyword jstsNull void never unknown
 syntax keyword tsDeclare declare
-hi def link tsDeclare jstsAsyncAwait
+hi def link tsDeclare Keyword
+syntax keyword tsAbstract contained abstract
+hi def link tsAbstract Keyword
 
 " syntax match jstsApply /\<[a-z_\$]\k*\ze\s*([^;]\{-})\s*\%(=>\)\@!/ skipwhite nextgroup=jstsAppliedContents
 syntax match tsAppliedType /\<\u\k*\ze\s*([^;]\{-})\s*\%(=>\)\@!/ skipwhite nextgroup=jstsAppliedContents
@@ -35,8 +37,9 @@ syntax keyword tsTypeKeyword contained keyof typeof extends in skipwhite skipemp
 hi def link tsTypeKeyword jstsOperator
 syntax region tsObjectType contained matchgroup=jstsBraces start=/{/ end=/}/ extend contains=tsObjectTypeKey,tsObjectReadOnly,tsObjectTypeConstructor,tsIndexSignature,tsLeadingGeneric,tsTypeParen,jstsComment skipwhite skipempty nextgroup=tsTypeIntersection
 syntax match tsObjectTypeKey contained /\<\K\k*\ze?\?:/ skipwhite skipempty nextgroup=tsObjectKeyColon
-syntax match tsObjectKeyColon contained /?\?:/ skipwhite skipempty nextgroup=@tsType
-hi def link tsObjectKeyColon jstsOperator
+syntax region tsObjectKeyColon contained matchgroup=jstsOperator start=/?\?:/ end=/\ze[={;\],)]/ contains=@tsType extend skipwhite skipempty nextgroup=tsTypeDefault,jstsBlock
+syntax match tsTypeDefault contained /=/ skipwhite skipempty nextgroup=@jstsExpression
+hi def link tsTypeDefault jstsOperator
 syntax match tsObjectReadOnly contained /readonly / skipwhite skipempty nextgroup=tsObjectTypeKey,tsIndexSignature
 hi def link tsObjectReadOnly Keyword
 syntax match tsObjectTypeConstructor contained /new / skipwhite skipempty nextgroup=tsCallSignature
@@ -76,14 +79,10 @@ syntax match jstsFunctionIdentifier contained /\<\K\k*/ skipwhite skipempty next
 syntax match tsFunctionNamespace contained /\<\u\k*/ skipwhite skipempty nextgroup=tsFunctionGenerics,jstsArguments
 hi def link tsFunctionNamespace tsNamespaceIdentifier
 syntax region tsFunctionGenerics contained matchgroup=jstsArgumentParens start=/</ end=/>/ contains=@tsGenericContains skipwhite skipempty nextgroup=jstsArguments
-syntax region jstsArguments contained matchgroup=jstsArgumentParens start=/(/ end=/)/ contains=@jstsArgumentContains skipwhite skipempty nextgroup=tsReturnType
-syntax match tsArgument contained /\<\K\k*/ skipwhite skipempty nextgroup=tsArgumentType,tsArgumentDefault
-syntax match tsArgumentType contained /?\?:/ skipwhite skipempty nextgroup=@tsType
-hi def link tsArgumentType jstsOperator
-syntax match tsArgumentDefault contained /=/ skipwhite skipempty nextgroup=@jstsExpression
-hi def link tsArgumentDefault jstsOperator
-syntax match tsReturnType contained /:/ skipwhite skipempty nextgroup=@tsType
-hi def link tsReturnType jstsOperator
+syntax region jstsArguments contained matchgroup=jstsArgumentParens start=/(/ end=/)/ contains=@jstsArgumentContains skipwhite skipempty nextgroup=tsObjectKeyColon,jstsBlock
+syntax match tsArgument contained /\<\K\k*/ skipwhite skipempty nextgroup=tsObjectKeyColon,tsTypeDefault
+
+" syntax match jstsArrowFunction /([^()]):.*=>/ contains=
 
 " Interfaces
 syntax keyword tsInterface interface skipwhite skipempty nextgroup=tsInterfaceIdentifier
@@ -105,13 +104,12 @@ hi def link tsEnumKey Constant
 syntax keyword jstsClass class skipwhite skipempty nextgroup=jstsClassBody,jstsClassName,jstsClassExtends,tsClassImplements
 syntax match jstsClassName contained /\<\K\k*/ skipwhite skipempty nextgroup=jstsClassExtends,tsClassImplements,jstsClassBody
 syntax keyword tsClassImplements contained implements skipwhite skipempty nextgroup=jstsExtendsName
-syntax region jstsClassBody contained matchgroup=jstsBraces start=/{/ end=/}/ contains=tsClassReadOnly,tsClassKey,tsClassVisibility,tsIndexSignature,jstsMethodKeyword,jstsMethod,tsClassInitialiser,jstsComment
+syntax region jstsClassBody contained matchgroup=jstsBraces start=/{/ end=/}/ contains=tsClassReadOnly,tsClassKey,tsClassVisibility,tsIndexSignature,jstsMethodKeyword,jstsMethod,tsClassInitialiser,tsAbstract,jstsComment
 syntax match tsClassReadOnly contained /readonly / skipwhite skipempty nextgroup=tsClassKey,tsIndexSignature
 hi def link tsClassReadOnly Keyword
-syntax match tsClassKey contained /\<\K\k*\ze?\?:/ skipwhite skipempty nextgroup=@tsType
+syntax match tsClassKey contained /\<\K\k*\ze\%(?\?:\|\s*=\)/ skipwhite skipempty nextgroup=tsObjectKeyColon,tsTypeDefault
 syntax keyword tsClassVisiblity contained static private protected public
 hi def link tsClassVisiblity Keyword
-syntax match tsClassInitialiser contained /\<\K\k*\ze\s*=/ skipwhite skipempty nextgroup=tsArgumentDefault
 
 " Namespaces
 syntax keyword tsNamespace namespace skipwhite skipempty nextgroup=tsNamespaceIdentifier

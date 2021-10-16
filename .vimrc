@@ -388,6 +388,9 @@ nnoremap <Space><Space> @:
 " nnoremap <silent> <Leader><Right> "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><C-o>/\w\+\_W\+<CR><C-l>
 
 " CoC Stuff
+let g:coc_filetype_map = {
+    \ 'tsx': 'typescriptreact'
+\ }
 if s:iswin
 	execute 'silent!cd ' . g:vim_path . 'coc\\data\\extensions && pnpm install'
 else
