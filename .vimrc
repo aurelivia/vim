@@ -288,17 +288,23 @@ vn <silent> <A-j> :m '>+1<CR>gv
 
 " Arrow Motions
 " NYET
-let s:arrowsenabled = 1
+let g:arrowsenabled = get(g:, 'arrowsenabled', 1) " 1 such that toggle will set to 0
 function! s:ToggleArrowsFn()
-	if s:arrowsenabled == 0
-		let s:arrowsenabled = 1
+	if g:arrowsenabled == 0
+		let g:arrowsenabled = 1
 		map <Up> gk
+		imap <Up> <NOP>
 		iunmap <Up>
 		map <Down> gj
+		imap <Down> <NOP>
 		iunmap <Down>
+		map <Left> <NOP>
 		unmap <Left>
+		imap <Left> <NOP>
 		iunmap <Left>
+		map <Right> <NOP>
 		unmap <Right>
+		imap <Right> <NOP>
 		iunmap <Right>
 		map <S-Up> 10gk
 		map <S-Down> 10gj
@@ -307,7 +313,7 @@ function! s:ToggleArrowsFn()
 		map <silent> <S-Left> <Plug>WordMotion_b
 		map <silent> <S-Right> <Plug>WordMotion_w
 	else
-		let s:arrowsenabled = 0
+		let g:arrowsenabled = 0
 		map <Up> <NOP>
 		imap <Up> <NOP>
 		map <Down> <NOP>
