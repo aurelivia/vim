@@ -45,10 +45,13 @@ Plug 'git@github.com:wavded/vim-stylus', { 'for': 'stylus' }
 Plug 'git@github.com:digitaltoad/vim-pug', { 'for': 'pug' }
 
 call plug#end()
+exec 'set runtimepath-=' . g:dotvim
+" let &runtimepath = substitute(&runtimepath, g:dotvim, trim(g:dotvim, '/', 2), '')
 
 filetype plugin on
 filetype indent on
 syntax enable
+set laststatus=2
 set enc=utf-8 fileencodings=utf-8
 colorscheme onedark
 let g:onedark_hide_endofbuffer = 1

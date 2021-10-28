@@ -3,14 +3,16 @@ exec 'set shell=\"' . g:dotvim . 'win-cmd.bat\"'
 set shellquote=
 set shellxquote=(
 set shellcmdflag=
-source ~/.vim/.vimrc
 au BufRead,BufNewFile .winrc set filetype=vim
 set runtimepath-=~/vimfiles
 set runtimepath-=$VIM/vimfiles
-set runtimepath^=~\.vim
 set runtimepath-=~/vimfiles/after
 set runtimepath-=$VIM/vimfiles/after
-set runtimepath+=~\.vim\after
+exec 'set runtimepath+=' . trim(g:dotvim, '\', 2) . ',' . g:dotvim . 'after'
+" exec 'set runtimepath+=' . g:dotvim . 'after'
+
+exec 'source ' . g:dotvim . '.vimrc'
+
 set nofixeol noeol
 set guioptions=
 set scrollfocus
