@@ -2,5 +2,6 @@ packages/
 coc/data/extensions/node_modules/
 coc/data/extensions/package-lock.json
 coc/data/extensions/pnpm-lock.yaml
+coc/data/extensions/.pnpm-debug.log
 sessions/
 temp/

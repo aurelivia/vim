@@ -3,17 +3,17 @@ set nocompatible
 " Paths
 let s:iswin = has('win32')
 if s:iswin
-	let g:vim_path = $HOME . '\.vim\'
-	let g:coc_config_home = g:vim_path . 'coc\config'
-	let g:coc_data_home = g:vim_path . 'coc\data'
+	let g:dotvim = get(g:, 'dotvim', $HOME . '\.vim\')
+	let g:coc_config_home = g:dotvim . 'coc\config'
+	let g:coc_data_home = g:dotvim . 'coc\data'
 else
-	let g:vim_path = $HOME . '/.vim/'
-	let g:coc_config_home = g:vim_path . 'coc/config'
-	let g:coc_data_home = g:vim_path . 'coc/data'
+	let g:dotvim = get(g:, 'dotvim', $HOME . '/.vim/')
+	let g:coc_config_home = g:dotvim . 'coc/config'
+	let g:coc_data_home = g:dotvim . 'coc/data'
 endif
-let g:vimrc = g:vim_path . '.vimrc'
+let g:vimrc = g:dotvim . '.vimrc'
 
-call plug#begin(g:vim_path . 'packages')
+call plug#begin(g:dotvim . 'packages')
 
 " Visuals
 Plug 'git@github.com:vim-airline/vim-airline'
@@ -79,7 +79,7 @@ let g:strip_white_space_on_save = 1
 let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 let g:ctrlp_use_caching = 0
 let g:sayonara_confirm_quit = 1
-let g:session_directory = g:vim_path . 'sessions'
+let g:session_directory = g:dotvim . 'sessions'
 let g:session_lock_enabled = 0
 let g:session_autosave = 'no'
 let g:session_autoload = 'no'
@@ -398,9 +398,9 @@ let g:coc_filetype_map = {
     \ 'tsx': 'typescriptreact'
 \ }
 if s:iswin
-	execute 'silent!cd ' . g:vim_path . 'coc\\data\\extensions && pnpm install'
+	execute 'silent!cd ' . g:dotvim . 'coc\\data\\extensions && pnpm install'
 else
-	execute 'silent!cd ' . g:vim_path . 'coc/data/extensions; pnpm install'
+	execute 'silent!cd ' . g:dotvim . 'coc/data/extensions; pnpm install'
 endif
 function! s:check_prev() abort
 	let col = col('.') - 1

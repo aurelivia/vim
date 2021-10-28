@@ -1,4 +1,5 @@
-set shell=\"C:\Users\Myrdd\.vim\win-cmd.bat\"
+let g:dotvim = get(g:, 'dotvim', $HOME . '\.vim\')
+exec 'set shell=\"' . g:dotvim . 'win-cmd.bat\"'
 set shellquote=
 set shellxquote=(
 set shellcmdflag=
@@ -18,17 +19,20 @@ set gfn=DejaVu_Sans_Mono:h10
 set dy=uhex,lastline
 set gcr+=n-v-c:blinkon0
 set belloff=all
-set directory=C:/Programs/Vim/Temp//
-set backupdir=C:/Programs/Vim/Temp//
-set undodir=C:/Programs/Vim/Temp//
-let g:session_directory = 'C:/Programs/Vim/Sessions/'
+set directory=C:\Temp\\
+set backupdir=C:\Temp\\
+set undodir=C:\Temp\\
+" exec 'set directory=' . $VIM . '\temp\\'
+" exec 'set backupdir=' . $VIM . '\temp\\'
+" exec 'set undodir=' . $VIM . '\temp\\'
+let g:session_directory = $VIM . '\sessions\'
 let g:session_persist_globals = ['&tabstop', '&softtabstop', '&shiftwidth', '&expandtab']
 au BufNewFile,BufRead *.apm set filetype=perl
 au BufNewFile,BufRead *.opx set filetype=perl
 au BufNewFile,BufRead *.ops set filetype=perl
 au BufNewFile,BufRead *.ocs set filetype=cs
 au BufNewFile,BufRead * set noeol
-command! Evimrc execute 'e ' . g:vimrc . '| :e ' . g:vim_path . '.winrc'
+command! Evimrc execute 'e ' . g:vimrc . '| :e ' . g:dotvim . '.winrc'
 command! Svimrc :so C:\Programs\Vim\_vimrc
 command! IncFont let &guifont = substitute(&guifont, ':h\zs\d\+', '\=eval(submatch(0)+1)', 'g')
 command! DecFont let &guifont = substitute(&guifont, ':h\zs\d\+', '\=eval(submatch(0)-1)', 'g')
