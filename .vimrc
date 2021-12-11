@@ -36,7 +36,10 @@ Plug 'git@github.com:gerw/vim-HiLinkTrace', { 'on': 'HLT' }
 " Plug 'git@github.com:ngemily/vim-vp4'
 
 " Lang Plugins
-Plug 'git@github.com:neoclide/coc.nvim', { 'branch': 'master', 'do': 'yarn install --frozen-lockfile' }
+let s:node_present = get(g:, 'coc_node_path', $COC_NODE_PATH == '' ? 'node' : $COC_NODE_PATH)
+if executable(s:node_present)
+	Plug 'git@github.com:neoclide/coc.nvim', { 'branch': 'master', 'do': 'yarn install --frozen-lockfile' }
+endif
 Plug 'git@github.com:rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'git@github.com:neovimhaskell/haskell-vim', { 'for': 'haskell' }
 Plug 'git@github.com:elixir-editors/vim-elixir', { 'for': 'elixir' }
@@ -98,7 +101,7 @@ let g:ctrlsf_mapping = {
 " {'chgmode': 'M', 'popenf': 'P', 'open': ['<CR>', 'o', '<2-LeftMouse>'], 'pquit': 'q', 'vsplit': '', 'openb': 'O', 'stop': '<C-C>', 'quit': 'q', 'next': '<C-J>', 'split': '<C-O>', 'prev': '<C-K>', 'tabb': 'T', 'loclist': '', 'popen': 'p', 'tab': 't'}
 
 set backspace=indent,eol,start wrap linebreak autoindent smartindent formatoptions-=t nostartofline
-if exists("g:tabmode")
+if exists('g:tabmode')
 	execute 'silent! set tabstop='. g:tabwidth . ' softtabstop=' . g:tabwidth . ' shiftwidth=' . g:tabwidth
 	if g:tabmode == 1
 		set expandtab
@@ -110,8 +113,6 @@ else
 	let g:tabwidth = 2
 	set tabstop=2 softtabstop=2 shiftwidth=2
 endif
-let g:session_persist_globals = ['&tabstop', '&softtabstop', '&shiftwidth', '&expandtab']
-au Filetype yaml setlocal noai nocin nosi expandtab inde=
 function! FixTabs(...)
 	if a:0
 		let l:width = a:1
@@ -167,6 +168,10 @@ function! NoExTabs(...)
 	echo 'Tabs'
 endfunction
 command! -nargs=1 Tabs call NoExTabs(<args>)
+
+let g:session_persist_globals = ['&tabstop', '&softtabstop', '&shiftwidth', '&expandtab']
+au Filetype yaml setlocal noai nocin nosi expandtab inde=
+au Filetype md setlocal noai nocin nosi expandtab inde=
 
 set updatetime=300
 set scrolloff=10
@@ -230,7 +235,7 @@ nm <BS> <NOP>
 map <S-CR> <NOP>
 nn i i <ESC>hr
 
-nn <silent> Z :w<CR>
+nn <silent> Z :silent w<CR>
 nn <silent> qq :Sayonara!<CR>
 nn <silent> qr :Sayonara<CR>
 nn qa :q!<CR>
@@ -278,43 +283,45 @@ xmap <silent> aw <Plug>WordMotion_aw
 " Letter Motions
 no k gk
 no j gj
-no <C-j> J
 no J 10gj
 no K 10gk
 no H <Plug>WordMotion_b
 no L <Plug>WordMotion_w
-
+no <silent> <C-h> :bprevious<CR>
+no <C-j> zz<C-d>
+no <C-k> zz<C-u>
+no <silent> <C-l> :bnext<CR>
 nn <silent> <A-k> :m-2<CR>
 vn <silent> <A-k> :m '<-2<CR>gv
 nn <silent> <A-j> :m+1<CR>
 vn <silent> <A-j> :m '>+1<CR>gv
 
 " Arrow Motions
-" NYET
-let g:arrowsenabled = get(g:, 'arrowsenabled', 1) " 1 such that toggle will set to 0
 function! s:ToggleArrowsFn()
 	if g:arrowsenabled == 0
 		let g:arrowsenabled = 1
-		map <Up> gk
+		no <Up> gk
 		imap <Up> <NOP>
 		iunmap <Up>
-		map <Down> gj
+		no <Down> gj
 		imap <Down> <NOP>
 		iunmap <Down>
-		map <Left> <NOP>
+		no <Left> <NOP>
 		unmap <Left>
 		imap <Left> <NOP>
 		iunmap <Left>
-		map <Right> <NOP>
+		no <Right> <NOP>
 		unmap <Right>
 		imap <Right> <NOP>
 		iunmap <Right>
-		map <S-Up> 10gk
-		map <S-Down> 10gj
-		" map <C-Up> zz<C-u>
-		" map <C-Down> zz<C-d>
-		map <silent> <S-Left> <Plug>WordMotion_b
-		map <silent> <S-Right> <Plug>WordMotion_w
+		no <S-Up> 10gk
+		no <S-Down> 10gj
+		no <silent> <S-Left> <Plug>WordMotion_b
+		no <silent> <S-Right> <Plug>WordMotion_w
+		no <C-Up> zz<C-u>
+		no <C-Down> zz<C-d>
+		no <silent> <C-Left> :bprevious<CR>
+		no <silent> <C-Right> :bnext<CR>
 	else
 		let g:arrowsenabled = 0
 		map <Up> <NOP>
@@ -336,6 +343,14 @@ function! s:ToggleArrowsFn()
 	endif
 endfunction
 command! ToggleArrows call s:ToggleArrowsFn()
+
+let g:arrowsenabled = get(g:, 'arrowsenabled', 1)
+" Flip the toggle so the function sets it to the default
+if g:arrowsenabled == 0
+	let g:arrowsenabled = 1
+else
+	let g:arrowsenabled = 0
+endif
 call s:ToggleArrowsFn()
 
 " no <silent> <C-Left> :bprevious<CR>
@@ -418,7 +433,7 @@ inoremap <silent> <expr> <Tab>
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 nn <silent> <nowait> gd :call CocAction('jumpDefinition')<CR>
-nn <silent> <nowait> <C-h> :call CocAction("doHover")<CR>
+nn <silent> <nowait> <C-f> :call CocAction("doHover")<CR>
 ino <silent> <nowait> <C-c> <C-o>:call coc#float#close_all()<CR>
 ino <silent> <nowait> <C-s> <C-o>:call CocActionAsync("showSignatureHelp")<CR>
 nmap <silent> gh <Plug>(coc-diagnostic-prev)

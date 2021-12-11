@@ -21,12 +21,7 @@ set gfn=DejaVu_Sans_Mono:h10
 set dy=uhex,lastline
 set gcr+=n-v-c:blinkon0
 set belloff=all
-set directory=C:\Temp\\
-set backupdir=C:\Temp\\
-set undodir=C:\Temp\\
-" exec 'set directory=' . $VIM . '\temp\\'
-" exec 'set backupdir=' . $VIM . '\temp\\'
-" exec 'set undodir=' . $VIM . '\temp\\'
+exec 'set directory=' . $TEMP . ' backupdir=' . $TEMP . ' undodir=' . $TEMP
 let g:session_directory = $VIM . '\sessions\'
 let g:session_persist_globals = ['&tabstop', '&softtabstop', '&shiftwidth', '&expandtab']
 au BufNewFile,BufRead *.apm set filetype=perl

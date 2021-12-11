@@ -1,1 +1,1 @@
-cmd /c "C:\Programs\cmder\vendor\init.bat && %*"
+if exist "C:\Programs\cmder\vendor\init.bat" (cmd /c "C:\Programs\cmder\vendor\init.bat && %*") else (%*)
