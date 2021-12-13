@@ -65,6 +65,17 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#whitespace#mixed_indent_algo = 2
 let g:airline#extensions#whitespace#checks = [ 'indent', 'trailing', 'long', 'conflicts' ]
 
+if &term =~ '^xterm\|rxvt'
+	let &t_SI = "\<Esc>[5 q" " Insert Mode
+	let &t_EI = "\<Esc>[2 q" " Non-Insert Mode
+	" 0/1 -> Blinking Block
+	" 2 -> Solid Block
+	" 3 -> Blinking Underscore
+	" 4 -> Solid Underscore
+	" 5 -> Blinking Vertical Bar
+	" 6 -> Solid Vertical Bar
+endif
+
 set hidden noshowmode shortmess=F noshowcmd
 set incsearch " hlsearch
 set listchars=eol:¬,trail:~,extends:>,precedes:<,space:·,tab:->
