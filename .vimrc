@@ -180,9 +180,11 @@ function! NoExTabs(...)
 endfunction
 command! -nargs=1 Tabs call NoExTabs(<args>)
 
-let g:session_persist_globals = ['&tabstop', '&softtabstop', '&shiftwidth', '&expandtab']
-au Filetype yaml setlocal noai nocin nosi expandtab inde=
-au Filetype md setlocal noai nocin nosi expandtab inde=
+augroup NeedsSpaces
+	au Filetype yaml setlocal noai nocin nosi expandtab inde=
+    au Filetype md setlocal noai nocin nosi expandtab inde=
+	au Filetype hs setlocal expandtab
+augroup END
 
 set updatetime=300
 set scrolloff=10
@@ -333,6 +335,10 @@ function! s:ToggleArrowsFn()
 		no <C-Down> zz<C-d>
 		no <silent> <C-Left> :bprevious<CR>
 		no <silent> <C-Right> :bnext<CR>
+		nn <silent> <A-Up> :m-2<CR>
+		vn <silent> <A-Up> :m '<-2<CR>gv
+		nn <silent> <A-Down> :m+1<CR>
+		vn <silent> <A-Down> :m '>+1<CR>gv
 	else
 		let g:arrowsenabled = 0
 		map <Up> <NOP>
@@ -351,6 +357,8 @@ function! s:ToggleArrowsFn()
 		map <C-Down> <NOP>
 		map <C-Left> <NOP>
 		map <C-Right> <NOP>
+		map <A-Up> <NOP>
+		map <A-Down> <NOP>
 	endif
 endfunction
 command! ToggleArrows call s:ToggleArrowsFn()

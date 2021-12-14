@@ -30,7 +30,7 @@ au BufNewFile,BufRead *.ops set filetype=perl
 au BufNewFile,BufRead *.ocs set filetype=cs
 au BufNewFile,BufRead * set noeol
 command! Evimrc execute 'e ' . g:vimrc . '| :e ' . g:dotvim . '.winrc'
-command! Svimrc :so C:\Programs\Vim\_vimrc
+command! Svimrc execute 'so ' . $HOME . '\.vimrc'
 command! IncFont let &guifont = substitute(&guifont, ':h\zs\d\+', '\=eval(submatch(0)+1)', 'g')
 command! DecFont let &guifont = substitute(&guifont, ':h\zs\d\+', '\=eval(submatch(0)-1)', 'g')
 
