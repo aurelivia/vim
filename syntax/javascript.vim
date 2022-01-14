@@ -18,7 +18,7 @@ syntax case match
 syntax cluster jstsNotObject contains=@jstsDefaultNotObject
 syntax cluster jstsExpression contains=@jstsNotObject,jstsObject,jstsType
 syntax cluster jstsBlockContains contains=@jstsDefaultBlockContains,jstsType
-syntax cluster jstsArgumentContains contains=jsArgument,jstsArgumentComma,jstsType
+syntax cluster jstsArgumentContains contains=jsArgument,jstsArgumentComma,jstsType,jstsComment
 syntax cluster jstsExportable contains=@jstsDefaultExportable,jstsType
 
 source <sfile>:h/jstsShared.vim

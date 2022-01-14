@@ -2,7 +2,7 @@ source <sfile>:h/jstsShared.vim
 
 syntax cluster tsExpression contains=@jstsNotObject,tsGenericArrow,tsObject,tsAppliedType,tsNamespace
 syntax cluster tsBlockContains contains=@jstsDefaultBlockContains,tsAppliedType,tsNamespace,tsAbstract
-syntax cluster jstsArgumentContains contains=tsArgument,jstsArgumentComma
+syntax cluster jstsArgumentContains contains=tsArgument,jstsArgumentComma,jstsComment
 syntax cluster jstsExportable contains=@jstsDefaultExportable,tsTypedef,tsInterface,tsNamespace,tsDeclare,tsAbstract
 
 syntax keyword jstsBoolean any
