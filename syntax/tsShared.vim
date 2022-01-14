@@ -84,6 +84,14 @@ syntax match tsArgument contained /\<\K\k*/ skipwhite skipempty nextgroup=tsObje
 
 " syntax match jstsArrowFunction /([^()]):.*=>/ contains=
 
+" Modules
+syntax keyword jstsModule import skipwhite skipempty nextgroup=jstsModuleAny,jstsModuleIdentifier,jstsModuleObject,tsModuleImportType
+syntax keyword jstsModule export skipwhite skipempty nextgroup=@jstsExportable,jstsModuleDefault,jstsModuleAny,jstsModuleIdentifier,jstsModuleObject,tsModuleExportType
+syntax keyword tsModuleImportType type skipwhite skipempty nextgroup=jstsModuleAny,jstsModuleIdentifier,jstsModuleObject
+hi def link tsModuleImportType jstsModule
+syntax keyword tsModuleExportType skipwhite skipempty nextgroup=tsTypedefIdentifier,jstsModuleAny,jstsModuleObject
+hi def link tsModuleExportType jstsModule
+
 " Interfaces
 syntax keyword tsInterface interface skipwhite skipempty nextgroup=tsInterfaceIdentifier
 hi def link tsInterface jstsStatement

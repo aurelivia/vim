@@ -98,8 +98,6 @@ syntax keyword jstsClassExtends contained extends skipwhite skipempty nextgroup=
 syntax match jstsExtendsName contained /\<\K\k*/ skipwhite skipempty nextgroup=jstsClassBody
 
 " Modules
-syntax keyword jstsModule import skipwhite skipempty nextgroup=jstsModuleAny,jstsModuleIdentifier,jstsModuleObject
-syntax keyword jstsModule export skipwhite skipempty nextgroup=@jstsExportable,jstsModuleDefault,jstsModuleAny,jstsModuleIdentifier,jstsModuleObject
 syntax match jstsModuleIdentifier contained /\<\K\k*/ skipwhite skipempty nextgroup=jstsModuleAs,jstsModuleFrom
 syntax match jstsModuleAny contained /\*/ skipwhite skipempty nextgroup=jstsModuleAs,jstsModuleFrom
 syntax keyword jstsModuleAs contained as skipwhite skipempty nextgroup=jstsModuleIdentifier

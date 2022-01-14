@@ -41,6 +41,10 @@ syntax match jsArgument contained /\<\K\k*/ skipwhite skipempty nextgroup=jsArgu
 syntax match jsArgumentDefault contained /=/ skipwhite skipempty nextgroup=@jstsExpression
 hi def link jsArgumentDefault jstsOperator
 
+" Modules
+syntax keyword jstsModule import skipwhite skipempty nextgroup=jstsModuleAny,jstsModuleIdentifier,jstsModuleObject
+syntax keyword jstsModule export skipwhite skipempty nextgroup=@jstsExportable,jstsModuleDefault,jstsModuleAny,jstsModuleIdentifier,jstsModuleObject
+
 " Classes
 " syntax keyword jsClass class skipwhite skipempty nextgroup=jsClassBody,jsClassName,jsClassExtends
 " syntax match jsClassName contained /\<\K\k*/ skipwhite skipempty nextgroup=jsClassExtends,jsClassBody
