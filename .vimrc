@@ -186,6 +186,12 @@ augroup NeedsSpaces
 	au Filetype hs setlocal expandtab
 augroup END
 
+augroup FoldRegions
+    au Filetype cs setlocal foldmethod=marker foldmarker=#region,#endregion
+    au Filetype javascript setlocal foldmethod=marker foldmarker=//#region,//#endregion
+    au Filetype typescript setlocal foldmethod=marker foldmarker=//#region,//#endregion
+augroup END
+
 set updatetime=300
 set scrolloff=10
 set number
