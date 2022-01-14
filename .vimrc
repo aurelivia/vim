@@ -124,7 +124,7 @@ else
 	let g:tabwidth = 2
 	set tabstop=2 softtabstop=2 shiftwidth=2
 endif
-function! FixTabs(...)
+function! <SID>FixTabs(...)
 	if a:0
 		let l:width = a:1
 	else
@@ -137,8 +137,8 @@ function! FixTabs(...)
 	end
 	execute "''"
 endfunction
-command! -nargs=1 FixTabs call FixTabs(<args>)
-function! SizeTabs(...)
+command! -nargs=1 FixTabs call <SID>FixTabs(<args>)
+function! <SID>SizeTabs(...)
 	if a:0
 		let l:width = a:1
 	else
@@ -152,8 +152,8 @@ function! SizeTabs(...)
 	execute 'silent! setlocal tabstop< softabstop< shiftwidth<'
 	let g:tabwidth = l:width
 endfunction
-command! -nargs=1 SizeTabs call SizeTabs(<args>)
-function! ExTabs(...)
+command! -nargs=1 SizeTabs call <SID>SizeTabs(<args>)
+function! <SID>ExTabs(...)
 	if a:0
 		let l:width = a:1
 	else
@@ -165,8 +165,8 @@ function! ExTabs(...)
 	execute 'silent! setlocal tabstop< softabstop< shiftwidth<'
 	echo 'Spaces'
 endfunction
-command! -nargs=1 Spaces call ExTabs(<args>)
-function! NoExTabs(...)
+command! -nargs=1 Spaces call <SID>ExTabs(<args>)
+function! <SID>NoExTabs(...)
 	if a:0
 		let l:width = a:1
 	else
@@ -178,11 +178,11 @@ function! NoExTabs(...)
 	execute 'silent! setlocal tabstop< softabstop< shiftwidth<'
 	echo 'Tabs'
 endfunction
-command! -nargs=1 Tabs call NoExTabs(<args>)
+command! -nargs=1 Tabs call <SID>NoExTabs(<args>)
 
 augroup NeedsSpaces
 	au Filetype yaml setlocal noai nocin nosi expandtab inde=
-    au Filetype md setlocal noai nocin nosi expandtab inde=
+	au Filetype markdown setlocal expandtab
 	au Filetype hs setlocal expandtab
 augroup END
 
@@ -218,6 +218,7 @@ endfunction
 au BufEnter,FocusGained,InsertLeave * call <SID>AutoNumbers(1)
 au BufLeave,FocusLost,InsertEnter * call <SID>AutoNumbers()
 nnoremap <silent> <F8> :call <SID>ManualNumbers()<CR>
+command! Nums call <SID>ManualNumbers()
 
 function! GetRange()
 	let [line_start, column_start] = getpos("'<")[1:2]
@@ -239,11 +240,22 @@ endfunction
 
 command! Folds setlocal foldmethod=syntax
 
-command! -nargs=1 E execute 'e %:p:h/' . '<args>'
+if !s:iswin
+	command! Swrite execute 'silent w !sudo tee %' | :e! %
+endif
+
+function! <SID>RelPath(path)
+	if a:path[0] == '/' || a:path[0] == '~'
+		return resolve(a:path)
+	else
+		return resolve(expand('%:p:h') . '/' . a:path)
+	endif
+endfunction
+
+command! -nargs=1 E execute 'edit ' . <SID>RelPath('<args>')
 
 command! Evimrc execute 'e ' . g:vimrc
 command! Svimrc execute 'so ' . g:vimrc
-command! Eawesome :e ~/.config/awesome/rc.lua | :e ~/.config/awesome/theme.lua
 
 " Editing
 nn <CR> i
@@ -252,7 +264,7 @@ ino <CR> <ESC>
 vn <CR> <ESC>
 nm <BS> <NOP>
 map <S-CR> <NOP>
-nn i i <ESC>hr
+nn i <ESC>hr
 
 nn <silent> Z :silent w<CR>
 nn <silent> qq :Sayonara!<CR>
@@ -276,6 +288,7 @@ vn p "_dP
 nm <C-d> <Plug>(dirvish_up)
 augroup dirvish_config
 	autocmd!
+	autocmd FileType dirvish nmap <buffer> <Up> k
 	autocmd FileType dirvish nmap <buffer> <Left> <Plug>(dirvish_up)
 	autocmd FileType dirvish nmap <buffer> h <Plug>(dirvish_up)
 	autocmd FileType dirvish nmap <buffer> <Right> <CR>
@@ -289,6 +302,9 @@ augroup END
 
 nn <silent> <F11> :syntax sync fromstart<CR>
 
+nn <silent> \ :set list!<CR>
+nn <silent> <Leader>\ :StripWhitespace<CR>
+
 let g:wordmotion_nomap = 1
 map <silent> w <Plug>WordMotion_w
 map <silent> b <Plug>WordMotion_b
@@ -300,31 +316,36 @@ omap <silent> aw <Plug>WordMotion_aw
 xmap <silent> aw <Plug>WordMotion_aw
 
 " Letter Motions
+no j h
 no k gk
-no j gj
-no J 10gj
+no l gj
+no ; l
+no h ;
+
+no J <NOP>
 no K 10gk
-no H <Plug>WordMotion_b
-no L <Plug>WordMotion_w
-no <silent> <C-h> :bprevious<CR>
-no <C-j> zz<C-d>
+no L 10gj
+no <Space><Space> :
+no <Space><Return> @:
+
+no <silent> <C-j> :bprevious<CR>
 no <C-k> zz<C-u>
-no <silent> <C-l> :bnext<CR>
-nn <silent> <A-k> :m-2<CR>
-vn <silent> <A-k> :m '<-2<CR>gv
+no <C-l> zz<C-d>
+no <silent> <C-;> :bnext<CR>
+
 nn <silent> <A-j> :m+1<CR>
-vn <silent> <A-j> :m '>+1<CR>gv
+vn <silent> <A-j> :m '<+1<CR>gv
+nn <silent> <A-k> :m-2<CR>
+vn <silent> <A-k> :m '>-2<CR>gv
 
 " Arrow Motions
-function! s:ToggleArrowsFn()
+function! <SID>ToggleArrowsFn()
 	if g:arrowsenabled == 0
 		let g:arrowsenabled = 1
 		no <Up> gk
-		imap <Up> <NOP>
-		iunmap <Up>
+		ino <Up> <C-\><C-o>gk
 		no <Down> gj
-		imap <Down> <NOP>
-		iunmap <Down>
+		ino <Down> <C-\><C-o>gj
 		no <Left> <NOP>
 		unmap <Left>
 		imap <Left> <NOP>
@@ -367,7 +388,7 @@ function! s:ToggleArrowsFn()
 		map <A-Down> <NOP>
 	endif
 endfunction
-command! ToggleArrows call s:ToggleArrowsFn()
+command! ToggleArrows call <SID>ToggleArrowsFn()
 
 let g:arrowsenabled = get(g:, 'arrowsenabled', 1)
 " Flip the toggle so the function sets it to the default
@@ -376,7 +397,7 @@ if g:arrowsenabled == 0
 else
 	let g:arrowsenabled = 0
 endif
-call s:ToggleArrowsFn()
+call <SID>ToggleArrowsFn()
 
 " no <silent> <C-Left> :bprevious<CR>
 " no <silent> <C-Right> :bnext<CR>
@@ -398,10 +419,6 @@ no <silent> <kDivide> :bprevious<CR>
 no <silent> <kMultiply> :bnext<CR>
 no <silent> <Home> :bprevious<CR>
 no <silent> <End> :bnext<CR>
-
-nn <silent> \ :set list!<CR>
-nn <silent> <Leader>\ :StripWhitespace<CR>
-nnoremap <Space><Space> @:
 
 
 " vnoremap / y/<C-R>"<CR>
@@ -445,7 +462,7 @@ if s:iswin
 else
 	execute 'silent!cd ' . g:dotvim . 'coc/data/extensions; pnpm install'
 endif
-function! s:check_prev() abort
+function! <SID>check_prev() abort
 	let col = col('.') - 1
 	return !col || getline('.')[col - 1] =~# '\s'
 endfunction
@@ -458,7 +475,7 @@ inoremap <silent> <expr> <Tab>
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 nn <silent> <nowait> gd :call CocAction('jumpDefinition')<CR>
-nn <silent> <nowait> <C-f> :call CocAction("doHover")<CR>
+nn <silent> <nowait> <C-h> :call CocAction("doHover")<CR>
 ino <silent> <nowait> <C-c> <C-o>:call coc#float#close_all()<CR>
 ino <silent> <nowait> <C-s> <C-o>:call CocActionAsync("showSignatureHelp")<CR>
 nmap <silent> gh <Plug>(coc-diagnostic-prev)
