@@ -10,38 +10,77 @@
 <Multi_key> <minus> <m> : "—" # Em Dash
 <Multi_key> <slash> <0> : "∅" # Null Sign
 <Multi_key> <0> <slash> : "∅" # Null Sign
+<Multi_key> <period> <period> : "·" # Middle Dot
+<Multi_key> <braceleft> : "⟨" # Left Chevron
+<Multi_key> <braceright> : "⟩" # Right Chevron
 
+<Multi_key> <colon> <equal> : "≔"
+<Multi_key> <equal> <colon> : "≕"
+<Multi_key> <equal> <equal> : "≡"
+<Multi_key> <slash> <equal> : "≠"
+<Multi_key> <equal> <slash> <equal> : "≢"
+<Multi_key> <tilde> <tilde> : "≈"
+# "∴"
+# "∵"
+<Multi_key> <at> <8> : "∞"
 
+<Multi_key> <less> <equal> <greater> : "⇔"
+<Multi_key> <comma> <equal> <period> : "⇔"
+<Multi_key> <less> <minus> <greater> : "↔"
+<Multi_key> <comma> <minus> <period> : "↔"
+<Multi_key> <equal> <less> : "≤"
+<Multi_key> <equal> <comma> : "≤"
+<Multi_key> <greater> <equal> : "≥"
+<Multi_key> <period> <equal> : "≥"
+<Multi_key> <equal> <greater> : "⇒"
+<Multi_key> <equal> <period> : "⇒"
+<Multi_key> <minus> <greater> : "→"
+<Multi_key> <minus> <period> : "→"
+<Multi_key> <less> <equals> : "⇐"
+<Multi_key> <comma> <equals> : "⇐"
+<Multi_key> <less> <minus> : "←"
+<Multi_key> <comma> <minus> : "←"
+
+<Multi_key> <x> <o> : "⊕"
+<Multi_key> <bar> <minus> : "⊢"
+<Multi_key> <bar> <equal> : "⊨"
+<Multi_key> <plus> <minus> : "±"
+<Multi_key> <asterisk> <asterisk> : "•"
+<Multi_key> <o> <asterisk> : "∘"
+
+# <Multi_key> <exclam> <plus> : "⊽"
+# <Multi_key> <exclam> <ampersand> : "⊼"
+# "⁙"
+
+<Multi_key> <3> <3> : "ꜣ" # Small Egyptological Aleph
+<Multi_key> <numbersign> <numbersign> : "Ꜣ" # Capital Egyptological Aleph
+<Multi_key> <9> <9> : "ꜥ" # Small Egyptological Ayin
+<Multi_key> <parenleft> <parenleft> : "Ꜥ" # Capital Egyptological Ayin
 
 
 
 # ===== CONSONANTS =====
 
-<Multi_key> <T> <h> : "Þ" # Latin Capital Letter Thorn
-<Multi_key> <T> <H> : "Þ" # Latin Capital Letter Thorn
-<Multi_key> <t> <h> : "þ" # Latin Small Letter Thorn
-<Multi_key> <t> <H> : "þ" # Latin Small Letter Thorn
-<Multi_key> <D> <h> : "Ð" # Latin Capital Letter Eth
-<Multi_key> <D> <H> : "Ð" # Latin Capital Letter Eth
-<Multi_key> <d> <h> : "ð" # Latin Small Letter Eth
-<Multi_key> <d> <H> : "ð" # Latin Small Letter Eth
-<Multi_key> <W> <y> : "Ƿ" # Latin Capital Letter Wynn
-<Multi_key> <W> <Y> : "Ƿ" # Latin Capital Letter Wynn
-<Multi_key> <w> <y> : "ƿ" # Latin Small Letter Wynn
-<Multi_key> <w> <Y> : "ƿ" # Latin Small Letter Wynn
-<Multi_key> <Y> <o> : "Ȝ" # Latin Capital Letter Yogh
-<Multi_key> <Y> <O> : "Ȝ" # Latin Capital Letter Yogh
-<Multi_key> <y> <o> : "ȝ" # Latin Small Letter Yogh
-<Multi_key> <y> <O> : "ȝ" # Latin Small Letter Yogh
-
+<Multi_key> <B> <h> : "Ꞵ" # Latin Capital Letter Beta
+<Multi_key> <B> <H> : "Ꞵ" # Latin Capital Letter Beta
+<Multi_key> <b> <h> : "ꞵ" # Latin Small Letter Beta
+<Multi_key> <b> <H> : "ꞵ" # Latin Small Letter Beta
+<Multi_key> <c> <h> : "ɕ" # Latin Small Letter C With Curl
 <Multi_key> <C> <c> : "Ç" # Latin Capital Letter C With Cedilla
 <Multi_key> <C> <C> : "Ç" # Latin Capital Letter C With Cedilla
 <Multi_key> <c> <c> : "ç" # Latin Small Letter C With Cedilla
 <Multi_key> <c> <C> : "ç" # Latin Small Letter C With Cedilla
-<Multi_key> <S> <s> : "ẞ" # Latin Capital Letter Sharp S
-<Multi_key> <S> <S> : "ẞ" # Latin Capital Letter Sharp S
-<Multi_key> <s> <s> : "ß" # Latin Small Letter Sharp S
-<Multi_key> <s> <S> : "ß" # Latin Small Letter Sharp S
+<Multi_key> <l> <l> : "ɬ" # Latin Small Letter L With Belt
+<Multi_key> <l> <L> : "ɬ" # Latin Small Letter L With Belt
+<Multi_key> <H> <l> : "Ɬ" # Latin Capital Letter L With Belt
+<Multi_key> <H> <L> : "Ɬ" # Latin Capital Letter L With Belt
+<Multi_key> <h> <l> : "ɬ" # Latin Small Letter L With Belt
+<Multi_key> <h> <L> : "ɬ" # Latin Small Letter L With Belt
+<Multi_key> <l> <z> : "ɮ" # Latin Small Letter Lezh
+<Multi_key> <l> <Z> : "ɮ" # Latin Small Letter Lezh
+<Multi_key> <g> <h> : "ɣ" # Latin Small Letter Gamma
+<Multi_key> <G> <h> : "Ɣ" # Latin Capital Letter Gamma
+<Multi_key> <G> <H> : "Ɣ" # Latin Capital Letter Gamma
 <Multi_key> <N> <g> : "Ŋ" # Latin Capital Letter Eng
 <Multi_key> <N> <G> : "Ŋ" # Latin Capital Letter Eng
 <Multi_key> <n> <g> : "ŋ" # Latin Small Letter Eng
@@ -50,26 +89,53 @@
 <Multi_key> <G> <N> : "Ɲ" # Latin Capital Letter N With Left Hook
 <Multi_key> <g> <n> : "ɲ" # Latin Small Letter N With Left Hook
 <Multi_key> <g> <N> : "ɲ" # Latin Small Letter N With Left Hook
-<Multi_key> <T> <c> : "Ţ" # Latin Capital Letter T With Cedilla
-<Multi_key> <T> <C> : "Ţ" # Latin Capital Letter T With Cedilla
-<Multi_key> <t> <c> : "ţ" # Latin Small Letter T With Cedilla
-<Multi_key> <t> <C> : "ţ" # Latin Small Letter T With Cedilla
+<Multi_key> <j> <j> : "ȷ" # Latin Small Letter Dotless J
+<Multi_key> <K> <h> : "Ꭓ" # Latin Capital Letter Chi
+<Multi_key> <K> <H> : "Ꭓ" # Latin Capital Letter Chi
+<Multi_key> <k> <h> : "ꭓ" # Latin Small Letter Chi
+<Multi_key> <k> <H> : "ꭓ" # Latin Small Letter Chi
+<Multi_key> <p> <h> : "ɸ" # Latin Small Letter Phi
+<Multi_key> <p> <H> : "ɸ" # Latin Small Letter Phi
+<Multi_key> <u> <r> : "ʁ" # Latin Letter Small Capital Inverted R
+<Multi_key> <S> <s> : "ẞ" # Latin Capital Letter Sharp S
+<Multi_key> <S> <S> : "ẞ" # Latin Capital Letter Sharp S
+<Multi_key> <s> <s> : "ß" # Latin Small Letter Sharp S
+<Multi_key> <s> <S> : "ß" # Latin Small Letter Sharp S
+<Multi_key> <s> <h> : "ʃ" # Latin Small Letter Esh
+<Multi_key> <S> <h> : "Ʃ" # Latin Capital Letter Esh
+<Multi_key> <S> <H> : "Ʃ" # Latin Captial Letter Esh
 <Multi_key> <S> <c> : "Ş" # Latin Capital Letter S With Cedilla
 <Multi_key> <S> <C> : "Ş" # Latin Capital Letter S With Cedilla
 <Multi_key> <s> <c> : "ş" # Latin Small Letter S With Cedilla
 <Multi_key> <s> <C> : "ş" # Latin Small Letter S With Cedilla
-<Multi_key> <l> <l> : "ɬ" # Latin Small Letter L With Belt
-<Multi_key> <l> <L> : "ɬ" # Latin Small Letter L With Belt
+<Multi_key> <T> <h> : "Þ" # Latin Capital Letter Thorn
+<Multi_key> <T> <H> : "Þ" # Latin Capital Letter Thorn
+<Multi_key> <t> <h> : "þ" # Latin Small Letter Thorn
+<Multi_key> <t> <H> : "þ" # Latin Small Letter Thorn
+<Multi_key> <D> <h> : "Ð" # Latin Capital Letter Eth
+<Multi_key> <D> <H> : "Ð" # Latin Capital Letter Eth
+<Multi_key> <d> <h> : "ð" # Latin Small Letter Eth
+<Multi_key> <d> <H> : "ð" # Latin Small Letter Eth
+<Multi_key> <T> <c> : "Ţ" # Latin Capital Letter T With Cedilla
+<Multi_key> <T> <C> : "Ţ" # Latin Capital Letter T With Cedilla
+<Multi_key> <t> <c> : "ţ" # Latin Small Letter T With Cedilla
+<Multi_key> <t> <C> : "ţ" # Latin Small Letter T With Cedilla
+<Multi_key> <T> <e> : "ϴ" # Latin Capital Letter Theta
+<Multi_key> <T> <E> : "ϴ" # Latin Capital Letter Theta
+<Multi_key> <t> <e> : "θ" # Latin Small Letter Theta
+<Multi_key> <t> <E> : "θ" # Latin Small Letter Theta
 <Multi_key> <Z> <h> : "Ʒ" # Latin Capital Letter Ezh
 <Multi_key> <Z> <H> : "Ʒ" # Latin Capital Letter Ezh
 <Multi_key> <z> <h> : "ʒ" # Latin Small Letter Ezh
 <Multi_key> <z> <H> : "ʒ" # Latin Small Letter Ezh
-<Multi_key> <l> <z> : "ɮ" # Latin Small Letter Lezh
-<Multi_key> <l> <Z> : "ɮ" # Latin Small Letter Lezh
-<Multi_key> <H> <l> : "Ɬ" # Latin Capital Letter L With Belt
-<Multi_key> <H> <L> : "Ɬ" # Latin Capital Letter L With Belt
-<Multi_key> <h> <l> : "ɬ" # Latin Small Letter L With Belt
-<Multi_key> <h> <L> : "ɬ" # Latin Small Letter L With Belt
+<Multi_key> <W> <y> : "Ƿ" # Latin Capital Letter Wynn
+<Multi_key> <W> <Y> : "Ƿ" # Latin Capital Letter Wynn
+<Multi_key> <w> <y> : "ƿ" # Latin Small Letter Wynn
+<Multi_key> <w> <Y> : "ƿ" # Latin Small Letter Wynn
+<Multi_key> <Y> <o> : "Ȝ" # Latin Capital Letter Yogh
+<Multi_key> <Y> <O> : "Ȝ" # Latin Capital Letter Yogh
+<Multi_key> <y> <o> : "ȝ" # Latin Small Letter Yogh
+<Multi_key> <y> <O> : "ȝ" # Latin Small Letter Yogh
 
 
 
@@ -82,9 +148,9 @@
 <Multi_key> <a> <o> : "å" # Latin Small Letter A With Ring Above
 <Multi_key> <a> <O> : "å" # Latin Small Letter A With Ring Above
 <Multi_key> <O> <slash> : "Ø" # Latin Capital Letter O With Stroke
-<Multi_key> <O> <?> : "Ø" # Latin Capital Letter O With Stroke
+<Multi_key> <O> <question> : "Ø" # Latin Capital Letter O With Stroke
 <Multi_key> <o> <slash> : "ø" # Latin Small Letter O With Stroke
-<Multi_key> <o> <?> : "ø" # Latin Small Letter O With Stroke
+<Multi_key> <o> <question> : "ø" # Latin Small Letter O With Stroke
 <Multi_key> <I> <I> : "İ" # Latin Capital Letter I With Dot Above
 <Multi_key> <i> <i> : "ı" # Latin Small Letter Dotless I
 <Multi_key> <A> <e> : "Æ" # Latin Capital Letter AE
@@ -96,10 +162,14 @@
 <Multi_key> <o> <e> : "œ" # Latin Small Letter OE
 <Multi_key> <o> <E> : "œ" # Latin Small Letter OE
 
-<Multi_ket> <A> <a> : "Ɑ" # Latin Capital Letter Alpha
-<Multi_ket> <A> <A> : "Ɑ" # Latin Capital Letter Alpha
-<Multi_ket> <a> <a> : "ɑ" # Latin Small Letter Alpha
-<Multi_ket> <a> <A> : "ɑ" # Latin Small Letter Alpha
+<Multi_key> <A> <a> : "Ɑ" # Latin Capital Letter Alpha
+<Multi_key> <A> <A> : "Ɑ" # Latin Capital Letter Alpha
+<Multi_key> <a> <a> : "ɑ" # Latin Small Letter Alpha
+<Multi_key> <a> <A> : "ɑ" # Latin Small Letter Alpha
+<Multi_key> <O> <a> : "Ɒ" # Latin Capital Letter Turned Alpha
+<Multi_key> <O> <A> : "Ɒ" # Latin Capital Letter Turned Alpha
+<Multi_key> <o> <a> : "ɒ" # Latin Small Letter Turned Alpha
+<Multi_key> <o> <A> : "ɒ" # Latin Small Letter Turned Alpha
 <Multi_key> <E> <3> : "Ɛ" # Latin Capital Letter Open E
 <Multi_key> <E> <numbersign> : "Ɛ" # Latin Capital Letter Open E
 <Multi_key> <e> <3> : "ɛ" # Latin Small Letter Open E
@@ -122,8 +192,22 @@
 <Multi_key> <U> <H> : "Ə" # Latin Capital Letter Schwa
 <Multi_key> <u> <h> : "ə" # Latin Small Letter Schwa
 <Multi_key> <u> <H> : "ə" # Latin Small Letter Schwa
+<Multi_key> <I> <underscore> : "Ɨ" # Latin Capital Letter I With Stroke
+<Multi_key> <I> <minus> : "Ɨ" # Latin Capital Letter I With Stroke
+<Multi_key> <i> <minus> : "ɨ" # Latin Small Letter I With Stroke
+<Multi_key> <i> <underscore> : "ɨ" # Latin Small Letter I With Stroke
 
 
+<Multi_key> <asterisk> <i> : "ɪ" # Short I
+<Multi_key> <asterisk> <y> : "ʏ" # Short Y
+<Multi_key> <asterisk> <u> : "ʊ" # Short U
+<Multi_key> <asterisk> <e> : "ɛ" # Short E
+<Multi_key> <asterisk> <o> : "ɔ" # Short O
+<Multi_key> <asterisk> <a> : "a" # Short A
+<Multi_key> <asterisk> <minus> <i> : "ᵻ" # Unstressed I
+<Multi_key> <asterisk> <minus> <u> : "ᵿ" # Unstressed U
+<Multi_key> <asterisk> <minus> <e> : "ə" # Unstressed E
+<Multi_key> <asterisk> <minus> <a> : "ɐ" # Unstressed A
 
 
 # ===== TONE LETTERS =====
@@ -147,19 +231,32 @@
 
 
 
-# ===== SUPERSCRIPTS =====
+# ===== SUPERSCRIPTS & SUBSCRIPTS =====
 
 <Multi_key> <equal> <0> : "⁰" # Superscript Zero
 <Multi_key> <equal> <1> : "¹" # Superscript One
-<Multi_key> <equal> <2> : "²" # Superscript One
-<Multi_key> <equal> <3> : "³" # Superscript One
-<Multi_key> <equal> <4> : "⁴" # Superscript One
-<Multi_key> <equal> <5> : "⁵" # Superscript One
-<Multi_key> <equal> <6> : "⁶" # Superscript One
-<Multi_key> <equal> <7> : "⁷" # Superscript One
-<Multi_key> <equal> <8> : "⁸" # Superscript One
-<Multi_key> <equal> <9> : "⁹" # Superscript One
+<Multi_key> <equal> <2> : "²" # Superscript Two
+<Multi_key> <equal> <3> : "³" # Superscript Three
+<Multi_key> <equal> <4> : "⁴" # Superscript Four
+<Multi_key> <equal> <5> : "⁵" # Superscript Five
+<Multi_key> <equal> <6> : "⁶" # Superscript Six
+<Multi_key> <equal> <7> : "⁷" # Superscript Seven
+<Multi_key> <equal> <8> : "⁸" # Superscript Eight
+<Multi_key> <equal> <9> : "⁹" # Superscript Nine
 
+<Multi_key> <minus> <0> : "₀" # Subscript Zero
+<Multi_key> <minus> <1> : "₁" # Subscript One
+<Multi_key> <minus> <2> : "₂" # Subscript Two
+<Multi_key> <minus> <3> : "₃" # Subscript Three
+<Multi_key> <minus> <4> : "₄" # Subscript Four
+<Multi_key> <minus> <5> : "₅" # Subscript Five
+<Multi_key> <minus> <6> : "₆" # Subscript Six
+<Multi_key> <minus> <7> : "₇" # Subscript Seven
+<Multi_key> <minus> <8> : "₈" # Subscript Eight
+<Multi_key> <minus> <9> : "₉" # Subscript Nine
+
+<Multi_key> <equal> <g> : "ˠ" # Modifier Letter Small Gamma (Superscript)
+<Multi_key> <equal> <ɣ> : "ˠ" # Modifier Letter Small Gamma (Superscript)
 <Multi_key> <equal> <h> : "ʰ" # Modifier Letter Small H (Superscript)
 <Multi_key> <equal> <j> : "ʲ" # Modifier Letter Small J (Superscript)
 <Multi_key> <equal> <l> : "ˡ" # Modifier Letter Small L (Superscript)
@@ -169,18 +266,19 @@
 <Multi_key> <equal> <ŋ> : "ᶮ" # Modifier Letter Small N With Left Hook (Superscript)
 <Multi_key> <equal> <r> : "ʳ" # Modifier Letter Small R (Superscript)
 <Multi_key> <equal> <s> : "ˢ" # Modifier Letter Small S (Superscript)
-<Multi_key> <equal> <?> : "ˀ" # Modifier Letter Glottal Stop (Superscript)
 <Multi_key> <equal> <t> : "ᶿ" # Modifier Letter Small Theta (Superscript)
-<Multi_key> <equal> <g> : "ˠ" # Modifier Letter Small Gamma (Superscript)
-<Multi_key> <equal> <ɣ> : "ˠ" # Modifier Letter Small Gamma (Superscript)
+<Multi_key> <equal> <v> : "ᵛ" # Modifier Letter Small V (Superscript)
 <Multi_key> <equal> <w> : "ʷ" # Modifier Letter Small W (Superscript)
+<Multi_key> <equal> <y> : "ʸ" # Modifier Letter Small Y (Superscript)
 <Multi_key> <equal> <ɥ> : "ᶣ" # Modifier Letter Small Turned H (Superscript)
+<Multi_key> <equal> <question> : "ˀ" # Modifier Letter Glottal Stop (Superscript)
 
 
 
 
 
 # ===== INVERTED LETTERS =====
+
 <Multi_key> <at> <2> : "↊" # Turned Digit 2 (Inverted)
 <Multi_key> <at> <3> : "↋" # Turned Digit 3 (Inverted)
 <Multi_key> <at> <A> : "Ɐ" # Latin Capital Letter Turned A (Inverted)
@@ -203,39 +301,46 @@
 
 # ===== DIACRITICS =====
 
-<Multi_key> <'> <A> : "Á" # Latin Capital Letter A With Acute
-<Multi_key> <'> <E> : "É" # Latin Capital Letter E With Acute
-<Multi_key> <'> <I> : "Í" # Latin Capital Letter I With Acute
-<Multi_key> <'> <O> : "Ó" # Latin Capital Letter O With Acute
-<Multi_key> <'> <U> : "Ú" # Latin Capital Letter U With Acute
-<Multi_key> <'> <Y> : "Ý" # Latin Capital Letter Y With Acute
-<Multi_key> <'> <a> : "á" # Latin Small Letter A With Acute
-<Multi_key> <'> <e> : "é" # Latin Small Letter E With Acute
-<Multi_key> <'> <i> : "í" # Latin Small Letter I With Acute
-<Multi_key> <'> <o> : "ó" # Latin Small Letter O With Acute
-<Multi_key> <'> <u> : "ú" # Latin Small Letter U With Acute
-<Multi_key> <'> <y> : "ý" # Latin Small Letter Y With Acute
+<Multi_key> <apostrophe> <A> : "Á" # Latin Capital Letter A With Acute
+<Multi_key> <apostrophe> <E> : "É" # Latin Capital Letter E With Acute
+<Multi_key> <apostrophe> <I> : "Í" # Latin Capital Letter I With Acute
+<Multi_key> <apostrophe> <O> : "Ó" # Latin Capital Letter O With Acute
+<Multi_key> <apostrophe> <U> : "Ú" # Latin Capital Letter U With Acute
+<Multi_key> <apostrophe> <Y> : "Ý" # Latin Capital Letter Y With Acute
+<Multi_key> <apostrophe> <a> : "á" # Latin Small Letter A With Acute
+<Multi_key> <apostrophe> <e> : "é" # Latin Small Letter E With Acute
+<Multi_key> <apostrophe> <i> : "í" # Latin Small Letter I With Acute
+<Multi_key> <apostrophe> <o> : "ó" # Latin Small Letter O With Acute
+<Multi_key> <apostrophe> <u> : "ú" # Latin Small Letter U With Acute
+<Multi_key> <apostrophe> <y> : "ý" # Latin Small Letter Y With Acute
 
-<Multi_key> <'> <W> : "Ẃ" # Latin Capital Letter W With Acute
-<Multi_key> <'> <w> : "ẃ" # Latin Small Letter W With Acute
-<Multi_key> <'> <Å> : "Ǻ" # Latin Capital Letter A With Ring Above And Acute
-<Multi_key> <'> <å> : "ǻ" # Latin Small Letter A With Ring Above And Acute
-<Multi_key> <A> <'> <o> : "Ǻ" # Latin Capital Letter A With Ring Above And Acute
-<Multi_key> <A> <'> <O> : "Ǻ" # Latin Capital Letter A With Ring Above And Acute
-<Multi_key> <a> <'> <o> : "ǻ" # Latin Small Letter A With Ring Above And Acute
-<Multi_key> <a> <'> <O> : "ǻ" # Latin Small Letter A With Ring Above And Acute
-<Multi_key> <'> <Ø> : "Ǿ" # Latin Capital Letter O With Stroke And Acute
-<Multi_key> <'> <ø> : "ǿ" # Latin Small Letter O With Stroke And Acute
-<Multi_key> <O> <'> <slash> : "Ǿ" # Latin Capital Letter O With Stroke And Acute
-<Multi_key> <O> <'> <?> : "Ǿ" # Latin Capital Letter O With Stroke And Acute
-<Multi_key> <o> <'> <slash> : "ǿ" # Latin Small Letter O With Stroke And Acute
-<Multi_key> <o> <'> <?> : "ǿ" # Latin Small Letter O With Stroke And Acute
-<Multi_key> <'> <Æ> : "Ǽ" # Latin Capital Letter AE With Acute
-<Multi_key> <'> <æ> : "ǽ" # Latin Small Letter AE With Acute
-<Multi_key> <A> <'> <e> : "Ǽ" # Latin Capital Letter AE With Acute
-<Multi_key> <A> <'> <E> : "Ǽ" # Latin Capital Letter AE With Acute
-<Multi_key> <a> <'> <e> : "ǽ" # Latin Small Letter AE With Acute
-<Multi_key> <a> <'> <E> : "ǽ" # Latin Small Letter AE With Acute
+<Multi_key> <apostrophe> <V> : "V́" # Latin Capital Letter V With Acute
+<Multi_key> <apostrophe> <v> : "v́" # Latin Small Letter V With Acute
+<Multi_key> <apostrophe> <W> : "Ẃ" # Latin Capital Letter W With Acute
+<Multi_key> <apostrophe> <w> : "ẃ" # Latin Small Letter W With Acute
+<Multi_key> <apostrophe> <Å> : "Ǻ" # Latin Capital Letter A With Ring Above And Acute
+<Multi_key> <apostrophe> <å> : "ǻ" # Latin Small Letter A With Ring Above And Acute
+<Multi_key> <A> <apostrophe> <o> : "Ǻ" # Latin Capital Letter A With Ring Above And Acute
+<Multi_key> <A> <apostrophe> <O> : "Ǻ" # Latin Capital Letter A With Ring Above And Acute
+<Multi_key> <a> <apostrophe> <o> : "ǻ" # Latin Small Letter A With Ring Above And Acute
+<Multi_key> <a> <apostrophe> <O> : "ǻ" # Latin Small Letter A With Ring Above And Acute
+<Multi_key> <apostrophe> <Ø> : "Ǿ" # Latin Capital Letter O With Stroke And Acute
+<Multi_key> <apostrophe> <ø> : "ǿ" # Latin Small Letter O With Stroke And Acute
+<Multi_key> <O> <apostrophe> <slash> : "Ǿ" # Latin Capital Letter O With Stroke And Acute
+<Multi_key> <O> <apostrophe> <question> : "Ǿ" # Latin Capital Letter O With Stroke And Acute
+<Multi_key> <o> <apostrophe> <slash> : "ǿ" # Latin Small Letter O With Stroke And Acute
+<Multi_key> <o> <apostrophe> <question> : "ǿ" # Latin Small Letter O With Stroke And Acute
+<Multi_key> <apostrophe> <Æ> : "Ǽ" # Latin Capital Letter AE With Acute
+<Multi_key> <apostrophe> <æ> : "ǽ" # Latin Small Letter AE With Acute
+<Multi_key> <A> <apostrophe> <e> : "Ǽ" # Latin Capital Letter AE With Acute
+<Multi_key> <A> <apostrophe> <E> : "Ǽ" # Latin Capital Letter AE With Acute
+<Multi_key> <a> <apostrophe> <e> : "ǽ" # Latin Small Letter AE With Acute
+<Multi_key> <a> <apostrophe> <E> : "ǽ" # Latin Small Letter AE With Acute
+
+<Multi_key> <quotedbl> <O> : "Ő" # Latin Capital Letter O With Double Acute
+<Multi_key> <quotedbl> <U> : "Ű" # Latin Capital Letter U With Double Acute
+<Multi_key> <quotedbl> <o> : "ő" # Latin Small Letter O With Double Acute
+<Multi_key> <quotedbl> <u> : "ű" # Latin Small Letter U With Double Acute
 
 <Multi_key> <grave> <A> : "À" # Latin Capital Letter A With Grave
 <Multi_key> <grave> <E> : "È" # Latin Capital Letter E With Grave
@@ -261,9 +366,9 @@
 <Multi_key> <grave> <Ø> : "Ø̀" # Latin Capital Letter O With Stroke And Grave
 <Multi_key> <grave> <ø> : "ø̀" # Latin Small Letter O With Stroke And Grave
 <Multi_key> <O> <grave> <slash> : "Ø̀" # Latin Capital Letter O With Stroke And Grave
-<Multi_key> <O> <grave> <?> : "Ø̀" # Latin Capital Letter O With Stroke And Grave
+<Multi_key> <O> <grave> <question> : "Ø̀" # Latin Capital Letter O With Stroke And Grave
 <Multi_key> <o> <grave> <slash> : "ø̀" # Latin Small Letter O With Stroke And Grave
-<Multi_key> <o> <grave> <?> : "ø̀" # Latin Small Letter O With Stroke And Grave
+<Multi_key> <o> <grave> <question> : "ø̀" # Latin Small Letter O With Stroke And Grave
 <Multi_key> <grave> <Æ> : "Æ̀" # Latin Capital Letter AE With Grave
 <Multi_key> <grave> <æ> : "æ̀" # Latin Small Letter AE With Grave
 <Multi_key> <A> <grave> <e> : "Æ̀" # Latin Capital Letter AE With Grave
@@ -406,6 +511,8 @@
 <Multi_key> <asciitilde> <o> : "õ" # Latin Small Letter O With Tilde
 <Multi_key> <asciitilde> <u> : "ũ" # Latin Small Letter U With Tilde
 <Multi_key> <asciitilde> <y> : "ỹ" # Latin Small Letter Y With Tilde
+
+<Multi_key> <bar> <i> : "ɨ" # Latin Small Letter I With Stroke
 
 <Multi_key> <bar> <D> : "Đ" # Latin Capital Letter H With Stroke
 <Multi_key> <bar> <d> : "đ" # Latin Small Letter H With Stroke
