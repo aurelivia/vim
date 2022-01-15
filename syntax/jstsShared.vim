@@ -72,6 +72,8 @@ hi def link jstsArrowFunction jstsOperator
 syntax match jstsApply /\<\%(async\|await\)\@![a-z_\$]\k*\ze\s*(/ skipwhite nextgroup=jstsAppliedContents
 syntax region jstsAppliedContents contained matchgroup=jstsParens start=/(/ end=/)/ contains=@jstsExpression extend
 syntax match jstsArgumentComma contained /,/
+syntax match jstsArgumentDefault contained /=/ skipwhite skipempty nextgroup=@jstsExpression
+hi def link jsArgumentDefault jstsOperator
 
 " Objects
 syntax region jstsObject contained matchgroup=jstsBraces start=/{/ end=/}/ contains=jstsObjectVariable,jstsObjectKey,jstsObjectKeyString,jstsObjectExpression,jstsMethodKeyword,jstsMethod,jstsSpread,jstsComment

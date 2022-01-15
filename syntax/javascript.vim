@@ -37,9 +37,7 @@ syntax keyword jstsFunction function skipwhite skipempty nextgroup=jstsFunctionG
 syntax match jstsFunctionGenerator contained /\*/ skipwhite skipempty nextgroup=jstsFunctionIdentifier,jstsArguments
 syntax match jstsFunctionIdentifier contained /\<\K\k*/ skipwhite skipempty nextgroup=jstsArguments
 syntax region jstsArguments contained matchgroup=jstsArgumentParens start=/(/ end=/)/ extend contains=@jstsArgumentContains skipwhite skipempty nextgroup=jstsBlock
-syntax match jsArgument contained /\<\K\k*/ skipwhite skipempty nextgroup=jsArgumentDefault
-syntax match jsArgumentDefault contained /=/ skipwhite skipempty nextgroup=@jstsExpression
-hi def link jsArgumentDefault jstsOperator
+syntax match jsArgument contained /\<\K\k*/ skipwhite skipempty nextgroup=jstsArgumentDefault
 
 " Modules
 syntax keyword jstsModule import skipwhite skipempty nextgroup=jstsModuleAny,jstsModuleIdentifier,jstsModuleObject
