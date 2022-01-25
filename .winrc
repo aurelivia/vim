@@ -14,13 +14,9 @@ exec 'set runtimepath+=' . trim(g:dotvim, '\', 2) . ',' . g:dotvim . 'after'
 exec 'source ' . g:dotvim . '.vimrc'
 
 set nofixeol noeol
-set guioptions=
 set scrollfocus
 set clipboard=unnamed
 set gfn=DejaVu_Sans_Mono:h10
-set dy=uhex,lastline
-set gcr+=n-v-c:blinkon0
-set belloff=all
 exec 'set directory=' . $TEMP . ' backupdir=' . $TEMP . ' undodir=' . $TEMP
 let g:session_directory = $VIM . '\sessions\'
 let g:session_persist_globals = ['&tabstop', '&softtabstop', '&shiftwidth', '&expandtab']

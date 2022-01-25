@@ -16,8 +16,8 @@ let g:vimrc = g:dotvim . '.vimrc'
 call plug#begin(g:dotvim . 'packages')
 
 " Visuals
-Plug 'git@github.com:vim-airline/vim-airline'
 Plug 'git@github.com:joshdick/onedark.vim'
+Plug 'git@github.com:vim-airline/vim-airline'
 
 " Presumably something is depending on this
 Plug 'git@github.com:xolox/vim-misc'
@@ -56,10 +56,24 @@ filetype indent on
 syntax enable
 set laststatus=2
 set enc=utf-8 fileencodings=utf-8
-colorscheme onedark
-let g:onedark_hide_endofbuffer = 1
+" let g:onedark_hide_endofbuffer = 1
 let g:onedark_termcolors = 256
 let g:onedark_terminal_italics = 1
+set tgc
+let g:onedark_color_overrides = {
+	\'background': { 'gui': '#2C2C2A', 'cterm': 'NONE', 'cterm16': 'NONE' },
+	\'black': { 'gui': '#2C2C2A', 'cterm': 'NONE', 'cterm16': 'NONE' },
+	\'foreground': { 'gui': '#AFAFAF', 'cterm': 'NONE', 'cterm16': 'NONE' },
+	\'white': { 'gui': '#AFAFAF', 'cterm': 'NONE', 'cterm16': 'NONE' },
+	\'comment_grey': { 'gui': '#5F5F5F', 'cterm': '59', 'cterm16': '7' },
+	\'gutter_fg_grey': { 'gui': '#444444', 'cterm': '238', 'cterm16': '8' },
+	\'cursor_grey': { 'gui': '#303030', 'cterm': '236', 'cterm16': '0' },
+	\'visual_grey': { 'gui': '#3A3A3A', 'cterm': '237', 'cterm16': '8' },
+	\'yellow': { 'gui': '#D7AF87', 'cterm': '180', 'cterm16': '3' }
+\}
+
+colorscheme onedark
+let g:airline_theme = 'onedark'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#whitespace#mixed_indent_algo = 2
@@ -83,6 +97,11 @@ set listchars=eol:¬,trail:~,extends:>,precedes:<,space:·,tab:->
 set mouse=
 let mapleader = ' '
 set nolist
+
+set guioptions=
+set dy=uhex,lastline
+set gcr+=n-v-c:blinkon0
+set belloff=all
 
 au InsertLeave * :normal `^
 set virtualedit=onemore
