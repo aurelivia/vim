@@ -307,16 +307,16 @@ vn p "_dP
 nm <C-d> <Plug>(dirvish_up)
 augroup dirvish_config
 	autocmd!
-	autocmd FileType dirvish nmap <buffer> <Up> k
-	autocmd FileType dirvish nmap <buffer> <Left> <Plug>(dirvish_up)
-	autocmd FileType dirvish nmap <buffer> h <Plug>(dirvish_up)
-	autocmd FileType dirvish nmap <buffer> <Right> <CR>
-	autocmd FileType dirvish nmap <buffer> l <CR>
-	autocmd FileType dirvish nmap <buffer> <C-d> <Plug>(dirvish_quit)
-	autocmd FileType dirvish nmap <buffer> <ESC> <Plug>(dirvish_quit)
+	autocmd FileType dirvish nmap <nowait><buffer> j <Plug>(dirvish_up)
+	autocmd FileType dirvish nmap <nowait><buffer> <Left> <Plug>(dirvish_up)
+	autocmd FileType dirvish nmap <nowait><buffer> k gj
+	autocmd FileType dirvish nmap <nowait><buffer> l gk
+	autocmd FileType dirvish nmap <nowait><buffer> ; <CR>
+	autocmd FileType dirvish nmap <nowait><buffer> <Right> <CR>
+	autocmd FileType dirvish nmap <nowait><buffer> <C-d> <Plug>(dirvish_quit)
 
-	autocmd FileType dirvish nmap <buffer> <kDivide> <Plug>(dirvish_up)
-	autocmd FileType dirvish nmap <buffer> <kMultiply> <CR>
+	autocmd FileType dirvish nmap <nowait><buffer> <kDivide> <Plug>(dirvish_up)
+	autocmd FileType dirvish nmap <nowait><buffer> <kMultiply> <CR>
 augroup END
 
 nn <silent> <F11> :syntax sync fromstart<CR>
@@ -336,26 +336,26 @@ xmap <silent> aw <Plug>WordMotion_aw
 
 " Letter Motions
 no j h
-no k gk
-no l gj
+no k gj
+no l gk
 no ; l
 no h ;
 
 no J <NOP>
-no K 10gk
-no L 10gj
+no K 10gj
+no L 10gk
 no <Space><Space> :
 no <Space><Return> @:
 
 no <silent> <C-j> :bprevious<CR>
-no <C-k> zz<C-u>
-no <C-l> zz<C-d>
+no <C-k> zz<C-d>
+no <C-l> zz<C-u>
 no <silent> <C-;> :bnext<CR>
 
-nn <silent> <A-j> :m+1<CR>
-vn <silent> <A-j> :m '<+1<CR>gv
-nn <silent> <A-k> :m-2<CR>
-vn <silent> <A-k> :m '>-2<CR>gv
+nn <silent> <A-k> :m+1<CR>
+vn <silent> <A-k> :m '<+1<CR>gv
+nn <silent> <A-l> :m-2<CR>
+vn <silent> <A-l> :m '>-2<CR>gv
 
 " Arrow Motions
 function! <SID>ToggleArrowsFn()
@@ -439,30 +439,6 @@ no <silent> <kMultiply> :bnext<CR>
 no <silent> <Home> :bprevious<CR>
 no <silent> <End> :bnext<CR>
 
-
-" vnoremap / y/<C-R>"<CR>
-" nnoremap <silent> <Leader><CR> :let @/=''<CR>
-" nnoremap <silent> <Leader>\ :StripWhitespace<CR>
-" nnoremap <silent> \ :set list!<CR>
-" nnoremap <Leader>s :SaveSession<CR>
-" nnoremap <Leader>o :OpenSession<CR>
-" " nnoremap <Leader>s :ToggleWorkspace<CR>
-" " nnoremap <Leader>s :mksession!<CR>
-" " nnoremap <Leader>rs :!rm ~/Dropbox/.vim/sessions/*<CR>
-" " nnoremap <Leader>rs :silent !rm Session.vim | :redraw!<CR>
-"
-" autocmd FileType javascript inoremap <buffer> <C-f> <Space>=><Space>{<CR><CR>}<ESC>ki<Tab>
-"
-" " CamelCaseMotion Bindings
-" map <silent> w <Plug>CamelCaseMotion_w
-" map <silent> b <Plug>CamelCaseMotion_b
-" map <silent> e <Plug>CamelCaseMotion_e
-" map <silent> ge <Plug>CamelCaseMotion_ge
-" sunmap w
-" sunmap b
-" sunmap e
-" sunmap ge
-"
 " " exchange word under cursor with the next word without moving the cursor
 " nnoremap gw "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><C-o><C-l>
 "
