@@ -13,6 +13,35 @@ else
 endif
 let g:vimrc = g:dotvim . '.vimrc'
 
+function! CocPostInstall(info) abort
+	if a:info.status == 'unchanged' && !a:info.force
+		return
+	endif
+
+	echomsg "Post install for Coc"
+
+	if executable('yarn')
+		!yarn install --frozen-lockfile
+	else
+		echohl ErrorMsg
+		echomsg "Yarn not installed, can't proceed with CoC install."
+		echohl None
+		return
+	endif
+
+	if executable('pnpm')
+		if s:iswin
+			execute '!cd ' . g:dotvim . 'coc\\data\\extensions && pnpm install'
+		else
+			execute '!cd ' . g:dotvim . 'coc/data/extensions; pnpm install'
+		endif
+	else
+		echohl ErrorMsg
+		echomsg "PNPM not installed, can't proceed with CoC extension install."
+		echohl None
+	endif
+endfunction
+
 call plug#begin(g:dotvim . 'packages')
 
 " Visuals
@@ -38,7 +67,7 @@ Plug 'git@github.com:gerw/vim-HiLinkTrace', { 'on': 'HLT' }
 " Lang Plugins
 let s:node_present = get(g:, 'coc_node_path', $COC_NODE_PATH == '' ? 'node' : $COC_NODE_PATH)
 if executable(s:node_present)
-	Plug 'git@github.com:neoclide/coc.nvim', { 'branch': 'master', 'do': 'yarn install --frozen-lockfile' }
+	Plug 'git@github.com:neoclide/coc.nvim', { 'branch': 'master', 'do': function('CocPostInstall') }
 endif
 Plug 'git@github.com:rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'git@github.com:neovimhaskell/haskell-vim', { 'for': 'haskell' }
@@ -61,15 +90,19 @@ let g:onedark_termcolors = 256
 let g:onedark_terminal_italics = 1
 set tgc
 let g:onedark_color_overrides = {
-	\'background': { 'gui': '#2C2C2A', 'cterm': 'NONE', 'cterm16': 'NONE' },
-	\'black': { 'gui': '#2C2C2A', 'cterm': 'NONE', 'cterm16': 'NONE' },
+	\'background': { 'gui': '#2C2C2C', 'cterm': 'NONE', 'cterm16': 'NONE' },
+	\'black': { 'gui': '#2C2C2C', 'cterm': 'NONE', 'cterm16': 'NONE' },
 	\'foreground': { 'gui': '#AFAFAF', 'cterm': 'NONE', 'cterm16': 'NONE' },
 	\'white': { 'gui': '#AFAFAF', 'cterm': 'NONE', 'cterm16': 'NONE' },
 	\'comment_grey': { 'gui': '#5F5F5F', 'cterm': '59', 'cterm16': '7' },
 	\'gutter_fg_grey': { 'gui': '#444444', 'cterm': '238', 'cterm16': '8' },
 	\'cursor_grey': { 'gui': '#303030', 'cterm': '236', 'cterm16': '0' },
 	\'visual_grey': { 'gui': '#3A3A3A', 'cterm': '237', 'cterm16': '8' },
-	\'yellow': { 'gui': '#D7AF87', 'cterm': '180', 'cterm16': '3' }
+	\'menu_grey': { 'gui': '#3A3A3A', 'cterm': '237', 'cterm16': '7' },
+	\'special_grey': { 'gui': '#444444', 'cterm': '238', 'cterm16': '7' },
+	\'vertsplit': { 'gui': '#3A3A3A', 'cterm': '59', 'cterm16': '7' },
+	\'yellow': { 'gui': '#D7AF87', 'cterm': '180', 'cterm16': '3' },
+	\'dark_yellow': { 'gui': '#D7875F', 'cterm': '173', 'cterm16': '11' }
 \}
 
 colorscheme onedark
@@ -452,11 +485,7 @@ no <silent> <End> :bnext<CR>
 let g:coc_filetype_map = {
 	\ 'tsx': 'typescriptreact'
 \ }
-if s:iswin
-	execute 'silent!cd ' . g:dotvim . 'coc\\data\\extensions && pnpm install'
-else
-	execute 'silent!cd ' . g:dotvim . 'coc/data/extensions; pnpm install'
-endif
+
 function! <SID>check_prev() abort
 	let col = col('.') - 1
 	return !col || getline('.')[col - 1] =~# '\s'
