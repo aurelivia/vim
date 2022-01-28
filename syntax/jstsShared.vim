@@ -1,6 +1,5 @@
-syntax cluster jstsPrimitive contains=jstsBoolean,jstsString,jstsTemplateLiteral,jstsNumber,jstsFloat,jstsNull
-syntax cluster jstsDefaultNotObject contains=@jstsPrimitive,jstsRegExp,jstsParen,jstsBracket,jstsApply,jstsOperator,jstsTernary,jstsThis,jstsFunction,jstsArrowFunction,jstsGlobals,jstsComment,jstsClass
-syntax cluster jstsDefaultBlockContains contains=@jstsNotObject,jstsBlock,jstsDefinition,jstsAsyncAwait,jstsStatement,jstsLabel,jstsConditional,jstsLoop,jstsThrow,jstsTry,jstsDelete
+syntax cluster jstsDefaultNotObject contains=@jstsLiterals,jstsRegExp,jstsParen,jstsBracket,jstsApply,jstsOperator,jstsTernary,jstsThis,jstsFunction,jstsArrowFunction,jstsGlobals,jstsComment,jstsClass
+syntax cluster jstsDefaultBlockContains contains=@jstsNotObject,jstsBlock,jstsDefinition,jstsAsyncAwait,jstsStatement,jstsLabel,jstsConditional,jstsLoop,jstsThrow,jstsTry,jstsDelete,jstsComment
 syntax cluster jstsDefaultExportable contains=jstsDefinition,jstsObject,jstsAsyncAwait,jstsFunction,jstsClass
 
 syntax match jstsNoise contained /[,;:]/
@@ -10,6 +9,7 @@ syntax region jstsBracket matchgroup=jstsBrackets start=/\[/ end=/\]/ contains=@
 
 " syntax match jstsApply /\<[a-z_\$]\k*\ze\s*([^;]\{-})\s*\%(=>\)\@!/ skipwhite nextgroup=jstsAppliedContents
 " Primitives
+syntax cluster jstsLiterals contains=jstsBoolean,jstsString,jstsTemplateLiteral,jstsNumber,jstsFloat,jstsNull
 syntax keyword jstsBoolean true false
 syntax match jstsEscaped contained /\v\\%(x\x\x|u%(\x{4}|\{\x{4,5}})|c\u|.)/
 syntax region jstsString start=`\z(["']\)` skip=`\\\%(\z1\|$\)` end=`\z1\|$` contains=jstsEscaped,@Spell extend
@@ -66,7 +66,7 @@ syntax keyword jstsFinally contained finally
 
 " Functions
 syntax match jstsArrowFunction /\<\K\k*\s*=>/ contains=jstsOperator skipwhite skipempty nextgroup=jstsBlock,@jstsNotObject
-syntax match jstsArrowFunction /([^()]*)\s*=>/ contains=@jstsArgumentContains skipwhite skipempty nextgroup=jstsBlock,@jstsNotObject
+syntax match jstsArrowFunction /(.\{-})\s*=>/ contains=@jstsArgumentContains skipwhite skipempty nextgroup=jstsBlock,@jstsNotObject
 hi def link jstsArrowFunction jstsOperator
 
 syntax match jstsApply /\<\%(async\|await\)\@![a-z_\$]\k*\ze\s*(/ skipwhite nextgroup=jstsAppliedContents

@@ -206,9 +206,9 @@ augroup NeedsSpaces
 augroup END
 
 augroup FoldRegions
-    au Filetype cs setlocal foldmethod=marker foldmarker=#region,#endregion
-    au Filetype javascript setlocal foldmethod=marker foldmarker=//#region,//#endregion
-    au Filetype typescript setlocal foldmethod=marker foldmarker=//#region,//#endregion
+	au Filetype cs setlocal foldmethod=marker foldmarker=#region,#endregion
+	au Filetype javascript setlocal foldmethod=marker foldmarker=//#region,//#endregion
+	au Filetype typescript setlocal foldmethod=marker foldmarker=//#region,//#endregion
 augroup END
 
 set updatetime=300
@@ -450,7 +450,7 @@ no <silent> <End> :bnext<CR>
 
 " CoC Stuff
 let g:coc_filetype_map = {
-    \ 'tsx': 'typescriptreact'
+	\ 'tsx': 'typescriptreact'
 \ }
 if s:iswin
 	execute 'silent!cd ' . g:dotvim . 'coc\\data\\extensions && pnpm install'

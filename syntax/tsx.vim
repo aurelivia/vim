@@ -30,7 +30,7 @@ syntax match tsxComponent contained /\<\u\k*/ skipwhite skipempty nextgroup=tsxP
 hi def link tsxComponent Constant
 syntax match tsxProp contained /\<\K\k*/ skipwhite skipempty nextgroup=tsxPropEquals,tsxProp
 hi def link tsxProp Boolean
-syntax match tsxPropEquals contained /=/ skipwhite skipempty nextgroup=tsxExpression,@jstsPrimitive
+syntax match tsxPropEquals contained /=/ skipwhite skipempty nextgroup=tsxExpression,@jstsLiterals
 hi def link tsxPropEquals Operator
 
 syntax region tsxBody contained matchgroup=tsxTagCarets start=/\/\@1<!>/ end=/\ze<\// extend contains=tsxTag,tsxInlineTag,tsxExpression

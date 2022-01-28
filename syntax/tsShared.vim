@@ -1,6 +1,6 @@
 source <sfile>:h/jstsShared.vim
 
-syntax cluster tsExpression contains=@jstsNotObject,tsConstant,tsGenericArrow,tsObject,tsAppliedType
+syntax cluster tsExpression contains=@jstsNotObject,tsConstant,tsGenericArrow,jstsObject,tsAppliedType
 syntax cluster tsBlockContains contains=@jstsDefaultBlockContains,tsConstant,tsAppliedType,tsNamespace,tsAbstract
 syntax cluster jstsArgumentContains contains=tsArgument,jstsArgumentComma,jstsSpread,jstsComment
 syntax cluster jstsExportable contains=@jstsDefaultExportable,tsTypedef,tsInterface,tsNamespace,tsDeclare,tsAbstract
@@ -20,22 +20,24 @@ hi def link tsAppliedType jstsType
 
 " Generics
 syntax cluster tsGenericContains contains=tsGenericName,jstsArgumentComma
-syntax match tsGenericName contained /\<\K\k*/ skipwhite skipempty nextgroup=tsTypeExtends
+syntax match tsGenericName contained /\<\K\k*/ skipwhite skipempty nextgroup=tsTypeExtends,tsGenericDefault
 hi def link tsGenericName tsTypeName
+syntax match tsGenericDefault contained /=/ skipwhite skipempty nextgroup=@tsType
+hi def link tsGenericDefault jstsOperator
 
 " Types
-syntax cluster tsType contains=tsTypeName,tsObjectType,tsTypeParen,tsTypeUnion,tsLeadingGeneric,tsTypeKeyword,tsTypeExtends,@jstsPrimitive,jstsArgumentDefault,tsTypeTernary
-syntax cluster tsTypeOperator contains=tsTypeIntersection,tsTypeUnion
+syntax cluster tsType contains=tsTypeName,tsObjectType,tsTypeParen,tsTypeUnion,tsLeadingGeneric,tsTypeKeyword,tsTypeExtends,@jstsLiterals,jstsArgumentDefault,tsTypeTernary
+syntax cluster tsTypeOperator contains=tsTypeIntersection,tsTypeUnion,tsTypeTernary
 syntax match tsTypeUnion contained /|/ skipwhite skipempty nextgroup=@tsType
 hi def link tsTypeUnion jstsOperator
 syntax match tsTypeIntersection contained /&/ skipwhite skipempty nextgroup=@tsType
 hi def link tsTypeIntersection jstsOperator
 syntax region tsLeadingGeneric contained matchgroup=jstsArgumentParens start=/</ end=/>/ extend contains=@tsGenericContains skipwhite skipempty nextgroup=tsTypeParen
-syntax region tsTypeParen contained matchgroup=jstsArgumentParens start=/(/ end=/)/ extend contains=tsTypeParenArg,tsTypeParenSpread,@tsType skipwhite skipempty nextgroup=tsTypeArrow,tsObjectKeyColon,tsTypeOperator,tsTypeTernary
-syntax match tsTypeName contained /\<\K\k*/ skipwhite skipempty nextgroup=tsTypeGenericApply,tsTypeIntersection,tsTypePropAccess,tsTypeExtends,tsTypeTernary
-syntax region tsTypeGenericApply contained matchgroup=jstsArgumentParens start=/</ end=/>/ extend contains=@tsType,tsArgumentComma skipwhite skipempty nextgroup=tsTypeIntersection
+syntax region tsTypeParen contained matchgroup=jstsArgumentParens start=/(/ end=/)/ extend contains=tsTypeParenArg,tsTypeParenSpread,@tsType skipwhite skipempty nextgroup=tsTypeArrow,tsObjectKeyColon,@tsTypeOperator
+syntax match tsTypeName contained /\<\K\k*/ skipwhite skipempty nextgroup=tsTypeGenericApply,@tsTypeOperator,tsTypePropAccess,tsTypeExtends
+syntax region tsTypeGenericApply contained matchgroup=jstsArgumentParens start=/</ end=/>/ extend contains=@tsType,tsArgumentComma skipwhite skipempty nextgroup=@tsTypeOperator
 hi def link tsTypeName jstsType
-syntax region tsTypePropAccess contained matchgroup=jstsBrackets start=/\[/ end=/\]/ contains=tsConstant skipwhite skipempty nextgroup=@tsType
+syntax region tsTypePropAccess contained matchgroup=jstsBrackets start=/\[/ end=/\]/ contains=tsConstant,@jstsLiterals skipwhite skipempty nextgroup=@tsTypeOperator,tsTypePropAccess
 syntax keyword tsTypeKeyword contained keyof typeof in skipwhite skipempty nextgroup=@tsType
 hi def link tsTypeKeyword jstsOperator
 syntax keyword tsTypeExtends contained extends skipwhite skipempty nextgroup=@tsType
@@ -95,9 +97,9 @@ syntax match tsArgument contained /\<\K\k*/ skipwhite skipempty nextgroup=tsObje
 " Modules
 syntax keyword jstsModule import skipwhite skipempty nextgroup=jstsModuleAny,jstsModuleIdentifier,jstsModuleObject,tsModuleImportType
 syntax keyword jstsModule export skipwhite skipempty nextgroup=@jstsExportable,jstsModuleDefault,jstsModuleAny,jstsModuleIdentifier,jstsModuleObject,tsModuleExportType
-syntax keyword tsModuleImportType type skipwhite skipempty nextgroup=jstsModuleAny,jstsModuleIdentifier,jstsModuleObject
+syntax keyword tsModuleImportType contained type skipwhite skipempty nextgroup=jstsModuleAny,jstsModuleIdentifier,jstsModuleObject
 hi def link tsModuleImportType jstsModule
-syntax keyword tsModuleExportType skipwhite skipempty nextgroup=tsTypedefIdentifier,jstsModuleAny,jstsModuleObject
+syntax keyword tsModuleExportType contained skipwhite skipempty nextgroup=tsTypedefIdentifier,jstsModuleAny,jstsModuleObject
 hi def link tsModuleExportType jstsModule
 
 " Interfaces

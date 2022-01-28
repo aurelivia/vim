@@ -17,6 +17,8 @@ set nofixeol noeol
 set scrollfocus
 set clipboard=unnamed
 set gfn=DejaVu_Sans_Mono:h10
+let $TEMP = expand($TEMP)
+let $TMP = $TEMP
 exec 'set directory=' . $TEMP . ' backupdir=' . $TEMP . ' undodir=' . $TEMP
 let g:session_directory = $VIM . '\sessions\'
 let g:session_persist_globals = ['&tabstop', '&softtabstop', '&shiftwidth', '&expandtab']
@@ -36,7 +38,7 @@ no <F13> gj
 
 function! DoInDir(fn,...)
 	let l:ech = get(a:,1,0)
-    let l:bak = getcwd()
+	let l:bak = getcwd()
 	:cd %:p:h
 	execute a:fn
 	echo l:ech
