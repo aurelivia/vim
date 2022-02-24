@@ -45,7 +45,8 @@ endfunction
 call plug#begin(g:dotvim . 'packages')
 
 " Visuals
-Plug 'git@github.com:joshdick/onedark.vim'
+" Plug 'git@github.com:joshdick/onedark.vim' Using local fork
+Plug g:dotvim . '/packages/onedark.vim'
 Plug 'git@github.com:vim-airline/vim-airline'
 
 " Presumably something is depending on this

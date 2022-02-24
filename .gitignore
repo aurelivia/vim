@@ -1,4 +1,5 @@
-packages/
+packages/*
+!packages/onedark.vim/
 coc/data/extensions/node_modules/
 coc/data/extensions/package-lock.json
 coc/data/extensions/pnpm-lock.yaml
