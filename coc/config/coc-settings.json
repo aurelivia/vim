@@ -1,4 +1,7 @@
 {
+    "npm": {
+        "binPath": "pnpm"
+    },
     "suggest": {
         "autoTrigger": "none"
     },

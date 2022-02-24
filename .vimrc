@@ -296,6 +296,7 @@ if !s:iswin
 	command! Swrite execute 'silent w !sudo tee %' | :e! %
 endif
 
+
 function! <SID>RelPath(path)
 	if a:path[0] == '/' || a:path[0] == '~'
 		return resolve(a:path)
@@ -305,6 +306,9 @@ function! <SID>RelPath(path)
 endfunction
 
 command! -nargs=1 E execute 'edit ' . <SID>RelPath('<args>')
+
+command! -nargs=1 Write execute 'write ' . <SID>RelPath('<args>')
+command! -nargs=1 W execute 'write ' . <SID>RelPath('<args>')
 
 command! Evimrc execute 'e ' . g:vimrc
 command! Svimrc execute 'so ' . g:vimrc
@@ -389,6 +393,13 @@ nn <silent> <A-k> :m+1<CR>
 vn <silent> <A-k> :m '<+1<CR>gv
 nn <silent> <A-l> :m-2<CR>
 vn <silent> <A-l> :m '>-2<CR>gv
+
+nn <C-w>; <C-w>l
+nn s; <C-w>l
+nn <C-w>j <C-w>h
+nn sj <C-w>h;
+nn <C-w>h <NOP>
+nn sh <NOP>
 
 " Arrow Motions
 function! <SID>ToggleArrowsFn()
