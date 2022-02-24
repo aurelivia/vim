@@ -39,6 +39,10 @@ syntax match jstsFunctionIdentifier contained /\<\K\k*/ skipwhite skipempty next
 syntax region jstsArguments contained matchgroup=jstsArgumentParens start=/(/ end=/)/ extend contains=@jstsArgumentContains skipwhite skipempty nextgroup=jstsBlock
 syntax match jsArgument contained /\<\K\k*/ skipwhite skipempty nextgroup=jstsArgumentDefault
 
+syntax match jstsArrowFunction /\<\K\k*\s*=>/ contains=jstsOperator skipwhite skipempty nextgroup=jstsBlock,@jstsNotObject
+syntax match jstsArrowFunction /(.\{-})\s*=>/ contains=@jstsArgumentContains skipwhite skipempty nextgroup=jstsBlock,@jstsNotObject
+hi def link jstsArrowFunction jstsOperator
+
 " Modules
 syntax keyword jstsModule import skipwhite skipempty nextgroup=jstsModuleAny,jstsModuleIdentifier,jstsModuleObject
 syntax keyword jstsModule export skipwhite skipempty nextgroup=@jstsExportable,jstsModuleDefault,jstsModuleAny,jstsModuleIdentifier,jstsModuleObject

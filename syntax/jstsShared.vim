@@ -49,7 +49,8 @@ syntax match jstsLabel /\<\K\k*\s*::\@!/ contains=jstsNoise
 syntax match jstsLabelKey contained /\<\K\k*\ze\s*\_[;]/
 
 syntax keyword jstsAsyncAwait async await
-syntax keyword jstsStatement return with yield debugger
+syntax keyword jstsStatement yield debugger
+syntax keyword jstsStatement return with skipwhite skipempty nextgroup=@jstsExpression
 syntax keyword jstsStatement break continue skipwhite skipempty nextgroup=jstsLabelKey
 syntax keyword jstsConditional if else switch
 syntax region jstsCase contained matchgroup=jstsConditional start=/\<\%(case\|default\)\>/ end=/:\@=/ contains=@jstsExpression keepend
@@ -63,11 +64,6 @@ syntax region jstsTryCatch contained matchgroup=jstsBraces start=/{/ end=/}/ con
 syntax keyword jstsCatch contained catch skipwhite skipempty nextgroup=jstsCatchArguments
 syntax region jstsCatchArguments contained matchgroup=jstsArgumentParens start=/(/ end=/)/ contains=@jstsArgumentContains extend skipwhite skipempty nextgroup=jstsTryCatch
 syntax keyword jstsFinally contained finally
-
-" Functions
-syntax match jstsArrowFunction /\<\K\k*\s*=>/ contains=jstsOperator skipwhite skipempty nextgroup=jstsBlock,@jstsNotObject
-syntax match jstsArrowFunction /(.\{-})\s*=>/ contains=@jstsArgumentContains skipwhite skipempty nextgroup=jstsBlock,@jstsNotObject
-hi def link jstsArrowFunction jstsOperator
 
 syntax match jstsApply /\<\%(async\|await\)\@![a-z_\$]\k*\ze\s*(/ skipwhite nextgroup=jstsAppliedContents
 syntax region jstsAppliedContents contained matchgroup=jstsParens start=/(/ end=/)/ contains=@jstsExpression extend

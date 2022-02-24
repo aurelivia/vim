@@ -37,7 +37,7 @@ syntax region tsTypeParen contained matchgroup=jstsArgumentParens start=/(/ end=
 syntax match tsTypeName contained /\<\K\k*/ skipwhite skipempty nextgroup=tsTypeGenericApply,@tsTypeOperator,tsTypePropAccess,tsTypeExtends
 syntax region tsTypeGenericApply contained matchgroup=jstsArgumentParens start=/</ end=/>/ extend contains=@tsType,tsArgumentComma skipwhite skipempty nextgroup=@tsTypeOperator
 hi def link tsTypeName jstsType
-syntax region tsTypePropAccess contained matchgroup=jstsBrackets start=/\[/ end=/\]/ contains=tsConstant,@jstsLiterals skipwhite skipempty nextgroup=@tsTypeOperator,tsTypePropAccess
+syntax region tsTypePropAccess contained matchgroup=jstsBrackets start=/\[/ end=/\]/ contains=tsConstant,@jstsLiterals skipwhite skipempty nextgroup=@tsTypeOperator,tsTypePropAccess,tsTypeGenericApply,tsTypeExtends
 syntax keyword tsTypeKeyword contained keyof typeof in skipwhite skipempty nextgroup=@tsType
 hi def link tsTypeKeyword jstsOperator
 syntax keyword tsTypeExtends contained extends skipwhite skipempty nextgroup=@tsType
@@ -92,7 +92,10 @@ syntax region tsFunctionGenerics contained matchgroup=jstsArgumentParens start=/
 syntax region jstsArguments contained matchgroup=jstsArgumentParens start=/(/ end=/)/ contains=@jstsArgumentContains skipwhite skipempty nextgroup=tsObjectKeyColon,jstsBlock
 syntax match tsArgument contained /\<\K\k*/ skipwhite skipempty nextgroup=tsObjectKeyColon,tsTypeDefault
 
-" syntax match jstsArrowFunction /([^()]):.*=>/ contains=
+syntax match jstsArrowFunction /(.\{-})\s*=>/ contains=@jstsArgumentContains skipwhite skipempty nextgroup=jstsBlock,@jstsNotObject
+syntax match jstsArrowFunction /(.\{-})\s*:/ contains=@jstsArgumentContains skipwhite skipempty nextgroup=@tsType
+syntax match jstsArrowFunction /=>/ skipwhite skipempty nextgroup=jstsBlock,@jstsNotObject
+hi def link jstsArrowFunction jstsOperator
 
 " Modules
 syntax keyword jstsModule import skipwhite skipempty nextgroup=jstsModuleAny,jstsModuleIdentifier,jstsModuleObject,tsModuleImportType

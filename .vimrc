@@ -81,6 +81,18 @@ call plug#end()
 exec 'set runtimepath-=' . g:dotvim
 " let &runtimepath = substitute(&runtimepath, g:dotvim, trim(g:dotvim, '/', 2), '')
 
+set termguicolors
+if &term =~ '^xterm\|rxvt'
+	let &t_SI = "\<Esc>[5 q" " Insert Mode
+	let &t_EI = "\<Esc>[2 q" " Non-Insert Mode
+	" 0/1 -> Blinking Block
+	" 2 -> Solid Block
+	" 3 -> Blinking Underscore
+	" 4 -> Solid Underscore
+	" 5 -> Blinking Vertical Bar
+	" 6 -> Solid Vertical Bar
+endif
+
 filetype plugin on
 filetype indent on
 syntax enable
@@ -89,7 +101,6 @@ set enc=utf-8 fileencodings=utf-8
 " let g:onedark_hide_endofbuffer = 1
 let g:onedark_termcolors = 256
 let g:onedark_terminal_italics = 1
-set tgc
 let g:onedark_color_overrides = {
 	\'background': { 'gui': '#2C2C2C', 'cterm': 'NONE', 'cterm16': 'NONE' },
 	\'black': { 'gui': '#2C2C2C', 'cterm': 'NONE', 'cterm16': 'NONE' },
@@ -113,19 +124,8 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#whitespace#mixed_indent_algo = 2
 let g:airline#extensions#whitespace#checks = [ 'indent', 'trailing', 'long', 'conflicts' ]
 
-if &term =~ '^xterm\|rxvt'
-	let &t_SI = "\<Esc>[5 q" " Insert Mode
-	let &t_EI = "\<Esc>[2 q" " Non-Insert Mode
-	" 0/1 -> Blinking Block
-	" 2 -> Solid Block
-	" 3 -> Blinking Underscore
-	" 4 -> Solid Underscore
-	" 5 -> Blinking Vertical Bar
-	" 6 -> Solid Vertical Bar
-endif
-
 set hidden noshowmode shortmess=F noshowcmd
-set incsearch " hlsearch
+set incsearch nohlsearch " hlsearch
 set listchars=eol:¬,trail:~,extends:>,precedes:<,space:·,tab:->
 
 set mouse=
@@ -313,6 +313,20 @@ command! -nargs=1 W execute 'write ' . <SID>RelPath('<args>')
 
 command! Evimrc execute 'e ' . g:vimrc
 command! Svimrc execute 'so ' . g:vimrc
+
+function! <SID>SetKBD(kbd)
+if a:kbd == 'qwerty'
+	set langmap=
+elseif a:kbd == 'lobby'
+	set langmap=/q,lw,oe,br,yt,wy,fu,ii,ho,\\;p,ua,ts,ed,nf,cg,gh,dj,ak,rl,s\\;,kz,zx,\\,c,pv,jb,xn,mm,.\\,,q.,v/,?Q,LW,OE,BR,YT,WY,FU,II,HO,:P,UA,TS,ED,NF,CG,GH,DJ,AK,RL,S:,KZ,ZX,<C,PV,JB,XN,MM,><,Q>,V?
+else
+	echohl ErrorMsg
+	echomsg 'Not a valid keyboard layout: ' . a:kbd
+	echohl None
+endif
+endfunction
+
+command! -nargs=1 SetKBD call <SID>SetKBD(<args>)
 
 " Editing
 nn <CR> i
