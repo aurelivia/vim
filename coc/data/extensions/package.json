@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "coc-clangd": ">=0.20.1",
     "coc-html": ">=1.4.1",
     "coc-tsserver": ">=1.8.6",
     "coc-vimlsp": ">=0.12.5"

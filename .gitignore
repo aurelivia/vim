@@ -1,8 +1,8 @@
 packages/*
 !packages/onedark.vim/
-coc/data/extensions/node_modules/
-coc/data/extensions/package-lock.json
-coc/data/extensions/pnpm-lock.yaml
-coc/data/extensions/.pnpm-debug.log
+coc/data/*
+!coc/data/extensions
+coc/data/extensions/*
+!coc/data/extensions/package.json
 sessions/
 temp/
