@@ -274,15 +274,15 @@ nnoremap <silent> <F8> :call <SID>ManualNumbers()<CR>
 command! Nums call <SID>ManualNumbers()
 
 function! GetRange()
-	let [line_start, column_start] = getpos("'<")[1:2]
-	let [line_end, column_end] = getpos("'>")[1:2]
-	let lines = getline(line_start, line_end)
-	if len(lines) == 0
+	let [l:line_start, l:column_start] = getpos("'<")[1:2]
+	let [l:line_end, l:column_end] = getpos("'>")[1:2]
+	let l:lines = getline(l:line_start, l:line_end)
+	if len(l:lines) == 0
 		return ''
 	endif
-	let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
-	let lines[0] = lines[0][column_start - 1:]
-	return join(lines, "\n")
+	let l:lines[-1] = l:lines[-1][: l:column_end - (&selection == 'inclusive' ? 1 : 2)]
+	let l:lines[0] = l:lines[0][l:column_start - 1:]
+	return join(l:lines, "\n")
 endfunction
 
 com! FormatJSON :call FormatJSON()
@@ -335,7 +335,7 @@ ino <CR> <ESC>
 vn <CR> <ESC>
 nm <BS> <NOP>
 map <S-CR> <NOP>
-nn i <ESC>hr
+" nn i <ESC>hr
 
 nn <silent> Z :silent w<CR>
 nn <silent> qq :Sayonara!<CR>
@@ -355,21 +355,6 @@ no xx dd
 nn p P
 nn P p
 vn p "_dP
-
-nm <C-d> <Plug>(dirvish_up)
-augroup dirvish_config
-	autocmd!
-	autocmd FileType dirvish nmap <nowait><buffer> j <Plug>(dirvish_up)
-	autocmd FileType dirvish nmap <nowait><buffer> <Left> <Plug>(dirvish_up)
-	autocmd FileType dirvish nmap <nowait><buffer> k gj
-	autocmd FileType dirvish nmap <nowait><buffer> l gk
-	autocmd FileType dirvish nmap <nowait><buffer> ; <CR>
-	autocmd FileType dirvish nmap <nowait><buffer> <Right> <CR>
-	autocmd FileType dirvish nmap <nowait><buffer> <C-d> <Plug>(dirvish_quit)
-
-	autocmd FileType dirvish nmap <nowait><buffer> <kDivide> <Plug>(dirvish_up)
-	autocmd FileType dirvish nmap <nowait><buffer> <kMultiply> <CR>
-augroup END
 
 nn <silent> <F11> :syntax sync fromstart<CR>
 
@@ -415,6 +400,22 @@ nn <C-w>j <C-w>h
 nn sj <C-w>h;
 nn <C-w>h <NOP>
 nn sh <NOP>
+
+nm <C-d> <Plug>(dirvish_up)
+augroup dirvishBindings
+	autocmd!
+	autocmd FileType dirvish nmap <nowait><buffer> j <Plug>(dirvish_up)
+	autocmd FileType dirvish nmap <nowait><buffer> <Left> <Plug>(dirvish_up)
+	autocmd FileType dirvish nmap <nowait><buffer> k gj
+	autocmd FileType dirvish nmap <nowait><buffer> K 10gj
+	autocmd FileType dirvish nmap <nowait><buffer> l gk
+	autocmd FileType dirvish nmap <nowait><buffer> ; <CR>
+	autocmd FileType dirvish nmap <nowait><buffer> <Right> <CR>
+	autocmd FileType dirvish nmap <nowait><buffer> <C-d> <Plug>(dirvish_quit)
+
+	autocmd FileType dirvish nmap <nowait><buffer> <kDivide> <Plug>(dirvish_up)
+	autocmd FileType dirvish nmap <nowait><buffer> <kMultiply> <CR>
+augroup END
 
 " Arrow Motions
 function! <SID>ToggleArrowsFn()
@@ -497,6 +498,16 @@ no <silent> <kDivide> :bprevious<CR>
 no <silent> <kMultiply> :bnext<CR>
 no <silent> <Home> :bprevious<CR>
 no <silent> <End> :bnext<CR>
+
+function! <SID>MoveToCol(col)
+	let l:count = a:col - virtcol('.')
+	if l:count <= 0
+		return
+	endif
+	execute 'normal!i' . repeat(' ', l:count)
+endfunction
+command! -nargs=1 MoveToCol call <SID>MoveToCol(<args>)
+no <silent> ><Bar> :<C-u>MoveToCol v:count<CR>
 
 " " exchange word under cursor with the next word without moving the cursor
 " nnoremap gw "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><C-o><C-l>

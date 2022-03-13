@@ -34,15 +34,24 @@ syntax match jstsDelete /[^.]\s*\zsdelete /
 hi def link jstsDelete jstsOperator
 
 " RegExp
-syntax region jstsRegExp start=`\%(\%(\<return\|\<typeof\|\_[^)\]'"[:blank:][:alnum:]_$]\)\s*\)\@<=/\ze[^*/]` skip=`\\.\|\[[^]]\{1,}\]` end=`/[gimyus]\{,6}` contains=@jstsRegExpStuff,jstsRegExpGroup oneline keepend extend
-syntax cluster jstsRegExpStuff contains=jstsEscaped,jstsRegExpBoundary,jstsRegExpBackref,jstsRegExpQuantifier,jstsRegExpOr,jstsRegExpMod,jstsRegExpCharClass
-syntax region jstsRegExpGroup contained start=/[^\\](/lc=1 skip=/\\.\|\[\(\\.\|[^]]\+\)\]/ end=/)/ contains=@jstsRegExpStuff
-syntax region jstsRegExpCharClass contained start=/\[/ skip=/\\./ end=/\]/ contains=jstsEscaped extend
+syntax region jstsRegExp start=`\%(\%(\<return\|\<typeof\|\_[^)\]'"[:blank:][:alnum:]_$]\)\s*\)\@<=/\ze[^*/]` skip=`\\.\|\[[^]]\{1,}\]` end=`/` contains=@jstsRegExpStuff,jstsRegExpGroup oneline keepend extend skipwhite skipempty nextgroup=jstsRegExpMods
+hi def link jstsRegExp String
+syntax match jstsRegExpMods contained /[gimyus]\{,6}/
+hi def link jstsRegExpMods jstsEscaped
+syntax cluster jstsRegExpStuff contains=jstsEscaped,jstsRegExpGroup,jstsRegExpBoundary,jstsRegExpBackref,jstsRegExpQuantifier,jstsRegExpOr,jstsRegExpMod,jstsRegExpCharClass
+syntax region jstsRegExpGroup contained matchgroup=SpecialChar start=/[^\\](/lc=1 skip=/\\.\|\[\(\\.\|[^]]\+\)\]/ end=/)/ contains=@jstsRegExpStuff
+syntax region jstsRegExpCharClass contained matchgroup=SpecialChar start=/\[/ skip=/\\./ end=/\]/ contains=jstsEscaped extend
+hi def link jstsRegExpCharClass Character
 syntax match jstsRegExpBoundary contained /\v\c[$^]|\\b/
+hi def link jstsRegExpBoundary SpecialChar
 syntax match jstsRegExpBackref contained /\v\\[1-9]\d*/
+hi def link jstsRegExpBackref SpecialChar
 syntax match jstsRegExpQuantifier contained /\v[^\\]%([?*+]|\{\d+%(,\d*)?})\??/lc=1
+hi def link jstsRegExpQuantifier Operator
 syntax match jstsRegExpOr contained /|/
+hi def link jstsRegExpOr Conditional
 syntax match jstsRegExpMod contained /\v\(\?[:=!>]/lc=1
+hi def link jstsRegExpMod Operator
 
 " Statements
 syntax match jstsLabel /\<\K\k*\s*::\@!/ contains=jstsNoise
@@ -70,6 +79,10 @@ syntax region jstsAppliedContents contained matchgroup=jstsParens start=/(/ end=
 syntax match jstsArgumentComma contained /,/
 syntax match jstsArgumentDefault contained /=/ skipwhite skipempty nextgroup=@jstsExpression
 hi def link jsArgumentDefault jstsOperator
+
+" Functions
+syn match jstsArrow /=>/ skipwhite skipempty nextgroup=jstsBlock,@jstsNotObject
+hi def link jstsArrow jstsOperator
 
 " Objects
 syntax region jstsObject contained matchgroup=jstsBraces start=/{/ end=/}/ contains=jstsObjectVariable,jstsObjectKey,jstsObjectKeyString,jstsObjectExpression,jstsMethodKeyword,jstsMethod,jstsSpread,jstsComment
@@ -108,9 +121,9 @@ syntax region jstsModuleObject contained matchgroup=jstsBraces start=/{/ end=/}/
 syntax keyword jstsGlobals arguments console document fetch window module exports global process __dirname __filename decodeURI decodeURIComponent encodeURI encodeURIComponent eval isFinite isNaN parseFloat parseInt Error EvalError InternalError RangeError ReferenceError StopIteration SyntaxError TypeError URIError
 
 " Comments
-syntax region jstsComment start='//' end=/$/ contains=@Spell extend keepend
-syntax region jstsComment start='/\*' end='\*/' contains=@Spell extend keepend fold
-syntax region jstsComment start=/\%^#!/ end=/$/ display
+syntax region jstsComment start='//' end=/$/ contains=@Spell extend keepend containedin=ALL
+syntax region jstsComment start='/\*' end='\*/' contains=@Spell extend keepend fold containedin=ALL
+syntax region jstsComment start=/\%^#!/ end=/$/ display containedin=ALL
 hi def link jstsComment Comment
 
 
@@ -163,14 +176,6 @@ hi def link jstsOperator Operator
 hi def link jstsParens Noise
 hi def link jstsPrivateField Special
 hi def link jstsProto Constant
-hi def link jstsRegExp String
-hi def link jstsRegExpBackref SpecialChar
-hi def link jstsRegExpBoundary SpecialChar
-hi def link jstsRegExpCharClass Character
-hi def link jstsRegExpGroup jstsRegExp
-hi def link jstsRegExpMod SpecialChar
-hi def link jstsRegExpOr Conditional
-hi def link jstsRegExpQuantifier SpecialChar
 hi def link jstsSpread Operator
 hi def link jstsStatement Statement
 hi def link jstsString String
