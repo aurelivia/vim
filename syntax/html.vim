@@ -18,6 +18,7 @@ syn include @css syntax/css.vim
 unlet b:current_syntax
 
 syn case match
+syn spell toplevel
 
 syn region htmlComment start='<!--' end='--\s*>' contains=@Spell
 syn region htmlComment start='<!DOCTYPE' end='>' keepend
@@ -52,7 +53,7 @@ hi def link htmlAttrEquals Operator
 
 syn cluster htmlAttrValue contains=htmlString,htmlNumber,htmlBoolean,htmlJSXInterp
 
-syn region htmlString contained start=/\z(["']\)/ end=/\z1/ contains=@Spell extend skipwhite skipempty nextgroup=@htmlTagContents
+syn region htmlString contained start=/\z(["']\)/ end=/\z1/ extend skipwhite skipempty nextgroup=@htmlTagContents
 hi def link htmlString String
 syn match htmlNumber contained /[0-9]\+/ skipwhite skipempty nextgroup=@htmlTagContents
 hi def link htmlNumber String
@@ -77,31 +78,31 @@ hi def link htmlStyleTag Statement
 syn region htmlStylesheet contained matchgroup=htmlStyleTag start=/>/ end='</\s*style\s*>' extend keepend contains=@css
 
 syn region htmlHeader matchgroup=htmlTag start=/<\zeh[0-6]\>/ end=/>/ extend keepend contains=htmlElem skipwhite skipempty nextgroup=htmlHeaderText
-syn region htmlHeaderText contained start='\%(</\)\@!' end='\ze</h[0-6]>' contains=@htmlTags
+syn region htmlHeaderText contained start='\%(</\)\@!' end='\ze</h[0-6]>' contains=@htmlTags,@Spell
 " hi def link htmlHeaderText Keyword
 
 syn region htmlAnchor matchgroup=htmlTag start=/<\zea\>/ end=/>/ extend keepend contains=htmlElem skipwhite skipempty nextgroup=htmlAnchorText
-syn region htmlAnchorText contained start='\%(</\)\@!' end='\ze</a>' contains=@htmlTags
+syn region htmlAnchorText contained start='\%(</\)\@!' end='\ze</a>' contains=@htmlTags,@Spell
 hi def link htmlAnchorText Special
 
 syn region htmlEmphasis matchgroup=htmlTag start=/<\zeem\>/ end=/>/ extend keepend contains=htmlElem skipwhite skipempty nextgroup=htmlEmphasisText
-syn region htmlEmphasisText contained start='\%(</\)\@!' end='\ze</em>' contains=@htmlTags
+syn region htmlEmphasisText contained start='\%(</\)\@!' end='\ze</em>' contains=@htmlTags,@Spell
 hi def link htmlEmphasisText htmlItalic
 
 syn region htmlBold matchgroup=htmlTag start=/<\zeb\>/ end=/>/ extend keepend contains=htmlElem skipwhite skipempty nextgroup=htmlBoldText
-syn region htmlBoldText contained start='\%(</\)\@!' end='\ze</b>' contains=@htmlTags
+syn region htmlBoldText contained start='\%(</\)\@!' end='\ze</b>' contains=@htmlTags,@Spell
 " hi def link htmlBoldText htmlBold
 
 syn region htmlMark matchgroup=htmlTag start=/<\zemark\>/ end=/>/ extend keepend contains=htmlElem skipwhite skipempty nextgroup=htmlMarkText
-syn region htmlMarkText contained start='\%(</\)\@!' end='\ze</mark>' contains=@htmlTags
+syn region htmlMarkText contained start='\%(</\)\@!' end='\ze</mark>' contains=@htmlTags,@Spell
 hi def link htmlMarkText htmlHeaderText
 
 syn region htmlItalic matchgroup=htmlTag start=/<\zei\>/ end=/>/ extend keepend contains=htmlElem skipwhite skipempty nextgroup=htmlItalicText
-syn region htmlItalicText contained start='\%(</\)\@!' end='\ze</i>' contains=@htmlTags
-" hi def htmlItalicText term=italic cterm=italic gui=italic
+syn region htmlItalicText contained start='\%(</\)\@!' end='\ze</i>' contains=@htmlTags,@Spell
+" hi def htmlItalicText term=italic cterm=italic gui=italic,
 
 syn region htmlTH matchgroup=htmlTag start=/<\zeth\>/ end=/>/ extend keepend contains=htmlElem skipwhite skipempty nextgroup=htmlTHText
-syn region htmlTHText contained start='\%(</\)\@!' end='\ze</th>' contains=@htmlTags
+syn region htmlTHText contained start='\%(</\)\@!' end='\ze</th>' contains=@htmlTags,@Spell
 hi def link htmlTHText htmlHeaderText
 
 syn cluster htmlTags contains=htmlHeader,htmlAnchor,htmlEmphasis,htmlBold,htmlMark,htmlItalic,htmlTH,htmlScriptTag,htmlStyleTag,htmlTag,htmlTagEnd,htmlClosingTag
