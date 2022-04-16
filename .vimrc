@@ -102,25 +102,19 @@ set enc=utf-8 fileencodings=utf-8
 let g:onedark_termcolors = 256
 let g:onedark_terminal_italics = 1
 let g:onedark_color_overrides = {
-	\'foreground': { 'gui': '#C2BAA3', 'cterm': '145', 'cterm16': 'NONE' },
-	\'background': { 'gui': '#333333', 'cterm': '235', 'cterm16': 'NONE' },
-	\'dark_red': { 'gui': '#A01C1C', 'cterm': '196', 'cterm16': '9' },
-	\'red': { 'gui': '#CC6666', 'cterm': '204', 'cterm16': '1' },
-	\'dark_yellow': { 'gui': '#D68F5C', 'cterm': '173', 'cterm16': '11' },
-	\'yellow': { 'gui': '#D2A92D', 'cterm': '180', 'cterm16': '3' },
-	\'green': { 'gui': '#8BC270', 'cterm': '114', 'cterm16': '2' },
-	\'cyan': { 'gui': '#70C2C2', 'cterm': '38', 'cterm16': '6' },
-	\'blue': { 'gui': '#66AACC', 'cterm': '39', 'cterm16': '4' },
-	\'purple': { 'gui': '#CC66CC', 'cterm': '170', 'cterm16': '5' },
-	\'black': { 'gui': '#333333', 'cterm': '235', 'cterm16': '0' },
-	\'cursor_grey': { 'gui': '#333333', 'cterm': '236', 'cterm16': '0' },
-	\'special_grey': { 'gui': '#333333', 'cterm': '238', 'cterm16': '7' },
-	\'gutter_fg_grey': { 'gui': '#4D4D4D', 'cterm': '238', 'cterm16': '8' },
-	\'visual_grey': { 'gui': '#4D4D4D', 'cterm': '237', 'cterm16': '8' },
-	\'menu_grey': { 'gui': '#4D4D4D', 'cterm': '237', 'cterm16': '7' },
-	\'vertsplit': { 'gui': '#4D4D4D', 'cterm': '59', 'cterm16': '7' },
-	\'comment_grey': { 'gui': '#666666', 'cterm': '59', 'cterm16': '7' },
-	\'white': { 'gui': '#C2BAA3', 'cterm': '145', 'cterm16': '15' }
+	\'background': { 'gui': '#2C2C2C', 'cterm': 'NONE', 'cterm16': 'NONE' },
+	\'black': { 'gui': '#2C2C2C', 'cterm': 'NONE', 'cterm16': 'NONE' },
+	\'foreground': { 'gui': '#AFAFAF', 'cterm': 'NONE', 'cterm16': 'NONE' },
+	\'white': { 'gui': '#AFAFAF', 'cterm': 'NONE', 'cterm16': 'NONE' },
+	\'comment_grey': { 'gui': '#5F5F5F', 'cterm': '59', 'cterm16': '7' },
+	\'gutter_fg_grey': { 'gui': '#444444', 'cterm': '238', 'cterm16': '8' },
+	\'cursor_grey': { 'gui': '#303030', 'cterm': '236', 'cterm16': '0' },
+	\'visual_grey': { 'gui': '#3A3A3A', 'cterm': '237', 'cterm16': '8' },
+	\'menu_grey': { 'gui': '#3A3A3A', 'cterm': '237', 'cterm16': '7' },
+	\'special_grey': { 'gui': '#444444', 'cterm': '238', 'cterm16': '7' },
+	\'vertsplit': { 'gui': '#3A3A3A', 'cterm': '59', 'cterm16': '7' },
+	\'yellow': { 'gui': '#D7AF87', 'cterm': '180', 'cterm16': '3' },
+	\'dark_yellow': { 'gui': '#D7875F', 'cterm': '173', 'cterm16': '11' }
 \}
 
 colorscheme onedark
