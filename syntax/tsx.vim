@@ -15,11 +15,7 @@ set cpo&vim
 syntax sync fromstart
 syntax case match
 
-syntax cluster jstsNotObject contains=@jstsDefaultNotObject,tsxTag
-syntax cluster jstsExpression contains=@tsExpression
-syntax cluster jstsBlockContains contains=@tsBlockContains
-
-source <sfile>:h/tsShared.vim
+source <sfile>:h/jsts.vim
 
 syntax region tsxTag matchgroup=tsxTagCarets start=/<\ze\z(\K\k*\)\%(\/\@1<!>\|\s.*\/\@1<!>\)/ end=/<\/\ze\z1>/ extend contains=tsxTagName,tsxComponent,tsxBody skipwhite skipempty nextgroup=tsxEndTagName,tsxEndTagComponent
 syntax region tsxInlineTag matchgroup=tsxTagCarets start=/<\ze\z(\K\k*\)\%(\/>\|\s.*\/>\)/ end=/\/>/ extend contains=tsxTagName,tsxComponent

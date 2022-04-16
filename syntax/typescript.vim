@@ -15,11 +15,9 @@ set cpo&vim
 syntax sync fromstart
 syntax case match
 
-syntax cluster jstsNotObject contains=@jstsDefaultNotObject
-syntax cluster jstsExpression contains=@tsExpression
-syntax cluster jstsBlockContains contains=@tsBlockContains
+source <sfile>:h/jsts.vim
 
-source <sfile>:h/tsShared.vim
+syn region jstsArrowFunction matchgroup=jstsArgumentParens start=`(\ze\%(/\*.\{-}\*/\)\?\_s*\%(\%([^()]\+\>?\?:\)\|\%([^():?]*)\_s*\%(=>\|?\?:\)\)\)` end=/)/ extend contains=@jstsArgumentContains skipwhite skipempty nextgroup=jstsReturnType,jstsArrow
 
 let b:current_syntax = "typescript"
 if main_syntax == 'typescript'
