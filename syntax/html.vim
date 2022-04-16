@@ -26,7 +26,7 @@ hi def link htmlComment Comment
 
 syn match htmlTag '<\ze[^/!]' skipwhite skipempty nextgroup=htmlComponent,htmlElem
 hi clear htmlTag
-hi def link htmlTag Comment
+hi def htmlTag guifg=#666666 gui=NONE ctermfg=59 cterm=NONE
 
 syn match htmlClosingTag '</' skipwhite skipempty nextgroup=htmlElem,htmlComponent
 hi def link htmlClosingTag htmlTag
