@@ -127,6 +127,7 @@ let g:airline#extensions#whitespace#checks = [ 'indent', 'trailing', 'long', 'co
 set hidden noshowmode shortmess=F noshowcmd
 set incsearch nohlsearch " hlsearch
 set listchars=eol:¬,trail:~,extends:>,precedes:<,space:·,tab:->
+set ignorecase smartcase
 
 set mouse=
 let mapleader = ' '
