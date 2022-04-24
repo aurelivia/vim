@@ -28,9 +28,9 @@ syn keyword jstsBoolean true false
 hi def link jstsBoolean Boolean
 syn match jstsEscaped contained /\v\\%(x\x\x|u%(\x{4}|\{\x{4,5}})|c\u|.)/
 hi def link jstsEscaped Special
-syn region jstsString start=`\z(["']\)` skip=`\\\%(\z1\|$\)` end=`\z1\|$` contains=jstsEscaped,@Spell extend
+syn region jstsString start=`\z(["']\)` skip=`\\\%(\z1\|$\)` end=`\z1\|$` contains=jstsEscaped extend
 hi def link jstsString String
-syn region jstsTemplateLiteral start=/`/ skip=/\\`/ end=/`/ contains=jstsEscaped,@Spell,jstsTemplateExpression extend
+syn region jstsTemplateLiteral start=/`/ skip=/\\`/ end=/`/ contains=jstsEscaped,jstsTemplateExpression extend
 hi def link jstsTemplateLiteral String
 syn region jstsTemplateExpression contained matchgroup=jstsBraces start=/${/ end=/}/ contains=@jstsExpression
 syn match jstsTag /\<\K\k*\ze`/
@@ -46,7 +46,7 @@ hi def link jstsNull Boolean
 " Operators
 
 syn region jstsTernary matchgroup=jstsTernaries start=/?\ze[^?:.]/ end=/:/ contains=@jstsExpression extend skipwhite skipempty nextgroup=@jstsExpression
-hi def link jstsTernary Operator
+hi def link jstsTernaries Operator
 syn keyword jstsOperator instanceof typeof in of new skipwhite skipempty nextgroup=@jstsExpression
 syn match jstsOperator /new\.target/
 syn match jstsOperator "[-!|&+<>=%/*~^]" skipwhite skipempty nextgroup=@jstsExpression
@@ -148,9 +148,9 @@ syn region jstsGenericArrowFunction matchgroup=jstsArgumentParens start=/<\ze\%(
 
 syn match jstsReturnType contained /:/ skipwhite skipempty nextgroup=@tsTypeNoFn
 hi def link jstsReturnType Operator
-syn region jstsFunctionGenerics contained matchgroup=jstsArgumentParents start=/</ end=/>/ contains=@jstsGenericContains skipwhite skipempty nextgroup=jstsArguments
+syn region jstsFunctionGenerics contained matchgroup=jstsArgumentParens start=/</ end=/>/ contains=@jstsGenericContains skipwhite skipempty nextgroup=jstsArguments
 
-syn region jstsArguments contained matchgroup=jstsArgumentParents start=/(/ end=/)/ contains=@jstsArgumentsContains skipwhite skipempty nextgroup=jstsTypeObjectColon,jstsBlock
+syn region jstsArguments contained matchgroup=jstsArgumentParens start=/(/ end=/)/ contains=@jstsArgumentsContains skipwhite skipempty nextgroup=jstsTypeObjectColon,jstsBlock
 hi def link jstsArgumentParens Operator
 syn match jstsArgument contained /\<\K\k*/ skipwhite skipempty nextgroup=jstsTypeObjectColon,jstsArgumentDefault
 syn match jstsArgumentComma contained /,/
@@ -160,10 +160,10 @@ hi def link jstsArgumentDefault Operator
 
 " Objects
 
-syn region jstsObject contained matchgroup=jstsBraces start=/{/ end=/}/ extend contains=jstsObjectVariable,jstsObjectKey,jstsObjectKeyString,jstsObjectExpression,jstsMethodKeyword,jstsMethod,jstsSpread,jstsComment
+syn region jstsObject contained matchgroup=jstsBraces start=/{/ end=/}/ extend contains=jstsObjectKeyString,jstsObjectKey,jstsObjectExpression,jstsMethodKeyword,jstsMethod,jstsSpread,jstsComment
 syn match jstsObjectKey contained /\<\K\k*\ze\s*:/ skipwhite skipempty nextgroup=jstsObjectValue
 syn region jstsObjectValue contained start=/:/ end=/[,}]\&/ extend contains=@jstsExpression
-syn region jstsObjectKeyString contained start=/\z(["']\)/ skip=/\\\z1/ end=/\z1\|$/ contains=jstsEscaped,@Spell skipwhite skipempty nextgroup=jstsObjectValue
+syn region jstsObjectKeyString contained start=`\z(["']\)` skip=`\\\%(\z1\|$\)` end=`\z1\|$` contains=jstsEscaped extend skipempty skipwhite nextgroup=jstsObjectValue
 hi def link jstsObjectKeyString String
 syn region jstsObjectExpression contained matchgroup=jstsBrackets start=/\[/ end=/\]/ extend contains=@jstsExpression skipwhite skipempty nextgroup=jstsObjectValue
 syn match jstsMethodKeyword contained /\%(get\|set\|async\)\ze\_s\+\%(\k\|\[\)/ skipwhite skipempty nextgroup=jstsFunctionIdentifierLower,jstsFunctionIdentifierUpper,jstsObjectExpression
@@ -258,9 +258,11 @@ syn region jstsTypeGenericApply contained matchgroup=jstsArgumentParens start=/<
 
 syn region jstsTypePropAccess contained matchgroup=jstsBrackejsts start=/\[/ end=/\]/ contains=jstsConstant,@jstsLiterals skipwhite skipempty nextgroup=jstsTypeGenericApply,jstsTypePropAccess,@jstsTypeOperator
 
-syn region jstsTypeObject contained matchgroup=jstsBraces start=/{/ end=/}/ extend contains=jstsTypeObjectKey,jstsTypeObjectRO,jstsTypeObjectIndex,jstsTypeObjectApply,jstsTypeObjectNew,jstsTypeLeadingGeneric,jstsTypeObjectMethod skipwhite skipempty nextgroup=@jstsTypeOperator
+syn region jstsTypeObject contained matchgroup=jstsBraces start=/{/ end=/}/ extend contains=jstsTypeObjectKey,jstsTypeObjectKeyString,jstsTypeObjectRO,jstsTypeObjectIndex,jstsTypeObjectApply,jstsTypeObjectNew,jstsTypeLeadingGeneric,jstsTypeObjectMethod skipwhite skipempty nextgroup=@jstsTypeOperator
 
 syn match jstsTypeObjectKey contained /\<\K\k*\ze?\?:/ skipwhite skipempty nextgroup=jstsTypeObjectColon
+syn region jstsTypeObjectKeyString contained start=`\z(["']\)` skip=`\\\%(\z1\|$\)` end=`\z1\|$` contains=jstsEscaped extend skipempty skipwhite nextgroup=jstsTypeObjectColon
+hi def link jstsTypeObjectKeyString String
 syn match jstsTypeObjectColon contained /?\?:/ skipwhite skipempty nextgroup=@jstsType
 hi def link jstsTypeObjectColon jstsOperator
 
@@ -309,7 +311,7 @@ hi def link jstsComment Comment
 syn region jstsComment start='/\*\*' end='\*/' contains=@Spell,@jstsDocTags extend keepend fold containedin=ALLBUT,@jstsNoComment
 
 syn cluster jstsDocTags contains=jstsDocType,jstsDocThis,jstsDocTypedef,jstsDocParam,jstsDocTemplate
-syn match jstsDocType contained /@type/ skipwhite skipempty nextgroup=jstsDocTypeBracket,jstsTypeIdentifier,@jstsTypeLiterals
+syn match jstsDocType contained /@type/ skipwhite skipempty nextgroup=jstsDocTypeBrace,jstsTypeIdentifier,@jstsTypeLiterals
 hi def link jstsDocType Special
 syn region jstsDocTypeBrace contained matchgroup=Special start=/{/ end=/}/ extend contains=@jstsType
 syn match jstsDocThis contained /@this/ skipwhite skipempty nextgroup=jstsDocTypeBrace,jstsTypedefIdentifier,@jstsTypeLiterals

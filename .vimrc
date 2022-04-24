@@ -344,6 +344,7 @@ nn <silent> qr :Sayonara<CR>
 nn qa :q!<CR>
 nn q <NOP>
 nn <C-@> q
+nn s <C-w>
 nn U <C-r>
 
 " nn c<CR> ciw
@@ -381,9 +382,8 @@ no h ;
 no J <NOP>
 no K 10gj
 no L 10gk
-no <Space><Space> .
-" no <Space><Return> @:
-no . ;
+no <Space><Space> :
+no <Space><Return> @:
 
 no <silent> <C-j> :bprevious<CR>
 no <C-k> zz<C-d>
@@ -395,15 +395,12 @@ vn <silent> <A-k> :m '<+1<CR>gv
 nn <silent> <A-l> :m-2<CR>
 vn <silent> <A-l> :m '>-2<CR>gv
 
-nn <C-w>j <C-w>h
-nn sj <C-w>h
-nn <C-w>k <C-w>j
-nn sk <C-w>j
-nn <C-w>l <C-w>k
-nn sl <C-w>k
 nn <C-w>; <C-w>l
 nn s; <C-w>l
-nn sq <C-w>q
+nn <C-w>j <C-w>h
+nn sj <C-w>h;
+nn <C-w>h <NOP>
+nn sh <NOP>
 
 nm <C-d> <Plug>(dirvish_up)
 augroup dirvishBindings
@@ -511,7 +508,7 @@ function! <SID>MoveToCol(col)
 	execute 'normal!i' . repeat(' ', l:count)
 endfunction
 command! -nargs=1 MoveToCol call <SID>MoveToCol(<args>)
-" no <silent>  :<C-u>MoveToCol v:count<CR>
+no <silent> ><Bar> :<C-u>MoveToCol v:count<CR>
 
 " " exchange word under cursor with the next word without moving the cursor
 " nnoremap gw "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><C-o><C-l>

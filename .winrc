@@ -14,7 +14,6 @@ exec 'set runtimepath+=' . trim(g:dotvim, '\', 2) . ',' . g:dotvim . 'after'
 exec 'source ' . g:dotvim . '.vimrc'
 
 set nofixeol noeol
-set scrollfocus
 set clipboard=unnamed
 set gfn=DejaVu_Sans_Mono:h10
 let $TEMP = expand($TEMP)
