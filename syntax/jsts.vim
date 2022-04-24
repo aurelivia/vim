@@ -146,7 +146,7 @@ syn match jstsArrow /=>/ skipwhite skipempty nextgroup=jstsBlock,@jstsNotObject
 hi def link jstsArrow Operator
 syn region jstsGenericArrowFunction matchgroup=jstsArgumentParens start=/<\ze\%(\k\|,\)\{-1,}>\s*(/ end=/>/ extend contains=@jstsGenericContains skipwhite skipempty nextgroup=jstsArrowFunction
 
-syn match jstsReturnType contained /:/ skipwhite skipempty nextgroup=@tsTypeNoFn
+syn match jstsReturnType contained /:/ skipwhite skipempty nextgroup=@jstsTypeNoFn
 hi def link jstsReturnType Operator
 syn region jstsFunctionGenerics contained matchgroup=jstsArgumentParens start=/</ end=/>/ contains=@jstsGenericContains skipwhite skipempty nextgroup=jstsArguments
 

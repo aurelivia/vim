@@ -401,6 +401,8 @@ nn <C-w>j <C-w>h
 nn sj <C-w>h;
 nn <C-w>h <NOP>
 nn sh <NOP>
+nn sq <C-w>q
+nn sv <C-w>v
 
 nm <C-d> <Plug>(dirvish_up)
 augroup dirvishBindings
@@ -509,6 +511,17 @@ function! <SID>MoveToCol(col)
 endfunction
 command! -nargs=1 MoveToCol call <SID>MoveToCol(<args>)
 no <silent> ><Bar> :<C-u>MoveToCol v:count<CR>
+
+
+command! -nargs=? Wrap if strlen(<q-args>) | set textwidth=<args> | else | set textwidth=70 | endif
+
+command! Nowrap set textwidth=0
+
+augroup FormatOptions
+	au Filetype html setlocal formatoptions=tmM
+augroup END
+
+
 
 " " exchange word under cursor with the next word without moving the cursor
 " nnoremap gw "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><C-o><C-l>

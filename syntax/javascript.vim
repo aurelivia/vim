@@ -17,7 +17,7 @@ syntax case match
 
 source <sfile>:h/jsts.vim
 
-syntax region jstsArrowFunction matchgroup=jstsArgumentParens start=`(\ze[^()]*)\_s*=>` end=/)/ extend contains=@jstsArgumentContains skipwhite skipempty nextgroup=jstsArrow
+syntax region jstsArrowFunction matchgroup=jstsArgumentParens start=`(\ze[^()]*)\_s*=>` end=/)/ extend contains=@jstsArgumentsContains skipwhite skipempty nextgroup=jstsArrow
 
 let b:current_syntax = 'javascript'
 
