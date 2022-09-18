@@ -4,45 +4,26 @@ set nocompatible
 let s:iswin = has('win32')
 if s:iswin
 	let g:dotvim = get(g:, 'dotvim', $HOME . '\.vim\')
-	let g:coc_config_home = g:dotvim . 'coc\config'
-	let g:coc_data_home = g:dotvim . 'coc\data'
 else
 	let g:dotvim = get(g:, 'dotvim', $HOME . '/.vim/')
-	let g:coc_config_home = g:dotvim . 'coc/config'
-	let g:coc_data_home = g:dotvim . 'coc/data'
 endif
 let g:vimrc = g:dotvim . '.vimrc'
 
-function! CocPostInstall(info) abort
+call plug#begin(g:dotvim . 'packages')
+
+function! LSPCheck(info) abort
 	if a:info.status == 'unchanged' && !a:info.force
 		return
 	endif
 
-	echomsg "Post install for Coc"
-
-	if executable('yarn')
-		!yarn install --frozen-lockfile
-	else
+	if !executable('typescript-language-server')
 		echohl ErrorMsg
-		echomsg "Yarn not installed, can't proceed with CoC install."
+		echomsg 'typescript-language-server not installed'
 		echohl None
 		return
 	endif
 
-	if executable('pnpm')
-		if s:iswin
-			execute '!cd ' . g:dotvim . 'coc\\data\\extensions && pnpm install'
-		else
-			execute '!cd ' . g:dotvim . 'coc/data/extensions; pnpm install'
-		endif
-	else
-		echohl ErrorMsg
-		echomsg "PNPM not installed, can't proceed with CoC extension install."
-		echohl None
-	endif
 endfunction
-
-call plug#begin(g:dotvim . 'packages')
 
 " Visuals
 " Plug 'git@github.com:joshdick/onedark.vim' Using local fork
@@ -61,21 +42,13 @@ Plug 'git@github.com:ntpeters/vim-better-whitespace'
 Plug 'git@github.com:tpope/vim-surround'
 Plug 'git@github.com:tmux-plugins/vim-tmux-focus-events'
 Plug 'git@github.com:tpope/vim-eunuch'
+Plug 'git@github.com:godlygeek/tabular'
 Plug 'git@github.com:gerw/vim-HiLinkTrace', { 'on': 'HLT' }
+Plug 'git@github.com:neovim/nvim-lspconfig', { 'do': function('LSPCheck') }
 " Plug 'git@github.com:tpope/vim-fugitive'
 " Plug 'git@github.com:ngemily/vim-vp4'
 
-" Lang Plugins
-let s:node_present = get(g:, 'coc_node_path', $COC_NODE_PATH == '' ? 'node' : $COC_NODE_PATH)
-if executable(s:node_present)
-	Plug 'git@github.com:neoclide/coc.nvim', { 'branch': 'master', 'do': function('CocPostInstall') }
-endif
-Plug 'git@github.com:rust-lang/rust.vim', { 'for': 'rust' }
-Plug 'git@github.com:neovimhaskell/haskell-vim', { 'for': 'haskell' }
-Plug 'git@github.com:elixir-editors/vim-elixir', { 'for': 'elixir' }
-Plug 'git@github.com:posva/vim-vue', { 'for': 'vue' }
-Plug 'git@github.com:wavded/vim-stylus', { 'for': 'stylus' }
-Plug 'git@github.com:digitaltoad/vim-pug', { 'for': 'pug' }
+Plug 'git@github.com:felipec/notmuch-vim.git', { 'on': 'NotMuch' }
 
 call plug#end()
 exec 'set runtimepath-=' . g:dotvim
@@ -532,26 +505,35 @@ augroup END
 " " push word under cursor to the right
 " nnoremap <silent> <Leader><Right> "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><C-o>/\w\+\_W\+<CR><C-l>
 
-" CoC Stuff
-let g:coc_filetype_map = {
-	\ 'tsx': 'typescriptreact'
-\ }
+lua << EOF
+local opts = { noremap = true, silent = true }
+vim.keymap.set('n', 'ge', vim.diagnostic.goto_next, opts)
+vim.keymap.set('n', 'gE', vim.diagnostic.goto_prev, opts)
+vim.keymap.set('n', '<C-e>', vim.diagnostic.open_float, opts)
 
-function! <SID>check_prev() abort
-	let col = col('.') - 1
-	return !col || getline('.')[col - 1] =~# '\s'
-endfunction
+local onAttach = function(client, bufno)
+	local opts = { noremap = true, silent = true, buffer = bufno }
 
-inoremap <silent> <expr> <Tab>
-	\ pumvisible() ? "\<C-n>"
-	\ : <SID>check_prev() ? "\<Tab>"
-	\ : coc#refresh()
+	vim.keymap.set('n', '<C-h>', vim.lsp.buf.hover, opts)
+	vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+end
 
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<C-h>"
+require('lspconfig')['tsserver'].setup{
+	on_attach = onAttach,
+	settings = {
+		typescript = {
+			format = {
+				enable = false,
+				trimTrailingWhitespace = false
+			}
+		}
+	}
+}
 
-nn <silent> <nowait> gd :call CocAction('jumpDefinition')<CR>
-nn <silent> <nowait> <C-h> :call CocAction("doHover")<CR>
-ino <silent> <nowait> <C-c> <C-o>:call coc#float#close_all()<CR>
-ino <silent> <nowait> <C-s> <C-o>:call CocActionAsync("showSignatureHelp")<CR>
-nmap <silent> gh <Plug>(coc-diagnostic-prev)
-nmap <silent> gl <Plug>(coc-diagnostic-next)
+vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
+	vim.lsp.diagnostic.on_publish_diagnostics, {
+		-- delay update diagnostics
+		update_in_insert = false,
+	}
+)
+EOF
