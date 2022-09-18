@@ -17,7 +17,9 @@ syntax case match
 
 source <sfile>:h/jsts.vim
 
-syn region jstsArrowFunction matchgroup=jstsArgumentParens start=`(\ze\%(/\*.\{-}\*/\)\?\_s*\%(\%([^()]\+\>?\?:\)\|\%([^():?]*)\_s*\%(=>\|?\?:\)\)\)` end=/)/ extend contains=@jstsArgumentsContains skipwhite skipempty nextgroup=jstsReturnType,jstsArrow
+syn region jstsArrowFunction matchgroup=jstsArgumentParens start=~(\ze\%(/\*.\{-}\*/\)\?\_s*\%(\%([a-zA-Z_$]\+\>?\?:\)\|\%([^():?]*)\_s*=>\)\|\%():\)\|\%({}:\)\)~ end=/)/ extend contains=@jstsArgumentsContains skipwhite skipempty nextgroup=jstsTypeReturned,jstsArrow
+" syn region jstsArrowFunction matchgroup=jstsArgumentParens start=~(\ze[^()]*)\_s*\%(:.\{-}\)\?\_s*\%(=>\|{\)~ end=/)/ extend contains=@jstsArgumentsContains skipwhite skipempty nextgroup=jstsReturnType,jstsArrow
+
 
 let b:current_syntax = "typescript"
 if main_syntax == 'typescript'
