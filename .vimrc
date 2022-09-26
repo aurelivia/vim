@@ -44,9 +44,17 @@ Plug 'git@github.com:tmux-plugins/vim-tmux-focus-events'
 Plug 'git@github.com:tpope/vim-eunuch'
 Plug 'git@github.com:godlygeek/tabular'
 Plug 'git@github.com:gerw/vim-HiLinkTrace', { 'on': 'HLT' }
-Plug 'git@github.com:neovim/nvim-lspconfig', { 'do': function('LSPCheck') }
 " Plug 'git@github.com:tpope/vim-fugitive'
 " Plug 'git@github.com:ngemily/vim-vp4'
+
+Plug 'git@github.com:neovim/nvim-lspconfig', { 'do': function('LSPCheck') }
+Plug 'git@github.com:hrsh7th/vim-vsnip'
+Plug 'git@github.com:hrsh7th/cmp-vsnip'
+Plug 'git@github.com:hrsh7th/cmp-nvim-lsp'
+Plug 'git@github.com:hrsh7th/cmp-buffer'
+Plug 'git@github.com:hrsh7th/cmp-path'
+Plug 'git@github.com:hrsh7th/cmp-cmdline'
+Plug 'git@github.com:hrsh7th/nvim-cmp'
 
 Plug 'git@github.com:felipec/notmuch-vim.git', { 'on': 'NotMuch' }
 
@@ -213,6 +221,10 @@ augroup NeedsSpaces
 	au Filetype hs setlocal expandtab
 augroup END
 
+augroup NoSpaces
+	au Filetype rust setlocal noexpandtab
+augroup END
+
 augroup FoldRegions
 	au Filetype cs setlocal foldmethod=marker foldmarker=#region,#endregion
 	au Filetype javascript setlocal foldmethod=marker foldmarker=//#region,//#endregion
@@ -368,12 +380,16 @@ vn <silent> <A-k> :m '<+1<CR>gv
 nn <silent> <A-l> :m-2<CR>
 vn <silent> <A-l> :m '>-2<CR>gv
 
-nn <C-w>; <C-w>l
-nn s; <C-w>l
+nn sj <C-w>h
 nn <C-w>j <C-w>h
-nn sj <C-w>h;
+nn sk <C-w>j
+nn <C-w>k <C-w>j
+nn sl <C-w>k
+nn <C-w>l <C-w>k
+nn s; <C-w>l
+nn <C-w>; <C-w>l
 nn <C-w>h <NOP>
-nn sh <NOP>
+nn sh <C-w>s
 nn sq <C-w>q
 nn sv <C-w>v
 
@@ -505,7 +521,62 @@ augroup END
 " " push word under cursor to the right
 " nnoremap <silent> <Leader><Right> "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><C-o>/\w\+\_W\+<CR><C-l>
 
+set completeopt=menu,menuone,noselect
+
 lua << EOF
+local cmp = require('cmp')
+
+local has_words_before = function()
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+
+local feedkey = function(key, mode)
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
+end
+
+cmp.setup({
+	completion = {
+		autocomplete = false
+	},
+	snippet = {
+		expand = function (args)
+			vim.fn['vsnip#anonymous'](args.body)
+		end
+	},
+	mapping = {
+		['<Tab>'] = cmp.mapping(function (fallback)
+			if cmp.visible() then
+				cmp.select_next_item()
+			elseif vim.fn['vsnip#available'](1) == 1 then
+				feedkey('<Plug>(vsnip-expand-or-jump)', '')
+			elseif has_words_before() then
+				cmp.complete()
+			else
+				fallback()
+			end
+		end, { 'i' }),
+		['<Down>'] = { i = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }) },
+		['<Up>'] = { i = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }) },
+		['<ESC>'] = { i = cmp.mapping.abort() },
+		['<Space>'] = cmp.mapping(function (fallback)
+			if cmp.visible() then
+				cmp.mapping.confirm({ select = false })
+			else
+				fallback()
+			end
+		end, { 'i' })
+	},
+	sources = cmp.config.sources({
+		{ name = 'nvim_lsp' },
+		{ name = 'vsnip' }
+	}, {
+		{ name = 'buffer' }
+	})
+})
+
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
 local opts = { noremap = true, silent = true }
 vim.keymap.set('n', 'ge', vim.diagnostic.goto_next, opts)
 vim.keymap.set('n', 'gE', vim.diagnostic.goto_prev, opts)
@@ -513,13 +584,21 @@ vim.keymap.set('n', '<C-e>', vim.diagnostic.open_float, opts)
 
 local onAttach = function(client, bufno)
 	local opts = { noremap = true, silent = true, buffer = bufno }
-
 	vim.keymap.set('n', '<C-h>', vim.lsp.buf.hover, opts)
 	vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
 end
 
-require('lspconfig')['tsserver'].setup{
+local lspconfig = require('lspconfig')
+
+lspconfig.tsserver.setup({
 	on_attach = onAttach,
+	capabilities = capabilities,
+		root_dir = function (path)
+			local denoPath = lspconfig.util.root_pattern('deno.json', 'deno.jsonc')(path)
+			if denoPath then return end
+			return lspconfig.util.root_pattern('tsconfig.json')(path)
+				or lspconfig.util.root_pattern('package.json', 'jsconfig.json', '.git')(path)
+		end,
 	settings = {
 		typescript = {
 			format = {
@@ -528,7 +607,39 @@ require('lspconfig')['tsserver'].setup{
 			}
 		}
 	}
+})
+
+lspconfig.denols.setup({
+	on_attach = onAttach,
+	capabilities = capabilities,
+	root_dir = lspconfig.util.root_pattern('deno.json', 'deno.jsonc'),
+	init_options = {
+		enable = true,
+		unstable = false,
+		lint = false
+	}
+})
+
+vim.g.markdown_fenced_languages = {
+	'ts=typescript'
 }
+
+lspconfig.pyright.setup {
+	on_attach = onAttach,
+	capabilities = capabilities
+}
+
+-- require('lspconfig')['rls'].setup {
+-- 	on_attach = onAttach,
+--	capabilities = capabilities,
+-- 	settings = {
+-- 		rust = {
+-- 			unstable_features = true,
+-- 			build_on_save = false,
+-- 			all_features = true
+-- 		}
+-- 	}
+-- }
 
 vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
 	vim.lsp.diagnostic.on_publish_diagnostics, {

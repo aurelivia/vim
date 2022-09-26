@@ -11,7 +11,7 @@ syn region jstsParen matchgroup=jstsParens start=/(\ze\_s*[^\_s)]/ end=/)/ conta
 hi def link jstsParens Noise
 syn region jstsBracket matchgroup=jstsBrackets start=/\[/ end=/\]/ contains=@jstsExpression,jstsSpread extend
 hi def link jstsBrackets Noise
-syn keyword jstsThis this
+syn keyword jstsThis this self
 hi def link jstsThis Keyword
 
 syn match jstsApply /\<\%(async\|await\)\@![a-z_\$]\k*\ze\s*(/ skipwhite skipempty nextgroup=jstsAppliedContents
