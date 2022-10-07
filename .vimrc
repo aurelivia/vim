@@ -545,7 +545,7 @@ cmp.setup({
 		end
 	},
 	mapping = {
-		['<Tab>'] = cmp.mapping(function (fallback)
+		['<S-Tab>'] = cmp.mapping(function (fallback)
 			if cmp.visible() then
 				cmp.select_next_item()
 			elseif vim.fn['vsnip#available'](1) == 1 then
@@ -605,6 +605,9 @@ lspconfig.tsserver.setup({
 				enable = false,
 				trimTrailingWhitespace = false
 			}
+		},
+		diagnostics = {
+			ignoredCodes = { 2350, 7043, 7044, 7045, 7056, 7047, 7048, 7049, 7050 }
 		}
 	}
 })
