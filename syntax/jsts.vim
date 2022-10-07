@@ -294,6 +294,20 @@ hi def link jstsTypeImport Statement
 syn region jstsTypeImportParens contained matchgroup=jstsParens start=/(/ end=/)/ extend contains=jstsString skipwhite skipempty nextgroup=jstsTypeImportDot
 syn match jstsTypeImportDot contained /./ skipwhite skipempty nextgroup=jstsTypeIdentifier
 
+syn keyword jstsTypeInterface interface skipwhite skipempty nextgroup=jstsInterfaceIdentifier
+hi def link jstsTypeInterface Statement
+syn match jstsInterfaceIdentifier contained /\<\K\k*/ skipwhite skipempty nextgroup=jstsTypeObject
+hi def link jstsInterfaceIdentifier Type
+
+syn keyword jstsTypeNamespace namespace skipwhite skipempty nextgroup=jstsNamespaceIdentifier
+hi def link jstsTypeNamespace Statement
+syn match jstsNamespaceIdentifier contained /\<\K\k*/ skipwhite skipempty nextgroup=jstsNamespaceBlock
+hi def link jstsNamespaceIdentifier Type
+syn region jstsNamespaceBlock contained matchgroup=jstsBraces start=/{/ end=/}/ contains=@jstsNamespaceBlockContains extend fold
+syn cluster jstsNamespaceBlockContains contains=jstsDefinition,jstsNamespaceExport,jstsAsync,jstsFunction,jstsClass
+syn keyword jstsNamespaceExport contained export skipwhite skipempty nextgroup=jstsDefinition,jstsAsync,jstsFunction,jstsClass
+hi def link jstsNamespaceExport Statement
+
 " Globals
 
 syn keyword jstsGlobals arguments console document fetch window module exports global process __dirname __filename decodeURI decodeURIComponent encodeURI encodeURIComponent eval isFinite isNaN parseFloat parseInt Error EvalError InternalError RangeError ReferenceError StopIteration SyntaxError TypeError URIError
