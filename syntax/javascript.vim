@@ -4,7 +4,7 @@
 
 if !exists('main_syntax')
 	if exists('b:current_syntax')
-		finish
+		syntax clear
 	endif
 	let main_syntax = 'javascript'
 endif

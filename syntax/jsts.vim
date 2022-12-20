@@ -1,8 +1,8 @@
 syntax iskeyword @,48-57,_,192-255,$
 
-syn cluster jstsNotObject contains=@jstsLiterals,jstsUpper,jstsRegExp,jstsParen,jstsBracket,jstsApply,jstsOperator,jstsTernary,jstsThis,jstsFunction,jstsArrowFunction,jstsGlobals,jstsClass,tsxTag,jstsAsync,jstsAwait
-syn cluster jstsExpression contains=@jstsNotObject,jstsGenericArrow,jstsObject,jstsAppliedType,jstsCast
-syn cluster jstsBlockContains contains=@jstsNotObject,jstsBlock,jstsDefinition,jstsStatement,jstsLabel,jstsConditional,jstsLoop,jstsThrow,jstsTry,jstsDelete,jstsAppliedType,jstsNamespace,jstsAbstract,jstsCast,jstsTypedef
+syn cluster jstsNotObject contains=@jstsLiterals,jstsUpper,jstsRegExp,jstsParen,jstsBracket,jstsApply,jstsOperator,jstsGenericApply,jstsTernary,jstsThis,jstsFunction,jstsArrowFunction,jstsGlobals,jstsClass,tsxTag,jstsAsync,jstsAwait
+syn cluster jstsExpression contains=@jstsNotObject,jstsObject,jstsCast
+syn cluster jstsBlockContains contains=@jstsNotObject,jstsBlock,jstsDefinition,jstsStatement,jstsLabel,jstsConditional,jstsLoop,jstsThrow,jstsTry,jstsDelete,jstsNamespace,jstsAbstract,jstsCast,jstsTypedef
 syn cluster jstsNoComment contains=jstsComment,jstsString,jstsTemplateLiteral,jstsRegExp,jstsRegExpGroup,jstsRegExpCharClass,jstsObjectKeyString
 
 syn region jstsBlock matchgroup=jstsBraces start=/{/ end=/}/ contains=@jstsBlockContains extend fold
@@ -57,6 +57,8 @@ syn match jstsSpread /\.\.\./ skipwhite skipempty nextgroup=@jstsExpression
 hi def link jstsSpread Operator
 syn match jstsDelete /[^.]\s*\zsdelete /
 hi def link jstsDelete Operator
+
+syn region jstsGenericApply matchgroup=jstsOperator start=/<\ze[a-zA-Z, <>"']\+>\s*(/ end=/>\ze\s*(/ contains=@jstsGenericContains skipwhite skipempty nextgroup=jstsAppliedContents
 
 " RegExp
 
@@ -145,7 +147,6 @@ hi def link jstsAwait Keyword
 " syn region jstsArrowFunction matchgroup=jstsArgumentParens start=`(\ze\%(/\*.\{-}\*/\)\?\_s*\%(\%([^()]\+\>?\?:\)\|\%([^():?]*)\_s*\%(=>\|?\?:\)\)\)` end=/)/ extend contains=@jstsArgumentsContains skipwhite skipempty nextgroup=jstsTypeReturned,jstsArrow
 syn match jstsArrow /=>/ skipwhite skipempty nextgroup=jstsBlock,@jstsNotObject
 hi def link jstsArrow Operator
-syn region jstsGenericArrowFunction matchgroup=jstsArgumentParens start=/<\ze\%(\k\|,\)\{-1,}>\s*(/ end=/>/ extend contains=@jstsGenericContains skipwhite skipempty nextgroup=jstsArrowFunction
 
 syn region jstsTypeReturned contained matchgroup=jstsOperator start=/:/ end=/\ze\%([{;]\|=>\)/ contains=@jstsTypeNoFn skipwhite skipempty nextgroup=jstsArrow,jstsBlock,@jstsNotObject
 syn region jstsFunctionGenerics contained matchgroup=jstsArgumentParens start=/</ end=/>/ contains=@jstsGenericContains skipwhite skipempty nextgroup=jstsArguments
@@ -185,7 +186,7 @@ syn region jstsDestructureDefault contained start=/=/ end=/[,}\]]\&/ contains=@j
 " Modules
 
 syn keyword jstsModule import skipwhite skipempty nextgroup=jstsModuleStar,jstsModuleIdentifier,jstsModuleObject,jstsModuleImportType
-syn keyword jstsModule export skipwhite skipempty nextgroup=jstsDefinition,jstsAsync,jstsFunction,jstsClass,jstsModuleDefault,jstsModuleStar,jstsModuleIdentifier,jstsModuleObject,jstsModuleExportType
+syn keyword jstsModule export skipwhite skipempty nextgroup=jstsDefinition,jstsAsync,jstsFunction,jstsClass,jstsTypeInterface,jstsModuleDefault,jstsModuleStar,jstsModuleObject,jstsModuleExportType,jstsModuleIdentifier
 hi def link jstsModule Statement
 syn match jstsModuleIdentifier contained /\<\K\k*/ skipwhite skipempty nextgroup=jstsModuleAs,jstsModuleFrom
 syn region jstsModuleObject contained matchgroup=jstsBraces start=/{/ end=/}/ extend fold contains=jstsModuleIdentifier,jstsModuleDefaultAs skipwhite skipempty nextgroup=jstsModuleFrom
@@ -215,7 +216,7 @@ hi def link jstsModuleDefaultAsType Keyword
 
 " Types
 
-syn keyword jstsTypedef type skipwhite skipempty nextgroup=jstsTypedefIdentifier
+syn match jstsTypedef /^\s*type/ skipwhite skipempty nextgroup=jstsTypedefIdentifier
 hi def link jstsTypedef Statement
 syn match jstsTypedefIdentifier contained /\<\K\k*/ skipwhite skipempty nextgroup=jstsTypedefGenerics,jstsTypedefEquals
 hi def link jstsTypedefIdentifier Type
@@ -296,8 +297,11 @@ syn match jstsTypeImportDot contained /./ skipwhite skipempty nextgroup=jstsType
 
 syn keyword jstsTypeInterface interface skipwhite skipempty nextgroup=jstsInterfaceIdentifier
 hi def link jstsTypeInterface Statement
-syn match jstsInterfaceIdentifier contained /\<\K\k*/ skipwhite skipempty nextgroup=jstsTypeObject
+syn match jstsInterfaceIdentifier contained /\<\K\k*/ skipwhite skipempty nextgroup=jstsTypeObject,jstsTypeInterfaceExtends,jstsTypeInterfaceComma
 hi def link jstsInterfaceIdentifier Type
+syn keyword jstsTypeInterfaceExtends contained extends skipwhite skipempty nextgroup=jstsInterfaceIdentifier
+hi def link jstsTypeInterfaceExtends Statement
+syn match jstsTypeInterfaceComma contained /,/ skipwhite skipempty nextgroup=jstsInterfaceIdentifier
 
 syn keyword jstsTypeNamespace namespace skipwhite skipempty nextgroup=jstsNamespaceIdentifier
 hi def link jstsTypeNamespace Statement
