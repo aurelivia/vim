@@ -636,10 +636,15 @@ vim.g.markdown_fenced_languages = {
 	'ts=typescript'
 }
 
-lspconfig.pyright.setup {
+lspconfig.pyright.setup({
 	on_attach = onAttach,
 	capabilities = capabilities
-}
+})
+
+lspconfig.csharp_ls.setup({
+	on_attach = onAttach,
+	capabilities = capabilities
+})
 
 lspconfig.rust_analyzer.setup({
 	on_attach = onAttach,
