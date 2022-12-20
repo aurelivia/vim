@@ -58,6 +58,8 @@ Plug 'git@github.com:hrsh7th/nvim-cmp'
 
 Plug 'git@github.com:felipec/notmuch-vim.git', { 'on': 'NotMuch' }
 
+Plug 'git@github.com:chrisbra/unicode.vim'
+
 call plug#end()
 exec 'set runtimepath-=' . g:dotvim
 " let &runtimepath = substitute(&runtimepath, g:dotvim, trim(g:dotvim, '/', 2), '')
@@ -137,6 +139,7 @@ let g:session_autosave = 'no'
 let g:session_autoload = 'no'
 let g:tagbar_left = 1
 let g:vue_pre_processors = []
+let g:rust_recommended_style = 0
 
 let g:ctrlsf_mapping = {
 	\ 'openb': ['<CR>', 'o'],
@@ -218,7 +221,7 @@ command! -nargs=1 Tabs call <SID>NoExTabs(<args>)
 augroup NeedsSpaces
 	au Filetype yaml setlocal noai nocin nosi expandtab inde=
 	au Filetype markdown setlocal expandtab
-	au Filetype hs setlocal expandtab
+	au Filetype haskell setlocal expandtab
 augroup END
 
 augroup NoSpaces
@@ -313,6 +316,8 @@ endif
 endfunction
 
 command! -nargs=1 SetKBD call <SID>SetKBD(<args>)
+
+command! Firefox silent execute '!firefox file://%:p'
 
 " Editing
 nn <CR> i
@@ -607,7 +612,11 @@ lspconfig.tsserver.setup({
 			}
 		},
 		diagnostics = {
-			ignoredCodes = { 2350, 7043, 7044, 7045, 7056, 7047, 7048, 7049, 7050 }
+			ignoredCodes = {
+				2350, -- Only void function can be called with new
+				7043, 7044, 7045, 7056, 7047, 7048, 7049, 7050, -- Implicit any warnings
+				2365 -- Operator can't be applied to types
+			}
 		}
 	}
 })
@@ -632,17 +641,15 @@ lspconfig.pyright.setup {
 	capabilities = capabilities
 }
 
--- require('lspconfig')['rls'].setup {
--- 	on_attach = onAttach,
---	capabilities = capabilities,
--- 	settings = {
--- 		rust = {
--- 			unstable_features = true,
--- 			build_on_save = false,
--- 			all_features = true
--- 		}
--- 	}
--- }
+lspconfig.rust_analyzer.setup({
+	on_attach = onAttach,
+	capabilities = capabilities
+})
+
+lspconfig.clangd.setup({
+	on_attach = onAttach,
+	capabilities = capabilities
+})
 
 vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
 	vim.lsp.diagnostic.on_publish_diagnostics, {

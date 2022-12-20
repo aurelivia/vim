@@ -1,8 +1,17 @@
+let g:skip_loading_mswin = 1
 let g:dotvim = get(g:, 'dotvim', $HOME . '\.vim\')
-exec 'set shell=\"' . g:dotvim . 'win-cmd.bat\"'
-set shellquote=
-set shellxquote=(
-set shellcmdflag=
+let $PATH = $PATH . ';C:\MSYS\usr\local\bin;C:\MSYS\usr\bin;C:\MSYS\bin;C:\MSYS\opt\bin'
+function! <SID>SetShell()
+	let &shell='"C:\MSYS\usr\bin\bash.exe"'
+	set shellcmdflag=-c
+	set shellslash
+	set shellquote=
+	set shellxquote=
+	set shellxescape=
+endfunction
+
+autocmd VimEnter * call <SID>SetShell()
+
 au BufRead,BufNewFile .winrc set filetype=vim
 set runtimepath-=~/vimfiles
 set runtimepath-=$VIM/vimfiles
@@ -15,7 +24,6 @@ exec 'source ' . g:dotvim . '.vimrc'
 
 set nofixeol noeol
 set clipboard=unnamed
-set gfn=DejaVu_Sans_Mono:h10
 let $TEMP = expand($TEMP)
 let $TMP = $TEMP
 exec 'set directory=' . $TEMP . ' backupdir=' . $TEMP . ' undodir=' . $TEMP
@@ -27,13 +35,13 @@ au BufNewFile,BufRead *.ops set filetype=perl
 au BufNewFile,BufRead *.ocs set filetype=cs
 au BufNewFile,BufRead * set noeol
 command! Evimrc execute 'e ' . g:vimrc . '| :e ' . g:dotvim . '.winrc'
-command! Svimrc execute 'so ' . $HOME . '\.vimrc'
+command! Svimrc execute 'so ' . g:dotvim . '\.winrc'
 command! IncFont let &guifont = substitute(&guifont, ':h\zs\d\+', '\=eval(submatch(0)+1)', 'g')
 command! DecFont let &guifont = substitute(&guifont, ':h\zs\d\+', '\=eval(submatch(0)-1)', 'g')
 
 cd C:\
 
-no <F13> gj
+ino <F13> a
 
 function! DoInDir(fn,...)
 	let l:ech = get(a:,1,0)
