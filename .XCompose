@@ -16,10 +16,8 @@
 <Multi_key> <d> <period> : "°" U00B0 # Degree Symbol
 <Multi_key> <period> <d> : "°" U00B0 # Degree Symbol
 <Multi_key> <d> <e> <g> : "°" U00B0 # Degree Symbol
-<Multi_key> <braceleft> <bracketleft> : "⟨" # Left Chevron
-<Multi_key> <bracketleft> <braceleft> : "⟨" # Left Chevron
-<Multi_key> <braceright> <bracketright> : "⟩" # Right Chevron
-<Multi_key> <bracketright> <braceright> : "⟩" # Right Chevron
+<Multi_key> <bracketleft> <bracketleft> : "⟨" # Left Chevron
+<Multi_key> <bracketright> <bracketright> : "⟩" # Right Chevron
 <Multi_key> <braceleft> <braceleft> : "«" # Left Guillemet
 <Multi_key> <braceright> <braceright> : "»" # Right Guillemet
 
@@ -263,9 +261,13 @@
 <Multi_key> <o> <a> : "ɒ" # Latin Small Letter Turned Alpha
 <Multi_key> <o> <A> : "ɒ" # Latin Small Letter Turned Alpha
 <Multi_key> <E> <3> : "Ɛ" U0190 # Latin Capital Letter Open E
-<Multi_key> <E> <numbersign> : "Ɛ" U0190 # Latin Capital Letter Open E
+# <Multi_key> <E> <numbersign> : "Ɛ" U0190 # Latin Capital Letter Open E
 <Multi_key> <e> <3> : "ɛ" U025B # Latin Small Letter Open E
-<Multi_key> <e> <numbersign> : "ɛ" U025B # Latin Small Letter Open E
+# <Multi_key> <e> <numbersign> : "ɛ" U025B # Latin Small Letter Open E
+<Multi_key> <3> <E> : "Ɜ" UA7AB # Latin Capital Letter Reversed Open E
+# <Multi_key> <numbersign> <E> : "Ɜ" UA7AB # Latin Capital Letter Reversed Open E
+<Multi_key> <3> <e> : "ɜ" U025C # Latin Small Letter Reversed Open E
+# <Multi_key> <numbersign> <e> : "ɜ" U025C # Latin Small Letter Reversed Open E
 <Multi_key> <O> <c> : "Ɔ" U0186 # Latin Capital Letter Open O
 <Multi_key> <O> <C> : "Ɔ" U0186 # Latin Capital Letter Open O
 <Multi_key> <o> <c> : "ɔ" U0254 # Latin Small Letter Open O
@@ -396,6 +398,64 @@
 
 <Multi_key> <equal> <apostrophe> : "ꚝ" UA69D # Modifier Letter Cyrillic Soft Sign (Superscript)
 <Multi_key> <equal> <grave> : "ꚜ" UA69C # Modifier Letter Cyrillic Hard Sign (Superscript)
+
+
+
+
+
+# ===== SMALL CAPITALS =====
+
+<Multi_key> <numbersign> <a> : "ᴀ" U1D00 # Latin Letter Small Capital A
+<Multi_key> <numbersign> <A> : "ᴀ" U1D00 # Latin Letter Small Capital A
+<Multi_key> <numbersign> <b> : "ʙ" U0299 # Latin Letter Small Capital B
+<Multi_key> <numbersign> <B> : "ʙ" U0299 # Latin Letter Small Capital B
+<Multi_key> <numbersign> <c> : "ᴄ" U1D04 # Latin Letter Small Capital C
+<Multi_key> <numbersign> <C> : "ᴄ" U1D04 # Latin Letter Small Capital C
+<Multi_key> <numbersign> <d> : "ᴅ" U1D05 # Latin Letter Small Capital D
+<Multi_key> <numbersign> <D> : "ᴅ" U1D05 # Latin Letter Small Capital D
+<Multi_key> <numbersign> <e> : "ᴇ" U1D07 # Latin Letter Small Capital E
+<Multi_key> <numbersign> <E> : "ᴇ" U1D07 # Latin Letter Small Capital E
+<Multi_key> <numbersign> <f> : "ꜰ" UA730 # Latin Letter Small Capital F
+<Multi_key> <numbersign> <F> : "ꜰ" UA730 # Latin Letter Small Capital F
+<Multi_key> <numbersign> <g> : "ɢ" U0262 # Latin Letter Small Capital G
+<Multi_key> <numbersign> <G> : "ɢ" U0262 # Latin Letter Small Capital G
+<Multi_key> <numbersign> <h> : "ʜ" U029C # Latin Letter Small Capital H
+<Multi_key> <numbersign> <H> : "ʜ" U029C # Latin Letter Small Capital H
+<Multi_key> <numbersign> <i> : "ɪ" U026A # Latin Letter Small Capital I
+<Multi_key> <numbersign> <I> : "ɪ" U026A # Latin Letter Small Capital I
+<Multi_key> <numbersign> <j> : "ᴊ" U1D0A # Latin Letter Small Capital J
+<Multi_key> <numbersign> <J> : "ᴊ" U1D0A # Latin Letter Small Capital J
+<Multi_key> <numbersign> <k> : "ᴋ" U1D0B # Latin Letter Small Capital K
+<Multi_key> <numbersign> <K> : "ᴋ" U1D0B # Latin Letter Small Capital K
+<Multi_key> <numbersign> <l> : "ʟ" U029F # Latin Letter Small Capital L
+<Multi_key> <numbersign> <L> : "ʟ" U029F # Latin Letter Small Capital L
+<Multi_key> <numbersign> <m> : "ᴍ" U1D0D # Latin Letter Small Capital M
+<Multi_key> <numbersign> <M> : "ᴍ" U1D0D # Latin Letter Small Capital M
+<Multi_key> <numbersign> <n> : "ɴ" U0274 # Latin Letter Small Capital N
+<Multi_key> <numbersign> <N> : "ɴ" U0274 # Latin Letter Small Capital N
+<Multi_key> <numbersign> <o> : "ᴏ" U1D0F # Latin Letter Small Capital O
+<Multi_key> <numbersign> <O> : "ᴏ" U1D0F # Latin Letter Small Capital O
+<Multi_key> <numbersign> <p> : "ᴘ" U1D18 # Latin Letter Small Capital P
+<Multi_key> <numbersign> <P> : "ᴘ" U1D18 # Latin Letter Small Capital P
+<Multi_key> <numbersign> <q> : "ꞯ" UA7AF # Latin Letter Small Capital Q
+<Multi_key> <numbersign> <Q> : "ꞯ" UA7AF # Latin Letter Small Capital Q
+<Multi_key> <numbersign> <r> : "ʀ" U0280 # Latin Letter Small Capital R
+<Multi_key> <numbersign> <R> : "ʀ" U0280 # Latin Letter Small Capital R
+<Multi_key> <numbersign> <s> : "ꜱ" UA731 # Latin Letter Small Capital S
+<Multi_key> <numbersign> <S> : "ꜱ" UA731 # Latin Letter Small Capital S
+<Multi_key> <numbersign> <t> : "ᴛ" U1D1B # Latin Letter Small Capital T
+<Multi_key> <numbersign> <T> : "ᴛ" U1D1B # Latin Letter Small Capital T
+<Multi_key> <numbersign> <u> : "ᴜ" U1D1C # Latin Letter Small Capital U
+<Multi_key> <numbersign> <U> : "ᴜ" U1D1C # Latin Letter Small Capital U
+<Multi_key> <numbersign> <v> : "ᴠ" U1D20 # Latin Letter Small Capital V
+<Multi_key> <numbersign> <V> : "ᴠ" U1D20 # Latin Letter Small Capital V
+<Multi_key> <numbersign> <w> : "ᴡ" U1D21 # Latin Letter Small Capital W
+<Multi_key> <numbersign> <W> : "ᴡ" U1D21 # Latin Letter Small Capital W
+# <Multi_key> <numbersign> <x> : "ᴀ" U # Latin Letter Small Capital X
+<Multi_key> <numbersign> <y> : "ʏ" U028F # Latin Letter Small Capital Y
+<Multi_key> <numbersign> <Y> : "ʏ" U028F # Latin Letter Small Capital Y
+<Multi_key> <numbersign> <z> : "ᴢ" U1D22 # Latin Letter Small Capital Z
+<Multi_key> <numbersign> <Z> : "ᴢ" U1D22 # Latin Letter Small Capital Z
 
 
 
