@@ -47,23 +47,40 @@ hi def link hsNumber Number
 syn match hsFloat /\v<[0-9]%(_*[0-9])*\.[0-9]%(_*[0-9])*%(_*[eE][-+]?[0-9]%(_*[0-9])*)?>|<[0-9]%(_*[0-9])*_*[eE][-+]?[0-9]%(_*[0-9])*>|<0[xX]_*[0-9a-fA-F]%(_*[0-9a-fA-F])*\.[0-9a-fA-F]%(_*[0-9a-fA-F])*%(_*[pP][-+]?[0-9]%(_*[0-9])*)?>|<0[xX]_*[0-9a-fA-F]%(_*[0-9a-fA-F])*_*[pP][-+]?[0-9]%(_*[0-9])*>/
 hi def link hsFloat Number
 
-syn keyword hsModule module
-" syn match hsKeyword /\<import\>.*/ contains=
+syn keyword hsModule module skipwhite skipempty nextgroup=hsModuleName
+hi def link hsModule Function
+syn match hsModuleName contained /[a-zA-Z._]/
+syn keyword hsImport import skipwhite skipempty nextgroup=hsQualified,hsImportName
+hi def link hsImport Function
+syn keyword hsQualified contained qualified skipwhite skipempty nextgroup=hsImportName
+hi def link hsQualified hsImport
+syn keyword hsImportAs contained as
+hi def link hsImportAs hsImport
+syn match hsImportName contained /[a-zA-Z._]\+/ skipwhite skipempty nextgroup=hsImports,hsImportAs,hsImportHiding
+syn keyword hsImportHiding contained hiding skipwhite skipempty nextgroup=hsImports
+
+syn region hsImports contained start=/(/ end=/)/ contains=TOP skipwhite skipempty nextgroup=hsImportAs,hsImportHiding
 
 syn keyword hsInfix infix infixl infixr
-hi def link hsInfix Label
+hi def link hsInfix Special
 
 syn keyword hsWhere where
-hi def link hsWhere Function
+hi def link hsWhere Special
+
+syn keyword hsOtherwise otherwise
+hi def link hsOtherwise Special
 
 syn keyword hsTypedef type newtype class data family deriving instance default
-hi def link hsTypedef Label
+hi def link hsTypedef Function
 
 syn keyword hsStatement mdo do case of let in if then else
 hi def link hsStatement Function
 
 syn keyword hsBoolean True False
 hi def link hsBoolean Boolean
+
+syn match hsLambda /\\\l\?\k*/
+hi def link hsLambda Special
 
 syn match hsComment /---*\%([^-!#$%&\*\+./<=>\?@\\^|~].*\)\?$/ contains=@Spell
 syn region hsComment start=/{-/ end=/-}/ contains=@Spell
