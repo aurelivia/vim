@@ -6,3 +6,4 @@ coc/data/extensions/*
 !coc/data/extensions/package.json
 sessions/
 temp/
+autoload/plug.vim

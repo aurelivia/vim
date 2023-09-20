@@ -9,7 +9,18 @@ else
 endif
 let g:vimrc = g:dotvim . '.vimrc'
 
-call plug#begin(g:dotvim . 'packages')
+silent! call system('curl -fLo "' . g:dotvim . 'autoload/plug.vim" --create-dirs "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
+
+if !exists(':Plug')
+	if filereadable(g:dotvim . 'autoload/plug.vim')
+		exec 'source ' . g:dotvim . 'autoload/plug.vim'
+	else
+		echohl ErrorMsg
+		echomsg 'plug.vim missing and could not be retrieved.'
+		echohl None
+		finish
+	endif
+endif
 
 function! LSPCheck(info) abort
 	if a:info.status == 'unchanged' && !a:info.force
@@ -22,8 +33,9 @@ function! LSPCheck(info) abort
 		echohl None
 		return
 	endif
-
 endfunction
+
+call plug#begin(g:dotvim . 'packages')
 
 " Visuals
 " Plug 'git@github.com:joshdick/onedark.vim' Using local fork
@@ -222,6 +234,8 @@ augroup NeedsSpaces
 	au Filetype yaml setlocal noai nocin nosi expandtab inde=
 	au Filetype markdown setlocal expandtab
 	au Filetype haskell setlocal expandtab
+	au Filetype cabal setlocal expandtab
+	au Filetype purescript setlocal expandtab
 augroup END
 
 augroup NoSpaces
@@ -317,7 +331,7 @@ endfunction
 
 command! -nargs=1 SetKBD call <SID>SetKBD(<args>)
 
-command! Firefox silent execute '!firefox file://%:p'
+command! Firefox execute '!firefox file://%:p'
 
 " Editing
 nn <CR> i
