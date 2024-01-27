@@ -9,7 +9,7 @@ else
 endif
 let g:vimrc = g:dotvim . '.vimrc'
 
-silent! call system('curl -fLo "' . g:dotvim . 'autoload/plug.vim" --create-dirs "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
+silent! call system('curl -fLo "' . g:dotvim . 'autoload/plug.vim" --create-dirs "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"')
 
 if !exists(':Plug')
 	if filereadable(g:dotvim . 'autoload/plug.vim')
@@ -35,7 +35,7 @@ function! LSPCheck(info) abort
 	endif
 endfunction
 
-call plug#begin(g:dotvim . 'packages')
+silent! call plug#begin(g:dotvim . 'packages')
 
 " Visuals
 " Plug 'git@github.com:joshdick/onedark.vim' Using local fork
@@ -58,19 +58,19 @@ Plug 'git@github.com:godlygeek/tabular'
 Plug 'git@github.com:gerw/vim-HiLinkTrace', { 'on': 'HLT' }
 " Plug 'git@github.com:tpope/vim-fugitive'
 " Plug 'git@github.com:ngemily/vim-vp4'
-
-Plug 'git@github.com:neovim/nvim-lspconfig', { 'do': function('LSPCheck') }
-Plug 'git@github.com:hrsh7th/vim-vsnip'
-Plug 'git@github.com:hrsh7th/cmp-vsnip'
-Plug 'git@github.com:hrsh7th/cmp-nvim-lsp'
-Plug 'git@github.com:hrsh7th/cmp-buffer'
-Plug 'git@github.com:hrsh7th/cmp-path'
-Plug 'git@github.com:hrsh7th/cmp-cmdline'
-Plug 'git@github.com:hrsh7th/nvim-cmp'
-
 Plug 'git@github.com:felipec/notmuch-vim.git', { 'on': 'NotMuch' }
-
 Plug 'git@github.com:chrisbra/unicode.vim'
+
+if has('nvim')
+	Plug 'git@github.com:neovim/nvim-lspconfig', { 'do': function('LSPCheck') }
+	Plug 'git@github.com:hrsh7th/vim-vsnip'
+	Plug 'git@github.com:hrsh7th/cmp-vsnip'
+	Plug 'git@github.com:hrsh7th/cmp-nvim-lsp'
+	Plug 'git@github.com:hrsh7th/cmp-buffer'
+	Plug 'git@github.com:hrsh7th/cmp-path'
+	Plug 'git@github.com:hrsh7th/cmp-cmdline'
+	Plug 'git@github.com:hrsh7th/nvim-cmp'
+endif
 
 call plug#end()
 exec 'set runtimepath-=' . g:dotvim
@@ -97,19 +97,19 @@ set enc=utf-8 fileencodings=utf-8
 let g:onedark_termcolors = 256
 let g:onedark_terminal_italics = 1
 let g:onedark_color_overrides = {
-	\'background': { 'gui': '#2C2C2C', 'cterm': 'NONE', 'cterm16': 'NONE' },
-	\'black': { 'gui': '#2C2C2C', 'cterm': 'NONE', 'cterm16': 'NONE' },
-	\'foreground': { 'gui': '#AFAFAF', 'cterm': 'NONE', 'cterm16': 'NONE' },
-	\'white': { 'gui': '#AFAFAF', 'cterm': 'NONE', 'cterm16': 'NONE' },
-	\'comment_grey': { 'gui': '#5F5F5F', 'cterm': '59', 'cterm16': '7' },
-	\'gutter_fg_grey': { 'gui': '#444444', 'cterm': '238', 'cterm16': '8' },
-	\'cursor_grey': { 'gui': '#303030', 'cterm': '236', 'cterm16': '0' },
-	\'visual_grey': { 'gui': '#3A3A3A', 'cterm': '237', 'cterm16': '8' },
-	\'menu_grey': { 'gui': '#3A3A3A', 'cterm': '237', 'cterm16': '7' },
-	\'special_grey': { 'gui': '#444444', 'cterm': '238', 'cterm16': '7' },
-	\'vertsplit': { 'gui': '#3A3A3A', 'cterm': '59', 'cterm16': '7' },
-	\'yellow': { 'gui': '#D7AF87', 'cterm': '180', 'cterm16': '3' },
-	\'dark_yellow': { 'gui': '#D7875F', 'cterm': '173', 'cterm16': '11' }
+\  'background': { 'gui': '#2C2C2C', 'cterm': 'NONE', 'cterm16': 'NONE' },
+\  'black': { 'gui': '#2C2C2C', 'cterm': 'NONE', 'cterm16': 'NONE' },
+\  'foreground': { 'gui': '#AFAFAF', 'cterm': 'NONE', 'cterm16': 'NONE' },
+\  'white': { 'gui': '#AFAFAF', 'cterm': 'NONE', 'cterm16': 'NONE' },
+\  'comment_grey': { 'gui': '#5F5F5F', 'cterm': '59', 'cterm16': '7' },
+\  'gutter_fg_grey': { 'gui': '#444444', 'cterm': '238', 'cterm16': '8' },
+\  'cursor_grey': { 'gui': '#303030', 'cterm': '236', 'cterm16': '0' },
+\  'visual_grey': { 'gui': '#3A3A3A', 'cterm': '237', 'cterm16': '8' },
+\  'menu_grey': { 'gui': '#3A3A3A', 'cterm': '237', 'cterm16': '7' },
+\  'special_grey': { 'gui': '#444444', 'cterm': '238', 'cterm16': '7' },
+\  'vertsplit': { 'gui': '#3A3A3A', 'cterm': '59', 'cterm16': '7' },
+\  'yellow': { 'gui': '#D7AF87', 'cterm': '180', 'cterm16': '3' },
+\  'dark_yellow': { 'gui': '#D7875F', 'cterm': '173', 'cterm16': '11' }
 \}
 
 colorscheme onedark
@@ -133,7 +133,6 @@ set dy=uhex,lastline
 set gcr+=n-v-c:blinkon0
 set belloff=all
 
-au InsertLeave * :normal `^
 set virtualedit=onemore
 set clipboard=unnamedplus
 
@@ -154,10 +153,10 @@ let g:vue_pre_processors = []
 let g:rust_recommended_style = 0
 
 let g:ctrlsf_mapping = {
-	\ 'openb': ['<CR>', 'o'],
-	\ 'open': ['O', '<2-LeftMouse>'],
-	\ 'next': 'n',
-	\ 'prev': 'N',
+\  'openb': ['<CR>', 'o'],
+\  'open': ['O', '<2-LeftMouse>'],
+\  'next': 'n',
+\  'prev': 'N',
 \ }
 " {'chgmode': 'M', 'popenf': 'P', 'open': ['<CR>', 'o', '<2-LeftMouse>'], 'pquit': 'q', 'vsplit': '', 'openb': 'O', 'stop': '<C-C>', 'quit': 'q', 'next': '<C-J>', 'split': '<C-O>', 'prev': '<C-K>', 'tabb': 'T', 'loclist': '', 'popen': 'p', 'tab': 't'}
 
@@ -236,6 +235,7 @@ augroup NeedsSpaces
 	au Filetype haskell setlocal expandtab
 	au Filetype cabal setlocal expandtab
 	au Filetype purescript setlocal expandtab
+	au Filetype gdscript setlocal expandtab
 augroup END
 
 augroup NoSpaces
@@ -333,8 +333,9 @@ command! -nargs=1 SetKBD call <SID>SetKBD(<args>)
 
 command! Firefox execute '!firefox file://%:p'
 
+" au InsertLeave * :normal `^
 " Editing
-nn <CR> i
+nn <CR> a
 " nn i <Insert>
 ino <CR> <ESC>
 vn <CR> <ESC>
@@ -525,11 +526,14 @@ command! -nargs=? Wrap if strlen(<q-args>) | set textwidth=<args> | else | set t
 
 command! Nowrap set textwidth=0
 
+set fileformats=unix
 augroup FormatOptions
 	au Filetype html setlocal formatoptions=tmM
 augroup END
 
-
+if has('nvim')
+	exec 'source ' . g:dotvim . '.nvimrc'
+endif
 
 " " exchange word under cursor with the next word without moving the cursor
 " nnoremap gw "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><C-o><C-l>
@@ -541,139 +545,3 @@ augroup END
 " nnoremap <silent> <Leader><Right> "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><C-o>/\w\+\_W\+<CR><C-l>
 
 set completeopt=menu,menuone,noselect
-
-lua << EOF
-local cmp = require('cmp')
-
-local has_words_before = function()
-  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
-
-local feedkey = function(key, mode)
-  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
-end
-
-cmp.setup({
-	completion = {
-		autocomplete = false
-	},
-	snippet = {
-		expand = function (args)
-			vim.fn['vsnip#anonymous'](args.body)
-		end
-	},
-	mapping = {
-		['<S-Tab>'] = cmp.mapping(function (fallback)
-			if cmp.visible() then
-				cmp.select_next_item()
-			elseif vim.fn['vsnip#available'](1) == 1 then
-				feedkey('<Plug>(vsnip-expand-or-jump)', '')
-			elseif has_words_before() then
-				cmp.complete()
-			else
-				fallback()
-			end
-		end, { 'i' }),
-		['<Down>'] = { i = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }) },
-		['<Up>'] = { i = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }) },
-		['<ESC>'] = { i = cmp.mapping.abort() },
-		['<Space>'] = cmp.mapping(function (fallback)
-			if cmp.visible() then
-				cmp.mapping.confirm({ select = false })
-			else
-				fallback()
-			end
-		end, { 'i' })
-	},
-	sources = cmp.config.sources({
-		{ name = 'nvim_lsp' },
-		{ name = 'vsnip' }
-	}, {
-		{ name = 'buffer' }
-	})
-})
-
-local capabilities = require('cmp_nvim_lsp').default_capabilities
-
-local opts = { noremap = true, silent = true }
-vim.keymap.set('n', 'ge', vim.diagnostic.goto_next, opts)
-vim.keymap.set('n', 'gE', vim.diagnostic.goto_prev, opts)
-vim.keymap.set('n', '<C-e>', vim.diagnostic.open_float, opts)
-
-local onAttach = function(client, bufno)
-	local opts = { noremap = true, silent = true, buffer = bufno }
-	vim.keymap.set('n', '<C-h>', vim.lsp.buf.hover, opts)
-	vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-end
-
-local lspconfig = require('lspconfig')
-
-lspconfig.tsserver.setup({
-	on_attach = onAttach,
-	capabilities = capabilities,
-		root_dir = function (path)
-			local denoPath = lspconfig.util.root_pattern('deno.json', 'deno.jsonc')(path)
-			if denoPath then return end
-			return lspconfig.util.root_pattern('tsconfig.json')(path)
-				or lspconfig.util.root_pattern('package.json', 'jsconfig.json', '.git')(path)
-		end,
-	settings = {
-		typescript = {
-			format = {
-				enable = false,
-				trimTrailingWhitespace = false
-			}
-		},
-		diagnostics = {
-			ignoredCodes = {
-				2350, -- Only void function can be called with new
-				7043, 7044, 7045, 7056, 7047, 7048, 7049, 7050, -- Implicit any warnings
-				2365 -- Operator can't be applied to types
-			}
-		}
-	}
-})
-
-lspconfig.denols.setup({
-	on_attach = onAttach,
-	capabilities = capabilities,
-	root_dir = lspconfig.util.root_pattern('deno.json', 'deno.jsonc'),
-	init_options = {
-		enable = true,
-		unstable = false,
-		lint = false
-	}
-})
-
-vim.g.markdown_fenced_languages = {
-	'ts=typescript'
-}
-
-lspconfig.pyright.setup({
-	on_attach = onAttach,
-	capabilities = capabilities
-})
-
-lspconfig.csharp_ls.setup({
-	on_attach = onAttach,
-	capabilities = capabilities
-})
-
-lspconfig.rust_analyzer.setup({
-	on_attach = onAttach,
-	capabilities = capabilities
-})
-
-lspconfig.clangd.setup({
-	on_attach = onAttach,
-	capabilities = capabilities
-})
-
-vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
-	vim.lsp.diagnostic.on_publish_diagnostics, {
-		-- delay update diagnostics
-		update_in_insert = false,
-	}
-)
-EOF

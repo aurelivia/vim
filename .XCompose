@@ -20,6 +20,8 @@
 <Multi_key> <bracketright> <bracketright> : "⟩" # Right Chevron
 <Multi_key> <braceleft> <braceleft> : "«" # Left Guillemet
 <Multi_key> <braceright> <braceright> : "»" # Right Guillemet
+<Multi_key> <comma> <quotedbl> : "“" U201C # Left Double Quotation Mark
+<Multi_key> <period> <quotedbl> : "”" U201D # Right Double Quotation Mark
 
 <Multi_key> <Multi_key> <s> <f> : "¯\\_(ツ)_/¯" # Shrug
 <Multi_key> <Multi_key> <l> <e> <n> <n> <y> : "( ͡° ͜ʖ ͡°)" # Lenny

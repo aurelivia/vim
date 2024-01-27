@@ -14,52 +14,53 @@ set cpo&vim
 
 syntax iskeyword @,48-57,_,39
 
-syn match hsOperator /\%(\<\u\k*\.\)\=[-!#$%&\*\+/<=>\?@\\^|~][-!#$%&\*\+/<=>\?@\\^|~:.]*/
-syn match hsOperator /\<\u\k*\.\.[-!#$%&\*\+/<=>\?@\\^|~:.]*/
-syn match hsOperator /\s\.[-!#$%&\*\+/<=>\?@\\^|~:.]*/
-syn match hsOperator /`\%(\<\u\k*\.\)\=\l\k*`/
+syn match   hsOperator /\%(\<\u\k*\.\)\=[-!#$%&\*\+/<=>\?@\\^|~][-!#$%&\*\+/<=>\?@\\^|~:.]*/
+syn match   hsOperator /\<\u\k*\.\.[-!#$%&\*\+/<=>\?@\\^|~:.]*/
+syn match   hsOperator /\s\.[-!#$%&\*\+/<=>\?@\\^|~:.]*/
+syn match   hsOperator /`\%(\<\u\k*\.\)\=\l\k*`/
 hi def link hsOperator Operator
 
-syn match hsConstructor /\%(\<\u\k*\.\)\=:[-!#$%&\*\+./<=>\?@\\^|~:]*/
-syn match hsConstructor /`\%(\<\u\k*\.\)\=\u\k*`/
+syn match   hsConstructor /\%(\<\u\k*\.\)\=:[-!#$%&\*\+./<=>\?@\\^|~:]*/
+syn match   hsConstructor /`\%(\<\u\k*\.\)\=\u\k*`/
 hi def link hsConstructor Operator
 
-syn match hsLabel /#\l\k*\>/
+syn match   hsLabel /#\l\k*\>/
 hi def link hsLabel Special
 
-syn match hsType /\<\u\k*\>/
+syn match   hsType /\<\u\k*\>/
 hi def link hsType Type
 
-syn match hsDelimiter /[()\[\],;{}]/
+syn match   hsDelimiter /[()\[\],;{}]/
 
-syn match hsEscape contained "\\\([0-9]\+\|o[0-7]\+\|x[0-9a-fA-F]\+\|[\"\\'&\\abfnrtv]\|^[A-Z^_\[\\\]]\)"
-syn match hsEscape contained "\\\(NUL\|SOH\|STX\|ETX\|EOT\|ENQ\|ACK\|BEL\|BS\|HT\|LF\|VT\|FF\|CR\|SO\|SI\|DLE\|DC1\|DC2\|DC3\|DC4\|NAK\|SYN\|ETB\|CAN\|EM\|SUB\|ESC\|FS\|GS\|RS\|US\|SP\|DEL\)"
+syn match   hsEscape contained "\\\([0-9]\+\|o[0-7]\+\|x[0-9a-fA-F]\+\|[\"\\'&\\abfnrtv]\|^[A-Z^_\[\\\]]\)"
+syn match   hsEscape contained "\\\(NUL\|SOH\|STX\|ETX\|EOT\|ENQ\|ACK\|BEL\|BS\|HT\|LF\|VT\|FF\|CR\|SO\|SI\|DLE\|DC1\|DC2\|DC3\|DC4\|NAK\|SYN\|ETB\|CAN\|EM\|SUB\|ESC\|FS\|GS\|RS\|US\|SP\|DEL\)"
 hi def link hsEscape Special
-syn match hsEscapeError contained "\\&\|'''\+"
+syn match   hsEscapeError contained "\\&\|'''\+"
 hi def link hsEscapeError Error
-syn region hsString start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=hsEscape
+syn region  hsString start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=hsEscape
 hi def link hsString String
-syn match hsCharacter /[^a-zA-Z0-9_']'\([^\\]\|\\[^']\+\|\\'\)'/lc=1 contains=hsEscape,hsEscapeError
-syn match hsCharacter /^'\([^\\]\|\\[^']\+\|\\'\)'/ contains=hsEscape,hsEscapeError
+syn match   hsCharacter /[^a-zA-Z0-9_']'\([^\\]\|\\[^']\+\|\\'\)'/lc=1 contains=hsEscape,hsEscapeError
+syn match   hsCharacter /^'\([^\\]\|\\[^']\+\|\\'\)'/ contains=hsEscape,hsEscapeError
 hi def link hsCharacter Character
-syn match hsNumber /\v<[0-9]%(_*[0-9])*>|<0[xX]_*[0-9a-fA-F]%(_*[0-9a-fA-F])*>|<0[oO]_*%(_*[0-7])*>|<0[bB]_*[01]%(_*[01])*>/
+syn match   hsNumber /\v<[0-9]%(_*[0-9])*>|<0[xX]_*[0-9a-fA-F]%(_*[0-9a-fA-F])*>|<0[oO]_*%(_*[0-7])*>|<0[bB]_*[01]%(_*[01])*>/
 hi def link hsNumber Number
-syn match hsFloat /\v<[0-9]%(_*[0-9])*\.[0-9]%(_*[0-9])*%(_*[eE][-+]?[0-9]%(_*[0-9])*)?>|<[0-9]%(_*[0-9])*_*[eE][-+]?[0-9]%(_*[0-9])*>|<0[xX]_*[0-9a-fA-F]%(_*[0-9a-fA-F])*\.[0-9a-fA-F]%(_*[0-9a-fA-F])*%(_*[pP][-+]?[0-9]%(_*[0-9])*)?>|<0[xX]_*[0-9a-fA-F]%(_*[0-9a-fA-F])*_*[pP][-+]?[0-9]%(_*[0-9])*>/
+syn match   hsFloat /\v<[0-9]%(_*[0-9])*\.[0-9]%(_*[0-9])*%(_*[eE][-+]?[0-9]%(_*[0-9])*)?>|<[0-9]%(_*[0-9])*_*[eE][-+]?[0-9]%(_*[0-9])*>|<0[xX]_*[0-9a-fA-F]%(_*[0-9a-fA-F])*\.[0-9a-fA-F]%(_*[0-9a-fA-F])*%(_*[pP][-+]?[0-9]%(_*[0-9])*)?>|<0[xX]_*[0-9a-fA-F]%(_*[0-9a-fA-F])*_*[pP][-+]?[0-9]%(_*[0-9])*>/
 hi def link hsFloat Number
 
 syn keyword hsModule module skipwhite skipempty nextgroup=hsModuleName
 hi def link hsModule Function
-syn match hsModuleName contained /[a-zA-Z._]/
+syn match   hsModuleName contained /[a-zA-Z._]/
 syn keyword hsImport import skipwhite skipempty nextgroup=hsQualified,hsImportName
 hi def link hsImport Function
 syn keyword hsQualified contained qualified skipwhite skipempty nextgroup=hsImportName
 hi def link hsQualified hsImport
 syn keyword hsImportAs contained as
 hi def link hsImportAs hsImport
-syn match hsImportName contained /[a-zA-Z._]\+/ skipwhite skipempty nextgroup=hsImports,hsImportAs,hsImportHiding
+syn match   hsImportName contained /[a-zA-Z._]\+/ skipwhite skipempty nextgroup=hsImports,hsImportAs,hsImportHiding
 syn keyword hsImportHiding contained hiding skipwhite skipempty nextgroup=hsImports
+hi def link hsImportHiding hsImport
 
-syn region hsImports contained start=/(/ end=/)/ contains=TOP skipwhite skipempty nextgroup=hsImportAs,hsImportHiding
+syn region  hsImports contained start=/(/ end=/)/ contains=TOP skipwhite skipempty nextgroup=hsImportAs,hsImportHiding
 
 syn keyword hsInfix infix infixl infixr
 hi def link hsInfix Special
@@ -79,11 +80,11 @@ hi def link hsStatement Function
 syn keyword hsBoolean True False
 hi def link hsBoolean Boolean
 
-syn match hsLambda /\\\l\?\k*/
+syn match   hsLambda /\\\l\?\k*/
 hi def link hsLambda Special
 
-syn match hsComment /---*\%([^-!#$%&\*\+./<=>\?@\\^|~].*\)\?$/ contains=@Spell
-syn region hsComment start=/{-/ end=/-}/ contains=@Spell
+syn match   hsComment /---*\%([^-!#$%&\*\+./<=>\?@\\^|~].*\)\?$/ contains=@Spell
+syn region  hsComment start=/{-/ end=/-}/ contains=@Spell
 hi def link hsComment Comment
 
 let b:current_syntax = 'haskell'
@@ -118,41 +119,41 @@ unlet s:cpo_save
 
 
 " " (Qualified) identifiers (no default highlighting)
-" syn match ConId "\(\<[A-Z][a-zA-Z0-9_']*\.\)*\<[A-Z][a-zA-Z0-9_']*\>" contains=@NoSpell
-" syn match VarId "\(\<[A-Z][a-zA-Z0-9_']*\.\)*\<[a-z][a-zA-Z0-9_']*\>" contains=@NoSpell
+" syn match   ConId "\(\<[A-Z][a-zA-Z0-9_']*\.\)*\<[A-Z][a-zA-Z0-9_']*\>" contains=@NoSpell
+" syn match   VarId "\(\<[A-Z][a-zA-Z0-9_']*\.\)*\<[a-z][a-zA-Z0-9_']*\>" contains=@NoSpell
 "
 " " Infix operators--most punctuation characters and any (qualified) identifier
 " " enclosed in `backquotes`. An operator starting with : is a constructor,
 " " others are variables (e.g. functions).
-" syn match hsVarSym "\(\<[A-Z][a-zA-Z0-9_']*\.\)\=[-!#$%&\*\+/<=>\?@\\^|~.][-!#$%&\*\+/<=>\?@\\^|~:.]*"
-" syn match hsConSym "\(\<[A-Z][a-zA-Z0-9_']*\.\)\=:[-!#$%&\*\+./<=>\?@\\^|~:]*"
-" syn match hsVarSym "`\(\<[A-Z][a-zA-Z0-9_']*\.\)\=[a-z][a-zA-Z0-9_']*`"
-" syn match hsConSym "`\(\<[A-Z][a-zA-Z0-9_']*\.\)\=[A-Z][a-zA-Z0-9_']*`"
+" syn match   hsVarSym "\(\<[A-Z][a-zA-Z0-9_']*\.\)\=[-!#$%&\*\+/<=>\?@\\^|~.][-!#$%&\*\+/<=>\?@\\^|~:.]*"
+" syn match   hsConSym "\(\<[A-Z][a-zA-Z0-9_']*\.\)\=:[-!#$%&\*\+./<=>\?@\\^|~:]*"
+" syn match   hsVarSym "`\(\<[A-Z][a-zA-Z0-9_']*\.\)\=[a-z][a-zA-Z0-9_']*`"
+" syn match   hsConSym "`\(\<[A-Z][a-zA-Z0-9_']*\.\)\=[A-Z][a-zA-Z0-9_']*`"
 "
 " " (Non-qualified) identifiers which start with # are labels
-" syn match hsLabel "#[a-z][a-zA-Z0-9_']*\>"
+" syn match   hsLabel "#[a-z][a-zA-Z0-9_']*\>"
 "
-" syn match hsType "[A-Z][a-zA-Z0-9_']*\>"
+" syn match   hsType "[A-Z][a-zA-Z0-9_']*\>"
 "
 " " Reserved symbols--cannot be overloaded.
-" syn match hsDelimiter  "(\|)\|\[\|\]\|,\|;\|{\|}"
+" syn match   hsDelimiter  "(\|)\|\[\|\]\|,\|;\|{\|}"
 "
 " " Strings and constants
-" syn match   hsSpecialChar	contained "\\\([0-9]\+\|o[0-7]\+\|x[0-9a-fA-F]\+\|[\"\\'&\\abfnrtv]\|^[A-Z^_\[\\\]]\)"
-" syn match   hsSpecialChar	contained "\\\(NUL\|SOH\|STX\|ETX\|EOT\|ENQ\|ACK\|BEL\|BS\|HT\|LF\|VT\|FF\|CR\|SO\|SI\|DLE\|DC1\|DC2\|DC3\|DC4\|NAK\|SYN\|ETB\|CAN\|EM\|SUB\|ESC\|FS\|GS\|RS\|US\|SP\|DEL\)"
-" syn match   hsSpecialCharError	contained "\\&\|'''\+"
-" syn region  hsString		start=+"+  skip=+\\\\\|\\"+  end=+"+  contains=hsSpecialChar,@NoSpell
-" syn match   hsCharacter		"[^a-zA-Z0-9_']'\([^\\]\|\\[^']\+\|\\'\)'"lc=1 contains=hsSpecialChar,hsSpecialCharError
-" syn match   hsCharacter		"^'\([^\\]\|\\[^']\+\|\\'\)'" contains=hsSpecialChar,hsSpecialCharError
-" syn match   hsNumber		"\v<[0-9]%(_*[0-9])*>|<0[xX]_*[0-9a-fA-F]%(_*[0-9a-fA-F])*>|<0[oO]_*%(_*[0-7])*>|<0[bB]_*[01]%(_*[01])*>"
-" syn match   hsFloat		"\v<[0-9]%(_*[0-9])*\.[0-9]%(_*[0-9])*%(_*[eE][-+]?[0-9]%(_*[0-9])*)?>|<[0-9]%(_*[0-9])*_*[eE][-+]?[0-9]%(_*[0-9])*>|<0[xX]_*[0-9a-fA-F]%(_*[0-9a-fA-F])*\.[0-9a-fA-F]%(_*[0-9a-fA-F])*%(_*[pP][-+]?[0-9]%(_*[0-9])*)?>|<0[xX]_*[0-9a-fA-F]%(_*[0-9a-fA-F])*_*[pP][-+]?[0-9]%(_*[0-9])*>"
+" syn match     hsSpecialChar	contained "\\\([0-9]\+\|o[0-7]\+\|x[0-9a-fA-F]\+\|[\"\\'&\\abfnrtv]\|^[A-Z^_\[\\\]]\)"
+" syn match     hsSpecialChar	contained "\\\(NUL\|SOH\|STX\|ETX\|EOT\|ENQ\|ACK\|BEL\|BS\|HT\|LF\|VT\|FF\|CR\|SO\|SI\|DLE\|DC1\|DC2\|DC3\|DC4\|NAK\|SYN\|ETB\|CAN\|EM\|SUB\|ESC\|FS\|GS\|RS\|US\|SP\|DEL\)"
+" syn match     hsSpecialCharError	contained "\\&\|'''\+"
+" syn region   hsString		start=+"+  skip=+\\\\\|\\"+  end=+"+  contains=hsSpecialChar,@NoSpell
+" syn match     hsCharacter		"[^a-zA-Z0-9_']'\([^\\]\|\\[^']\+\|\\'\)'"lc=1 contains=hsSpecialChar,hsSpecialCharError
+" syn match     hsCharacter		"^'\([^\\]\|\\[^']\+\|\\'\)'" contains=hsSpecialChar,hsSpecialCharError
+" syn match     hsNumber		"\v<[0-9]%(_*[0-9])*>|<0[xX]_*[0-9a-fA-F]%(_*[0-9a-fA-F])*>|<0[oO]_*%(_*[0-7])*>|<0[bB]_*[01]%(_*[01])*>"
+" syn match     hsFloat		"\v<[0-9]%(_*[0-9])*\.[0-9]%(_*[0-9])*%(_*[eE][-+]?[0-9]%(_*[0-9])*)?>|<[0-9]%(_*[0-9])*_*[eE][-+]?[0-9]%(_*[0-9])*>|<0[xX]_*[0-9a-fA-F]%(_*[0-9a-fA-F])*\.[0-9a-fA-F]%(_*[0-9a-fA-F])*%(_*[pP][-+]?[0-9]%(_*[0-9])*)?>|<0[xX]_*[0-9a-fA-F]%(_*[0-9a-fA-F])*_*[pP][-+]?[0-9]%(_*[0-9])*>"
 "
 " " Keyword definitions.
 " syn keyword hsModule		module
-" syn match   hsImportGroup	"\<import\>.*" contains=hsImport,hsImportModuleName,hsImportMod,hsLineComment,hsBlockComment,hsImportList,@NoSpell nextgroup=hsImport
+" syn match     hsImportGroup	"\<import\>.*" contains=hsImport,hsImportModuleName,hsImportMod,hsLineComment,hsBlockComment,hsImportList,@NoSpell nextgroup=hsImport
 " syn keyword hsImport import contained nextgroup=hsImportModuleName
-" syn match   hsImportModuleName '\<[A-Z][A-Za-z.]*' contained
-" syn region  hsImportList start='(' skip='([^)]\{-})' end=')' keepend contained contains=ConId,VarId,hsDelimiter,hsBlockComment,hsTypedef,@NoSpell
+" syn match     hsImportModuleName '\<[A-Z][A-Za-z.]*' contained
+" syn region   hsImportList start='(' skip='([^)]\{-})' end=')' keepend contained contains=ConId,VarId,hsDelimiter,hsBlockComment,hsTypedef,@NoSpell
 "
 " syn keyword hsImportMod contained as qualified hiding
 " syn keyword hsInfix infix infixl infixr
@@ -186,32 +187,32 @@ unlet s:cpo_save
 "
 "
 " " Comments
-" syn match   hsLineComment      "---*\([^-!#$%&\*\+./<=>\?@\\^|~].*\)\?$" contains=@Spell
-" syn region  hsBlockComment     start="{-"  end="-}" contains=hsBlockComment,@Spell
-" syn region  hsPragma	       start="{-#" end="#-}"
+" syn match     hsLineComment      "---*\([^-!#$%&\*\+./<=>\?@\\^|~].*\)\?$" contains=@Spell
+" syn region   hsBlockComment     start="{-"  end="-}" contains=hsBlockComment,@Spell
+" syn region   hsPragma	       start="{-#" end="#-}"
 "
 " " C Preprocessor directives. Shamelessly ripped from c.vim and trimmed
 " " First, see whether to flag directive-like lines or not
 " if (!exists("hs_allow_hash_operator"))
-"     syn match	cError		display "^\s*\(%:\|#\).*$"
+"     syn match  	cError		display "^\s*\(%:\|#\).*$"
 " endif
 " " Accept %: for # (C99)
-" syn region	cPreCondit	start="^\s*\(%:\|#\)\s*\(if\|ifdef\|ifndef\|elif\)\>" skip="\\$" end="$" end="//"me=s-1 contains=cComment,cCppString,cCommentError
-" syn match	cPreCondit	display "^\s*\(%:\|#\)\s*\(else\|endif\)\>"
-" syn region	cCppOut		start="^\s*\(%:\|#\)\s*if\s\+0\+\>" end=".\@=\|$" contains=cCppOut2
-" syn region	cCppOut2	contained start="0" end="^\s*\(%:\|#\)\s*\(endif\>\|else\>\|elif\>\)" contains=cCppSkip
-" syn region	cCppSkip	contained start="^\s*\(%:\|#\)\s*\(if\>\|ifdef\>\|ifndef\>\)" skip="\\$" end="^\s*\(%:\|#\)\s*endif\>" contains=cCppSkip
-" syn region	cIncluded	display contained start=+"+ skip=+\\\\\|\\"+ end=+"+
-" syn match	cIncluded	display contained "<[^>]*>"
-" syn match	cInclude	display "^\s*\(%:\|#\)\s*include\>\s*["<]" contains=cIncluded
+" syn region 	cPreCondit	start="^\s*\(%:\|#\)\s*\(if\|ifdef\|ifndef\|elif\)\>" skip="\\$" end="$" end="//"me=s-1 contains=cComment,cCppString,cCommentError
+" syn match  	cPreCondit	display "^\s*\(%:\|#\)\s*\(else\|endif\)\>"
+" syn region 	cCppOut		start="^\s*\(%:\|#\)\s*if\s\+0\+\>" end=".\@=\|$" contains=cCppOut2
+" syn region 	cCppOut2	contained start="0" end="^\s*\(%:\|#\)\s*\(endif\>\|else\>\|elif\>\)" contains=cCppSkip
+" syn region 	cCppSkip	contained start="^\s*\(%:\|#\)\s*\(if\>\|ifdef\>\|ifndef\>\)" skip="\\$" end="^\s*\(%:\|#\)\s*endif\>" contains=cCppSkip
+" syn region 	cIncluded	display contained start=+"+ skip=+\\\\\|\\"+ end=+"+
+" syn match  	cIncluded	display contained "<[^>]*>"
+" syn match  	cInclude	display "^\s*\(%:\|#\)\s*include\>\s*["<]" contains=cIncluded
 " syn cluster	cPreProcGroup	contains=cPreCondit,cIncluded,cInclude,cDefine,cCppOut,cCppOut2,cCppSkip,cCommentStartError
-" syn region	cDefine		matchgroup=cPreCondit start="^\s*\(%:\|#\)\s*\(define\|undef\)\>" skip="\\$" end="$"
-" syn region	cPreProc	matchgroup=cPreCondit start="^\s*\(%:\|#\)\s*\(pragma\>\|line\>\|warning\>\|warn\>\|error\>\)" skip="\\$" end="$" keepend
+" syn region 	cDefine		match  group=cPreCondit start="^\s*\(%:\|#\)\s*\(define\|undef\)\>" skip="\\$" end="$"
+" syn region 	cPreProc	match  group=cPreCondit start="^\s*\(%:\|#\)\s*\(pragma\>\|line\>\|warning\>\|warn\>\|error\>\)" skip="\\$" end="$" keepend
 "
-" syn region	cComment	matchgroup=cCommentStart start="/\*" end="\*/" contains=cCommentStartError,cSpaceError contained
-" syntax match	cCommentError	display "\*/" contained
-" syntax match	cCommentStartError display "/\*"me=e-1 contained
-" syn region	cCppString	start=+L\="+ skip=+\\\\\|\\"\|\\$+ excludenl end=+"+ end='$' contains=cSpecial contained
+" syn region 	cComment	match  group=cCommentStart start="/\*" end="\*/" contains=cCommentStartError,cSpaceError contained
+" syntax match  	cCommentError	display "\*/" contained
+" syntax match  	cCommentStartError display "/\*"me=e-1 contained
+" syn region 	cCppString	start=+L\="+ skip=+\\\\\|\\"\|\\$+ excludenl end=+"+ end='$' contains=cSpecial contained
 "
 " " Define the default highlighting.
 " " Only when an item doesn't have highlighting yet
