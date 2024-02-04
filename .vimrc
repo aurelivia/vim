@@ -54,7 +54,7 @@ Plug 'git@github.com:ntpeters/vim-better-whitespace'
 Plug 'git@github.com:tpope/vim-surround'
 Plug 'git@github.com:tmux-plugins/vim-tmux-focus-events'
 Plug 'git@github.com:tpope/vim-eunuch'
-Plug 'git@github.com:godlygeek/tabular'
+Plug 'git@github.com:junegunn/vim-easy-align'
 Plug 'git@github.com:gerw/vim-HiLinkTrace', { 'on': 'HLT' }
 " Plug 'git@github.com:tpope/vim-fugitive'
 " Plug 'git@github.com:ngemily/vim-vp4'
@@ -331,7 +331,13 @@ endfunction
 
 command! -nargs=1 SetKBD call <SID>SetKBD(<args>)
 
-command! Firefox execute '!firefox file://%:p'
+command! -bang Firefox execute "silent !firefox " . <SID>FFWinOrTab('<bang>') . " 'file://" . resolve(expand('%:p')) . "'"
+function! <SID>FFWinOrTab(bang)
+	if a:bang == '!'
+		return '-new-window'
+	endif
+	return '-new-tab'
+endfunction
 
 " au InsertLeave * :normal `^
 " Editing

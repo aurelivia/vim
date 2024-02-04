@@ -14,20 +14,20 @@ set cpo&vim
 
 syntax iskeyword @,48-57,_,39
 
-syn match   hsOperator /\%(\<\u\k*\.\)\=[-!#$%&\*\+/<=>\?@\\^|~][-!#$%&\*\+/<=>\?@\\^|~:.]*/
-syn match   hsOperator /\<\u\k*\.\.[-!#$%&\*\+/<=>\?@\\^|~:.]*/
+syn match   hsOperator /\%(\<[[:upper:]]\k*\.\)\=[-!#$%&\*\+/<=>\?@\\^|~][-!#$%&\*\+/<=>\?@\\^|~:.]*/
+syn match   hsOperator /\<[[:upper:]]\k*\.\.[-!#$%&\*\+/<=>\?@\\^|~:.]*/
 syn match   hsOperator /\s\.[-!#$%&\*\+/<=>\?@\\^|~:.]*/
-syn match   hsOperator /`\%(\<\u\k*\.\)\=\l\k*`/
+syn match   hsOperator /`\%(\<[[:upper:]]\k*\.\)\=\l\k*`/
 hi def link hsOperator Operator
 
-syn match   hsConstructor /\%(\<\u\k*\.\)\=:[-!#$%&\*\+./<=>\?@\\^|~:]*/
-syn match   hsConstructor /`\%(\<\u\k*\.\)\=\u\k*`/
+syn match   hsConstructor /\%(\<[[:upper:]]\k*\.\)\=:[-!#$%&\*\+./<=>\?@\\^|~:]*/
+syn match   hsConstructor /`\%(\<[[:upper:]]\k*\.\)\=[[:upper:]]\k*`/
 hi def link hsConstructor Operator
 
 syn match   hsLabel /#\l\k*\>/
 hi def link hsLabel Special
 
-syn match   hsType /\<\u\k*\>/
+syn match   hsType /\<[[:upper:]]\k*\>/
 hi def link hsType Type
 
 syn match   hsDelimiter /[()\[\],;{}]/
@@ -84,8 +84,11 @@ syn match   hsLambda /\\\l\?\k*/
 hi def link hsLambda Special
 
 syn match   hsComment /---*\%([^-!#$%&\*\+./<=>\?@\\^|~].*\)\?$/ contains=@Spell
-syn region  hsComment start=/{-/ end=/-}/ contains=@Spell
+syn region  hsComment start=/{-[^#]/ end=/-}/ contains=@Spell
 hi def link hsComment Comment
+
+syn region  hsPragma  start=/{-#/ end=/-}/
+hi def link hsPragma  Special
 
 let b:current_syntax = 'haskell'
 
