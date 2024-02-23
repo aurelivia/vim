@@ -7,76 +7,39 @@ if s:iswin
 else
 	let g:dotvim = get(g:, 'dotvim', $HOME . '/.vim/')
 endif
-let g:vimrc = g:dotvim . '.vimrc'
+let g:vimrc = get(g:, 'vimrc', g:dotvim . '.vimrc')
 
-silent! call system('curl -fLo "' . g:dotvim . 'autoload/plug.vim" --create-dirs "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"')
+exec 'source ' . g:dotvim . 'keys.vim'
 
-if !exists(':Plug')
-	if filereadable(g:dotvim . 'autoload/plug.vim')
-		exec 'source ' . g:dotvim . 'autoload/plug.vim'
-	else
-		echohl ErrorMsg
-		echomsg 'plug.vim missing and could not be retrieved.'
-		echohl None
-		finish
-	endif
-endif
-
-function! LSPCheck(info) abort
-	if a:info.status == 'unchanged' && !a:info.force
-		return
-	endif
-
-	if !executable('typescript-language-server')
-		echohl ErrorMsg
-		echomsg 'typescript-language-server not installed'
-		echohl None
-		return
-	endif
-endfunction
-
-silent! call plug#begin(g:dotvim . 'packages')
-
-" Visuals
-" Plug 'git@github.com:joshdick/onedark.vim' Using local fork
-Plug g:dotvim . '/packages/onedark.vim'
-Plug 'git@github.com:vim-airline/vim-airline'
-
-" Presumably something is depending on this
-Plug 'git@github.com:xolox/vim-misc'
-
-" Quality of Life
-Plug 'git@github.com:mhinz/vim-sayonara'
-Plug 'git@github.com:justinmk/vim-dirvish'
-Plug 'git@github.com:chaoren/vim-wordmotion'
-Plug 'git@github.com:tomtom/tcomment_vim'
-Plug 'git@github.com:ntpeters/vim-better-whitespace'
-Plug 'git@github.com:tpope/vim-surround'
-Plug 'git@github.com:tmux-plugins/vim-tmux-focus-events'
-Plug 'git@github.com:tpope/vim-eunuch'
-Plug 'git@github.com:junegunn/vim-easy-align'
-Plug 'git@github.com:gerw/vim-HiLinkTrace', { 'on': 'HLT' }
-" Plug 'git@github.com:tpope/vim-fugitive'
-" Plug 'git@github.com:ngemily/vim-vp4'
-Plug 'git@github.com:felipec/notmuch-vim.git', { 'on': 'NotMuch' }
-Plug 'git@github.com:chrisbra/unicode.vim'
-
-if has('nvim')
-	Plug 'git@github.com:neovim/nvim-lspconfig', { 'do': function('LSPCheck') }
-	Plug 'git@github.com:hrsh7th/vim-vsnip'
-	Plug 'git@github.com:hrsh7th/cmp-vsnip'
-	Plug 'git@github.com:hrsh7th/cmp-nvim-lsp'
-	Plug 'git@github.com:hrsh7th/cmp-buffer'
-	Plug 'git@github.com:hrsh7th/cmp-path'
-	Plug 'git@github.com:hrsh7th/cmp-cmdline'
-	Plug 'git@github.com:hrsh7th/nvim-cmp'
-endif
-
-call plug#end()
-exec 'set runtimepath-=' . g:dotvim
-" let &runtimepath = substitute(&runtimepath, g:dotvim, trim(g:dotvim, '/', 2), '')
-
+" Options
+set hidden noshowmode noshowcmd incsearch nohlsearch ignorecase smartcase nolist autoread noswapfile
+set backspace=indent,eol,start wrap linebreak autoindent smartindent formatoptions-=t nostartofline
+set guifont=Noto\ Sans\ Mono:h10
+set laststatus=2
+set enc=utf-8
+set fileencodings=utf-8
+set shortmess=F
+set listchars=eol:¬,trail:~,extends:>,precedes:<,space:·,tab:->
+set mouse=
+set guioptions=
+set dy=uhex,lastline
+set gcr+=n-v-c:blinkon0
+set belloff=all
+set virtualedit=onemore
+set clipboard=unnamedplus
+set completeopt=menu,menuone,noselect
+set conceallevel=1
 set termguicolors
+set updatetime=300
+set scrolloff=10
+set number
+set relativenumber
+set fileformats=unix
+
+augroup FormatOptions
+	au Filetype html setlocal formatoptions=tmM
+augroup END
+
 if &term =~ '^xterm\|rxvt'
 	let &t_SI = "\<Esc>[5 q" " Insert Mode
 	let &t_EI = "\<Esc>[2 q" " Non-Insert Mode
@@ -88,63 +51,18 @@ if &term =~ '^xterm\|rxvt'
 	" 6 -> Solid Vertical Bar
 endif
 
-filetype plugin on
-filetype indent on
-syntax enable
-set laststatus=2
-set enc=utf-8 fileencodings=utf-8
-" let g:onedark_hide_endofbuffer = 1
-let g:onedark_termcolors = 256
-let g:onedark_terminal_italics = 1
-let g:onedark_color_overrides = {
-\  'background': { 'gui': '#2C2C2C', 'cterm': 'NONE', 'cterm16': 'NONE' },
-\  'black': { 'gui': '#2C2C2C', 'cterm': 'NONE', 'cterm16': 'NONE' },
-\  'foreground': { 'gui': '#AFAFAF', 'cterm': 'NONE', 'cterm16': 'NONE' },
-\  'white': { 'gui': '#AFAFAF', 'cterm': 'NONE', 'cterm16': 'NONE' },
-\  'comment_grey': { 'gui': '#5F5F5F', 'cterm': '59', 'cterm16': '7' },
-\  'gutter_fg_grey': { 'gui': '#444444', 'cterm': '238', 'cterm16': '8' },
-\  'cursor_grey': { 'gui': '#303030', 'cterm': '236', 'cterm16': '0' },
-\  'visual_grey': { 'gui': '#3A3A3A', 'cterm': '237', 'cterm16': '8' },
-\  'menu_grey': { 'gui': '#3A3A3A', 'cterm': '237', 'cterm16': '7' },
-\  'special_grey': { 'gui': '#444444', 'cterm': '238', 'cterm16': '7' },
-\  'vertsplit': { 'gui': '#3A3A3A', 'cterm': '59', 'cterm16': '7' },
-\  'yellow': { 'gui': '#D7AF87', 'cterm': '180', 'cterm16': '3' },
-\  'dark_yellow': { 'gui': '#D7875F', 'cterm': '173', 'cterm16': '11' }
-\}
-
 colorscheme onedark
-let g:airline_theme = 'onedark'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline#extensions#whitespace#mixed_indent_algo = 2
-let g:airline#extensions#whitespace#checks = [ 'indent', 'trailing', 'long', 'conflicts' ]
 
-set hidden noshowmode shortmess=F noshowcmd
-set incsearch nohlsearch " hlsearch
-set listchars=eol:¬,trail:~,extends:>,precedes:<,space:·,tab:->
-set ignorecase smartcase
-
-set mouse=
-let mapleader = ' '
-set nolist
-
-set guioptions=
-set dy=uhex,lastline
-set gcr+=n-v-c:blinkon0
-set belloff=all
-
-set virtualedit=onemore
-set clipboard=unnamedplus
-
-set autoread noswapfile
 au FocusGained,BufEnter * :checktime
 au BufEnter *.txt if &buftype == 'help' | wincmd L | endif
 
+let g:mapleader = ' '
 let g:strip_white_space_on_save = 1
 let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 let g:ctrlp_use_caching = 0
 let g:sayonara_confirm_quit = 1
-let g:session_directory = g:dotvim . 'sessions'
+let g:wordmotion_nomap = 1
+" let g:session_directory = g:dotvim . 'sessions'
 let g:session_lock_enabled = 0
 let g:session_autosave = 'no'
 let g:session_autoload = 'no'
@@ -160,7 +78,6 @@ let g:ctrlsf_mapping = {
 \ }
 " {'chgmode': 'M', 'popenf': 'P', 'open': ['<CR>', 'o', '<2-LeftMouse>'], 'pquit': 'q', 'vsplit': '', 'openb': 'O', 'stop': '<C-C>', 'quit': 'q', 'next': '<C-J>', 'split': '<C-O>', 'prev': '<C-K>', 'tabb': 'T', 'loclist': '', 'popen': 'p', 'tab': 't'}
 
-set backspace=indent,eol,start wrap linebreak autoindent smartindent formatoptions-=t nostartofline
 if exists('g:tabmode')
 	execute 'silent! set tabstop='. g:tabwidth . ' softtabstop=' . g:tabwidth . ' shiftwidth=' . g:tabwidth
 	if g:tabmode == 1
@@ -169,7 +86,7 @@ if exists('g:tabmode')
 		set noexpandtab
 	endif
 else
-	let g:tabmode = 0
+	let g:tabmode = 1
 	let g:tabwidth = 2
 	set tabstop=2 softtabstop=2 shiftwidth=2
 endif
@@ -248,10 +165,6 @@ augroup FoldRegions
 	au Filetype typescript setlocal foldmethod=marker foldmarker=//#region,//#endregion
 augroup END
 
-set updatetime=300
-set scrolloff=10
-set number
-set relativenumber
 let g:nummode = 0
 function! <SID>AutoNumbers(...)
 	if g:nummode == 0
@@ -339,184 +252,6 @@ function! <SID>FFWinOrTab(bang)
 	return '-new-tab'
 endfunction
 
-" au InsertLeave * :normal `^
-" Editing
-nn <CR> a
-" nn i <Insert>
-ino <CR> <ESC>
-vn <CR> <ESC>
-nm <BS> <NOP>
-map <S-CR> <NOP>
-" nn i <ESC>hr
-
-nn <silent> Z :silent w<CR>
-nn <silent> qq :Sayonara!<CR>
-nn <silent> qr :Sayonara<CR>
-nn qa :q!<CR>
-nn q <NOP>
-nn <C-@> q
-nn s <C-w>
-nn U <C-r>
-
-" nn c<CR> ciw
-nn c<CR> <NOP>
-no d "_d
-nn dd "_dd
-no x d
-no xx dd
-nn p P
-nn P p
-vn p "_dP
-
-nn <silent> <F11> :syntax sync fromstart<CR>
-
-nn <silent> \ :set list!<CR>
-nn <silent> <Leader>\ :StripWhitespace<CR>
-
-let g:wordmotion_nomap = 1
-map <silent> w <Plug>WordMotion_w
-map <silent> b <Plug>WordMotion_b
-map <silent> e <Plug>WordMotion_e
-map <silent> ge <Plug>WordMotion_ge
-omap <silent> iw <Plug>WordMotion_iw
-xmap <silent> iw <Plug>WordMotion_iw
-omap <silent> aw <Plug>WordMotion_aw
-xmap <silent> aw <Plug>WordMotion_aw
-
-" Letter Motions
-no j h
-no k gj
-no l gk
-no ; l
-no h ;
-
-no J <NOP>
-no K 10gj
-no L 10gk
-no <Space><Space> :
-no <Space><Return> @:
-
-no <silent> <C-j> :bprevious<CR>
-no <C-k> zz<C-d>
-no <C-l> zz<C-u>
-no <silent> <C-;> :bnext<CR>
-
-nn <silent> <A-k> :m+1<CR>
-vn <silent> <A-k> :m '<+1<CR>gv
-nn <silent> <A-l> :m-2<CR>
-vn <silent> <A-l> :m '>-2<CR>gv
-
-nn sj <C-w>h
-nn <C-w>j <C-w>h
-nn sk <C-w>j
-nn <C-w>k <C-w>j
-nn sl <C-w>k
-nn <C-w>l <C-w>k
-nn s; <C-w>l
-nn <C-w>; <C-w>l
-nn <C-w>h <NOP>
-nn sh <C-w>s
-nn sq <C-w>q
-nn sv <C-w>v
-
-nm <C-d> <Plug>(dirvish_up)
-augroup dirvishBindings
-	autocmd!
-	autocmd FileType dirvish nmap <nowait><buffer> j <Plug>(dirvish_up)
-	autocmd FileType dirvish nmap <nowait><buffer> <Left> <Plug>(dirvish_up)
-	autocmd FileType dirvish nmap <nowait><buffer> k gj
-	autocmd FileType dirvish nmap <nowait><buffer> K 10gj
-	autocmd FileType dirvish nmap <nowait><buffer> l gk
-	autocmd FileType dirvish nmap <nowait><buffer> ; <CR>
-	autocmd FileType dirvish nmap <nowait><buffer> <Right> <CR>
-	autocmd FileType dirvish nmap <nowait><buffer> <C-d> <Plug>(dirvish_quit)
-
-	autocmd FileType dirvish nmap <nowait><buffer> <kDivide> <Plug>(dirvish_up)
-	autocmd FileType dirvish nmap <nowait><buffer> <kMultiply> <CR>
-augroup END
-
-" Arrow Motions
-function! <SID>ToggleArrowsFn()
-	if g:arrowsenabled == 0
-		let g:arrowsenabled = 1
-		no <Up> gk
-		ino <Up> <C-\><C-o>gk
-		no <Down> gj
-		ino <Down> <C-\><C-o>gj
-		no <Left> <NOP>
-		unmap <Left>
-		imap <Left> <NOP>
-		iunmap <Left>
-		no <Right> <NOP>
-		unmap <Right>
-		imap <Right> <NOP>
-		iunmap <Right>
-		no <S-Up> 10gk
-		no <S-Down> 10gj
-		no <silent> <S-Left> <Plug>WordMotion_b
-		no <silent> <S-Right> <Plug>WordMotion_w
-		no <C-Up> zz<C-u>
-		no <C-Down> zz<C-d>
-		no <silent> <C-Left> :bprevious<CR>
-		no <silent> <C-Right> :bnext<CR>
-		nn <silent> <A-Up> :m-2<CR>
-		vn <silent> <A-Up> :m '<-2<CR>gv
-		nn <silent> <A-Down> :m+1<CR>
-		vn <silent> <A-Down> :m '>+1<CR>gv
-	else
-		let g:arrowsenabled = 0
-		map <Up> <NOP>
-		imap <Up> <NOP>
-		map <Down> <NOP>
-		imap <Down> <NOP>
-		map <Left> <NOP>
-		imap <Left> <NOP>
-		map <Right> <NOP>
-		imap <Right> <NOP>
-		map <S-Up> <NOP>
-		map <S-Down> <NOP>
-		map <S-Left> <NOP>
-		map <S-Right> <NOP>
-		map <C-Up> <NOP>
-		map <C-Down> <NOP>
-		map <C-Left> <NOP>
-		map <C-Right> <NOP>
-		map <A-Up> <NOP>
-		map <A-Down> <NOP>
-	endif
-endfunction
-command! ToggleArrows call <SID>ToggleArrowsFn()
-
-let g:arrowsenabled = get(g:, 'arrowsenabled', 1)
-" Flip the toggle so the function sets it to the default
-if g:arrowsenabled == 0
-	let g:arrowsenabled = 1
-else
-	let g:arrowsenabled = 0
-endif
-call <SID>ToggleArrowsFn()
-
-" no <silent> <C-Left> :bprevious<CR>
-" no <silent> <C-Right> :bnext<CR>
-
-" Numpad Motions
-no <kPlus> gk
-no <kEnter> gj
-no <kMinus> gg
-no = gk
-no - gj
-no <S-kPlus> 10gk
-no <S-kEnter> 10gj
-no + 10gk
-no _ 10gj
-
-no <PageUp> zz<C-u>
-no <PageDown> zz<C-d>
-no <silent> <kDivide> :bprevious<CR>
-no <silent> <kMultiply> :bnext<CR>
-no <silent> <Home> :bprevious<CR>
-no <silent> <End> :bnext<CR>
-
 function! <SID>MoveToCol(col)
 	let l:count = a:col - virtcol('.')
 	if l:count <= 0
@@ -527,19 +262,9 @@ endfunction
 command! -nargs=1 MoveToCol call <SID>MoveToCol(<args>)
 no <silent> ><Bar> :<C-u>MoveToCol v:count<CR>
 
-
 command! -nargs=? Wrap if strlen(<q-args>) | set textwidth=<args> | else | set textwidth=70 | endif
 
 command! Nowrap set textwidth=0
-
-set fileformats=unix
-augroup FormatOptions
-	au Filetype html setlocal formatoptions=tmM
-augroup END
-
-if has('nvim')
-	exec 'source ' . g:dotvim . '.nvimrc'
-endif
 
 " " exchange word under cursor with the next word without moving the cursor
 " nnoremap gw "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><C-o><C-l>
@@ -549,5 +274,3 @@ endif
 "
 " " push word under cursor to the right
 " nnoremap <silent> <Leader><Right> "_yiw:s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<CR><C-o>/\w\+\_W\+<CR><C-l>
-
-set completeopt=menu,menuone,noselect

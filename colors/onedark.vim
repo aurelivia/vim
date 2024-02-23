@@ -67,7 +67,7 @@ endif
 
 " Not all terminals support italics properly. If yours does, opt-in.
 if !exists("g:onedark_terminal_italics")
-  let g:onedark_terminal_italics = 0
+  let g:onedark_terminal_italics = 1
 endif
 
 " This function is based on one from FlatColor: https://github.com/MaxSt/FlatColor/
@@ -133,7 +133,27 @@ endfunction
 
 " Color Variables {{{
 
-let s:colors = onedark#GetColors()
+let s:colors = {
+\  'background': { 'gui': '#2C2C2C', 'cterm': 'NONE', 'cterm16': 'NONE' },
+\  'black': { 'gui': '#2C2C2C', 'cterm': 'NONE', 'cterm16': 'NONE' },
+\  'foreground': { 'gui': '#AFAFAF', 'cterm': 'NONE', 'cterm16': 'NONE' },
+\  'white': { 'gui': '#AFAFAF', 'cterm': 'NONE', 'cterm16': 'NONE' },
+\  'comment_grey': { 'gui': '#5F5F5F', 'cterm': '59', 'cterm16': '7' },
+\  'gutter_fg_grey': { 'gui': '#444444', 'cterm': '238', 'cterm16': '8' },
+\  'cursor_grey': { 'gui': '#303030', 'cterm': '236', 'cterm16': '0' },
+\  'visual_grey': { 'gui': '#3A3A3A', 'cterm': '237', 'cterm16': '8' },
+\  'menu_grey': { 'gui': '#3A3A3A', 'cterm': '237', 'cterm16': '7' },
+\  'special_grey': { 'gui': '#444444', 'cterm': '238', 'cterm16': '7' },
+\  'vertsplit': { 'gui': '#3A3A3A', 'cterm': '59', 'cterm16': '7' },
+\  'yellow': { 'gui': '#D7AF87', 'cterm': '180', 'cterm16': '3' },
+\  'dark_yellow': { 'gui': '#D7875F', 'cterm': '173', 'cterm16': '11' },
+\  'red': { 'gui': '#E06C75', 'cterm': '204', 'cterm16': '1' },
+\  'dark_red': { 'gui': '#BE5046', 'cterm': '196', 'cterm16': '9' },
+\  'green': { 'gui': '#98C379', 'cterm': '114', 'cterm16': '2' },
+\  'blue': { 'gui': '#61AFEF', 'cterm': '39', 'cterm16': '4' },
+\  'purple': { 'gui': '#C678DD', 'cterm': '170', 'cterm16': '5' },
+\  'cyan': { 'gui': '#56B6C2', 'cterm': '38', 'cterm16': '6' }
+\}
 
 let s:red = s:colors.red
 let s:dark_red = s:colors.dark_red
@@ -177,7 +197,7 @@ call s:h("Character", { "fg": s:dark_yellow }) " a character constant: 'c', '\n'
 call s:h("Number", { "fg": s:dark_yellow }) " a number constant: 234, 0xff
 call s:h("Boolean", { "fg": s:dark_yellow }) " a boolean constant: TRUE, false
 call s:h("Float", { "fg": s:dark_yellow }) " a floating point constant: 2.3e10
-call s:h("Identifier", { "fg": s:red }) " any variable name
+call s:h("Identifier", { "fg": s:foreground }) " any variable name
 call s:h("Function", { "fg": s:blue }) " function name (also: methods for classes)
 call s:h("Statement", { "fg": s:purple }) " any statement
 call s:h("Conditional", { "fg": s:purple }) " if, then, else, endif, switch, etc.

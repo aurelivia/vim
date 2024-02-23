@@ -1,8 +1,8 @@
 let g:skip_loading_mswin = 1
-let g:dotvim = get(g:, 'dotvim', $HOME . '\.vim\')
-let $PATH = $PATH . ';C:\MSYS\usr\local\bin;C:\MSYS\usr\bin;C:\MSYS\bin;C:\MSYS\opt\bin'
+let g:msys = get(g:, 'msys', 'C:\MSYS')
+let $PATH = $PATH . g:msys . '\usr\local\bin;' . g:msys . '\usr\bin;' . g:msys . '\bin;' . g:msys . '\opt\bin'
 function! <SID>SetShell()
-	let &shell='"C:\MSYS\usr\bin\bash.exe"'
+	let &shell='"' . g:msys . '\usr\bin\bash.exe"'
 	set shellcmdflag=-c
 	set shellslash
 	set shellquote=
@@ -17,13 +17,17 @@ set runtimepath-=~/vimfiles
 set runtimepath-=$VIM/vimfiles
 set runtimepath-=~/vimfiles/after
 set runtimepath-=$VIM/vimfiles/after
-exec 'set runtimepath+=' . trim(g:dotvim, '\', 2) . ',' . g:dotvim . 'after'
-" exec 'set runtimepath+=' . g:dotvim . 'after'
 
 exec 'source ' . g:dotvim . '.vimrc'
 
 set nofixeol noeol
-set clipboard=unnamed
+let g:clipboard = {
+\ 'name': 'win32yank',
+\ 'copy': { '+': 'win32yank.exe -i --crlf', '*': 'win32yank.exe -i --crlf' },
+\ 'paste': { '+': 'win32yank.exe -o --lf', '*': 'win32yank.exe -o --lf' },
+\ 'cache_enabled': 0
+\ }
+
 let $TEMP = expand($TEMP)
 let $TMP = $TEMP
 exec 'set directory=' . $TEMP . ' backupdir=' . $TEMP . ' undodir=' . $TEMP

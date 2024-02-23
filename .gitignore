@@ -7,3 +7,4 @@ coc/data/extensions/*
 sessions/
 temp/
 autoload/plug.vim
+lazy-lock.json

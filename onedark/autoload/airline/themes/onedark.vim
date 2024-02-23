@@ -5,7 +5,27 @@
 
 " It is based on vim-airline's ["tomorrow" theme](https://github.com/vim-airline/vim-airline-themes/blob/master/autoload/airline/themes/tomorrow.vim).
 function! airline#themes#onedark#refresh()
-  let s:colors = onedark#GetColors()
+let s:colors = {
+\  'background': { 'gui': '#2C2C2C', 'cterm': 'NONE', 'cterm16': 'NONE' },
+\  'black': { 'gui': '#2C2C2C', 'cterm': 'NONE', 'cterm16': 'NONE' },
+\  'foreground': { 'gui': '#AFAFAF', 'cterm': 'NONE', 'cterm16': 'NONE' },
+\  'white': { 'gui': '#AFAFAF', 'cterm': 'NONE', 'cterm16': 'NONE' },
+\  'comment_grey': { 'gui': '#5F5F5F', 'cterm': '59', 'cterm16': '7' },
+\  'gutter_fg_grey': { 'gui': '#444444', 'cterm': '238', 'cterm16': '8' },
+\  'cursor_grey': { 'gui': '#303030', 'cterm': '236', 'cterm16': '0' },
+\  'visual_grey': { 'gui': '#3A3A3A', 'cterm': '237', 'cterm16': '8' },
+\  'menu_grey': { 'gui': '#3A3A3A', 'cterm': '237', 'cterm16': '7' },
+\  'special_grey': { 'gui': '#444444', 'cterm': '238', 'cterm16': '7' },
+\  'vertsplit': { 'gui': '#3A3A3A', 'cterm': '59', 'cterm16': '7' },
+\  'yellow': { 'gui': '#D7AF87', 'cterm': '180', 'cterm16': '3' },
+\  'dark_yellow': { 'gui': '#D7875F', 'cterm': '173', 'cterm16': '11' },
+\  'red': { 'gui': '#E06C75', 'cterm': '204', 'cterm16': '1' },
+\  'dark_red': { 'gui': '#BE5046', 'cterm': '196', 'cterm16': '9' },
+\  'green': { 'gui': '#98C379', 'cterm': '114', 'cterm16': '2' },
+\  'blue': { 'gui': '#61AFEF', 'cterm': '39', 'cterm16': '4' },
+\  'purple': { 'gui': '#C678DD', 'cterm': '170', 'cterm16': '5' },
+\  'cyan': { 'gui': '#56B6C2', 'cterm': '38', 'cterm16': '6' }
+\}
 
   if get(g:, 'onedark_termcolors', 256) == 16
     let s:term_red = s:colors.red.cterm16
