@@ -1,6 +1,4 @@
 let g:skip_loading_mswin = 1
-let g:msys = get(g:, 'msys', 'C:\MSYS')
-let $PATH = $PATH . g:msys . '\usr\local\bin;' . g:msys . '\usr\bin;' . g:msys . '\bin;' . g:msys . '\opt\bin'
 function! <SID>SetShell()
 	let &shell='"' . g:msys . '\usr\bin\bash.exe"'
 	set shellcmdflag=-c
