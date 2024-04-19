@@ -1,11 +1,11 @@
 let g:skip_loading_mswin = 1
 function! <SID>SetShell()
-	let &shell='"' . g:msys . '\usr\bin\bash.exe"'
-	set shellcmdflag=-c
-	set shellslash
-	set shellquote=
-	set shellxquote=
-	set shellxescape=
+  let &shell='"' . g:msys . '\usr\bin\bash.exe"'
+  set shellcmdflag=-c
+  set shellslash
+  set shellquote=
+  set shellxquote=
+  set shellxescape=
 endfunction
 
 autocmd VimEnter * call <SID>SetShell()
@@ -46,16 +46,16 @@ cd C:\
 ino <F13> a
 
 function! DoInDir(fn,...)
-	let l:ech = get(a:,1,0)
-	let l:bak = getcwd()
-	:cd %:p:h
-	execute a:fn
-	echo l:ech
-	if l:ech
-		echo l:ech
-		echo l:ech . ': ' . expand('%')
-	endif
-	execute 'cd ' . l:bak
+  let l:ech = get(a:,1,0)
+  let l:bak = getcwd()
+  :cd %:p:h
+  execute a:fn
+  echo l:ech
+  if l:ech
+    echo l:ech
+    echo l:ech . ': ' . expand('%')
+  endif
+  execute 'cd ' . l:bak
 endfunction
 
 command! CMD call DoInDir('silent! !start cmd')

@@ -3,9 +3,9 @@ set nocompatible
 " Paths
 let s:iswin = has('win32')
 if s:iswin
-	let g:dotvim = get(g:, 'dotvim', $HOME . '\.vim\')
+  let g:dotvim = get(g:, 'dotvim', $HOME . '\.vim\')
 else
-	let g:dotvim = get(g:, 'dotvim', $HOME . '/.vim/')
+  let g:dotvim = get(g:, 'dotvim', $HOME . '/.vim/')
 endif
 let g:vimrc = get(g:, 'vimrc', g:dotvim . '.vimrc')
 
@@ -28,7 +28,7 @@ set belloff=all
 set virtualedit=onemore
 set clipboard=unnamedplus
 set completeopt=menu,menuone,noselect
-set conceallevel=1
+set conceallevel=0
 set termguicolors
 set updatetime=300
 set scrolloff=10
@@ -37,18 +37,20 @@ set relativenumber
 set fileformats=unix
 
 augroup FormatOptions
-	au Filetype html setlocal formatoptions=tmM
+  au Filetype html setlocal formatoptions=tmM
+  au Filetype tex setlocal formatoptions+=t
 augroup END
 
+
 if &term =~ '^xterm\|rxvt'
-	let &t_SI = "\<Esc>[5 q" " Insert Mode
-	let &t_EI = "\<Esc>[2 q" " Non-Insert Mode
-	" 0/1 -> Blinking Block
-	" 2 -> Solid Block
-	" 3 -> Blinking Underscore
-	" 4 -> Solid Underscore
-	" 5 -> Blinking Vertical Bar
-	" 6 -> Solid Vertical Bar
+  let &t_SI = "\<Esc>[5 q" " Insert Mode
+  let &t_EI = "\<Esc>[2 q" " Non-Insert Mode
+  " 0/1 -> Blinking Block
+  " 2 -> Solid Block
+  " 3 -> Blinking Underscore
+  " 4 -> Solid Underscore
+  " 5 -> Blinking Vertical Bar
+  " 6 -> Solid Vertical Bar
 endif
 
 colorscheme onedark
@@ -79,110 +81,110 @@ let g:ctrlsf_mapping = {
 " {'chgmode': 'M', 'popenf': 'P', 'open': ['<CR>', 'o', '<2-LeftMouse>'], 'pquit': 'q', 'vsplit': '', 'openb': 'O', 'stop': '<C-C>', 'quit': 'q', 'next': '<C-J>', 'split': '<C-O>', 'prev': '<C-K>', 'tabb': 'T', 'loclist': '', 'popen': 'p', 'tab': 't'}
 
 if exists('g:tabmode')
-	execute 'silent! set tabstop='. g:tabwidth . ' softtabstop=' . g:tabwidth . ' shiftwidth=' . g:tabwidth
-	if g:tabmode == 1
-		set expandtab
-	else
-		set noexpandtab
-	endif
+  execute 'silent! set tabstop='. g:tabwidth . ' softtabstop=' . g:tabwidth . ' shiftwidth=' . g:tabwidth
+  if g:tabmode == 1
+    set expandtab
+  else
+    set noexpandtab
+  endif
 else
-	let g:tabmode = 1
-	let g:tabwidth = 2
-	set tabstop=2 softtabstop=2 shiftwidth=2
+  let g:tabmode = 1
+  let g:tabwidth = 2
+  set expandtab tabstop=2 softtabstop=2 shiftwidth=2
 endif
 function! <SID>FixTabs(...)
-	if a:0
-		let l:width = a:1
-	else
-		let l:width = g:tabwidth
-	endif
-	if g:tabmode == 1
-		execute 'silent! %s/\t/' . repeat(' ', l:width) . '/g'
-	else
-		execute 'silent! %s/' . repeat(' ', l:width) . '/\t/g'
-	end
-	execute "''"
+  if a:0
+    let l:width = a:1
+  else
+    let l:width = g:tabwidth
+  endif
+  if g:tabmode == 1
+    execute 'silent! %s/\t/' . repeat(' ', l:width) . '/g'
+  else
+    execute 'silent! %s/' . repeat(' ', l:width) . '/\t/g'
+  end
+  execute "''"
 endfunction
 command! -nargs=1 FixTabs call <SID>FixTabs(<args>)
 function! <SID>SizeTabs(...)
-	if a:0
-		let l:width = a:1
-	else
-		let l:width = g:tabwidth
-	endif
-	if g:tabmode == 1
-		execute 'silent! %s/' . repeat(' ', g:tabwidth) . '/' . repeat(' ', l:width) . '/g'
-		execute "''"
-	endif
-	execute 'silent! set tabstop=' . l:width . ' softtabstop=' . l:width . ' shiftwidth=' . l:width
-	execute 'silent! setlocal tabstop< softabstop< shiftwidth<'
-	let g:tabwidth = l:width
+  if a:0
+    let l:width = a:1
+  else
+    let l:width = g:tabwidth
+  endif
+  if g:tabmode == 1
+    execute 'silent! %s/' . repeat(' ', g:tabwidth) . '/' . repeat(' ', l:width) . '/g'
+    execute "''"
+  endif
+  execute 'silent! set tabstop=' . l:width . ' softtabstop=' . l:width . ' shiftwidth=' . l:width
+  execute 'silent! setlocal tabstop< softabstop< shiftwidth<'
+  let g:tabwidth = l:width
 endfunction
 command! -nargs=1 SizeTabs call <SID>SizeTabs(<args>)
 function! <SID>ExTabs(...)
-	if a:0
-		let l:width = a:1
-	else
-		let l:width = g:tabwidth
-	endif
-	let g:tabmode = 1
-	set expandtab
-	execute 'silent! set tabstop=' . l:width . ' softtabstop=' . l:width . ' shiftwidth=' . l:width
-	execute 'silent! setlocal tabstop< softabstop< shiftwidth<'
-	echo 'Spaces'
+  if a:0
+    let l:width = a:1
+  else
+    let l:width = g:tabwidth
+  endif
+  let g:tabmode = 1
+  set expandtab
+  execute 'silent! set tabstop=' . l:width . ' softtabstop=' . l:width . ' shiftwidth=' . l:width
+  execute 'silent! setlocal tabstop< softabstop< shiftwidth<'
+  echo 'Spaces'
 endfunction
 command! -nargs=1 Spaces call <SID>ExTabs(<args>)
 function! <SID>NoExTabs(...)
-	if a:0
-		let l:width = a:1
-	else
-		let l:width = g:tabwidth
-	endif
-	let g:tabmode = 0
-	set noexpandtab
-	execute 'silent! set tabstop=' . l:width . ' softtabstop=' . l:width . ' shiftwidth=' . l:width
-	execute 'silent! setlocal tabstop< softabstop< shiftwidth<'
-	echo 'Tabs'
+  if a:0
+    let l:width = a:1
+  else
+    let l:width = g:tabwidth
+  endif
+  let g:tabmode = 0
+  set noexpandtab
+  execute 'silent! set tabstop=' . l:width . ' softtabstop=' . l:width . ' shiftwidth=' . l:width
+  execute 'silent! setlocal tabstop< softabstop< shiftwidth<'
+  echo 'Tabs'
 endfunction
 command! -nargs=1 Tabs call <SID>NoExTabs(<args>)
 
 augroup NeedsSpaces
-	au Filetype yaml setlocal noai nocin nosi expandtab inde=
-	au Filetype markdown setlocal expandtab
-	au Filetype haskell setlocal expandtab
-	au Filetype cabal setlocal expandtab
-	au Filetype purescript setlocal expandtab
-	au Filetype gdscript setlocal expandtab
+  au Filetype yaml setlocal noai nocin nosi expandtab inde=
+  au Filetype markdown setlocal expandtab
+  au Filetype haskell setlocal expandtab
+  au Filetype cabal setlocal expandtab
+  au Filetype purescript setlocal expandtab
+  au Filetype gdscript setlocal expandtab
 augroup END
 
 augroup NoSpaces
-	au Filetype rust setlocal noexpandtab
+  au Filetype rust setlocal noexpandtab
 augroup END
 
 augroup FoldRegions
-	au Filetype cs setlocal foldmethod=marker foldmarker=#region,#endregion
-	au Filetype javascript setlocal foldmethod=marker foldmarker=//#region,//#endregion
-	au Filetype typescript setlocal foldmethod=marker foldmarker=//#region,//#endregion
+  au Filetype cs setlocal foldmethod=marker foldmarker=#region,#endregion
+  au Filetype javascript setlocal foldmethod=marker foldmarker=//#region,//#endregion
+  au Filetype typescript setlocal foldmethod=marker foldmarker=//#region,//#endregion
 augroup END
 
 let g:nummode = 0
 function! <SID>AutoNumbers(...)
-	if g:nummode == 0
-		if a:0
-			set relativenumber
-		else
-			set norelativenumber
-		endif
-	endif
+  if g:nummode == 0
+    if a:0
+      set relativenumber
+    else
+      set norelativenumber
+    endif
+  endif
 endfunction
 function! <SID>ManualNumbers()
-	if g:nummode == 0
-		let g:nummode = 1
-		set norelativenumber
-	else
-		let g:nummode = 0
-		set relativenumber
-	endif
+  if g:nummode == 0
+    let g:nummode = 1
+    set norelativenumber
+  else
+    let g:nummode = 0
+    set relativenumber
+  endif
 endfunction
 au BufEnter,FocusGained,InsertLeave * call <SID>AutoNumbers(1)
 au BufLeave,FocusLost,InsertEnter * call <SID>AutoNumbers()
@@ -190,36 +192,36 @@ nnoremap <silent> <F8> :call <SID>ManualNumbers()<CR>
 command! Nums call <SID>ManualNumbers()
 
 function! GetRange()
-	let [l:line_start, l:column_start] = getpos("'<")[1:2]
-	let [l:line_end, l:column_end] = getpos("'>")[1:2]
-	let l:lines = getline(l:line_start, l:line_end)
-	if len(l:lines) == 0
-		return ''
-	endif
-	let l:lines[-1] = l:lines[-1][: l:column_end - (&selection == 'inclusive' ? 1 : 2)]
-	let l:lines[0] = l:lines[0][l:column_start - 1:]
-	return join(l:lines, "\n")
+  let [l:line_start, l:column_start] = getpos("'<")[1:2]
+  let [l:line_end, l:column_end] = getpos("'>")[1:2]
+  let l:lines = getline(l:line_start, l:line_end)
+  if len(l:lines) == 0
+    return ''
+  endif
+  let l:lines[-1] = l:lines[-1][: l:column_end - (&selection == 'inclusive' ? 1 : 2)]
+  let l:lines[0] = l:lines[0][l:column_start - 1:]
+  return join(l:lines, "\n")
 endfunction
 
 com! FormatJSON :call FormatJSON()
 function! FormatJSON()
-	%!python -c "import json, sys, collections;print(json.dumps(json.load(sys.stdin, object_pairs_hook=collections.OrderedDict), indent=2))"
-	%s/\\u\(\x\{4\}\)/\=nr2char('0x'.submatch(1),1)/g
+  %!python -c "import json, sys, collections;print(json.dumps(json.load(sys.stdin, object_pairs_hook=collections.OrderedDict), indent=2))"
+  %s/\\u\(\x\{4\}\)/\=nr2char('0x'.submatch(1),1)/g
 endfunction
 
 command! Folds setlocal foldmethod=syntax
 
 if !s:iswin
-	command! Swrite execute 'silent w !sudo tee %' | :e! %
+  command! Swrite execute 'silent w !sudo tee %' | :e! %
 endif
 
 
 function! <SID>RelPath(path)
-	if a:path[0] == '/' || a:path[0] == '~'
-		return resolve(a:path)
-	else
-		return resolve(expand('%:p:h') . '/' . a:path)
-	endif
+  if a:path[0] == '/' || a:path[0] == '~'
+    return resolve(a:path)
+  else
+    return resolve(expand('%:p:h') . '/' . a:path)
+  endif
 endfunction
 
 command! -nargs=1 E execute 'edit ' . <SID>RelPath('<args>')
@@ -232,13 +234,13 @@ command! Svimrc execute 'so ' . g:vimrc
 
 function! <SID>SetKBD(kbd)
 if a:kbd == 'qwerty'
-	set langmap=
+  set langmap=
 elseif a:kbd == 'lobby'
-	set langmap=/q,lw,oe,br,yt,wy,fu,ii,ho,\\;p,ua,ts,ed,nf,cg,gh,dj,ak,rl,s\\;,kz,zx,\\,c,pv,jb,xn,mm,.\\,,q.,v/,?Q,LW,OE,BR,YT,WY,FU,II,HO,:P,UA,TS,ED,NF,CG,GH,DJ,AK,RL,S:,KZ,ZX,<C,PV,JB,XN,MM,><,Q>,V?
+  set langmap=/q,lw,oe,br,yt,wy,fu,ii,ho,\\;p,ua,ts,ed,nf,cg,gh,dj,ak,rl,s\\;,kz,zx,\\,c,pv,jb,xn,mm,.\\,,q.,v/,?Q,LW,OE,BR,YT,WY,FU,II,HO,:P,UA,TS,ED,NF,CG,GH,DJ,AK,RL,S:,KZ,ZX,<C,PV,JB,XN,MM,><,Q>,V?
 else
-	echohl ErrorMsg
-	echomsg 'Not a valid keyboard layout: ' . a:kbd
-	echohl None
+  echohl ErrorMsg
+  echomsg 'Not a valid keyboard layout: ' . a:kbd
+  echohl None
 endif
 endfunction
 
@@ -246,18 +248,18 @@ command! -nargs=1 SetKBD call <SID>SetKBD(<args>)
 
 command! -bang Firefox execute "silent !firefox " . <SID>FFWinOrTab('<bang>') . " 'file://" . resolve(expand('%:p')) . "'"
 function! <SID>FFWinOrTab(bang)
-	if a:bang == '!'
-		return '-new-window'
-	endif
-	return '-new-tab'
+  if a:bang == '!'
+    return '-new-window'
+  endif
+  return '-new-tab'
 endfunction
 
 function! <SID>MoveToCol(col)
-	let l:count = a:col - virtcol('.')
-	if l:count <= 0
-		return
-	endif
-	execute 'normal!i' . repeat(' ', l:count)
+  let l:count = a:col - virtcol('.')
+  if l:count <= 0
+    return
+  endif
+  execute 'normal!i' . repeat(' ', l:count)
 endfunction
 command! -nargs=1 MoveToCol call <SID>MoveToCol(<args>)
 no <silent> ><Bar> :<C-u>MoveToCol v:count<CR>
