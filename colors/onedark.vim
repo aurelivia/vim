@@ -155,6 +155,10 @@ let s:colors = {
 \  'cyan': { 'gui': '#56B6C2', 'cterm': '38', 'cterm16': '6' }
 \}
 
+function! onedark#GetColors()
+  return s:colors
+endfunction
+
 let s:red = s:colors.red
 let s:dark_red = s:colors.dark_red
 let s:green = s:colors.green

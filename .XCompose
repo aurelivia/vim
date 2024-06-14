@@ -115,6 +115,10 @@
 <Multi_key> <g> <H> : "ɣ" U0263 # Latin Small Letter Gamma
 <Multi_key> <G> <h> : "Ɣ" U0194 # Latin Capital Letter Gamma
 <Multi_key> <G> <H> : "Ɣ" U0194 # Latin Capital Letter Gamma
+<Multi_key> <h> <h> : "ħ" U0127 # Latin Small Letter H With Stroke
+<Multi_key> <h> <H> : "ħ" U0127 # Latin Small Letter H With Stroke
+<Multi_key> <H> <h> : "Ħ" U0126 # Latin Capital Letter H With Stroke
+<Multi_key> <H> <H> : "Ħ" U0126 # Latin Capital Letter H With Stroke
 <Multi_key> <j> <j> : "ȷ" # Latin Small Letter Dotless J
 <Multi_key> <J> <h> : "Ʒ" U01B7 # Latin Capital Letter Ezh
 <Multi_key> <J> <H> : "Ʒ" U01B7 # Latin Capital Letter Ezh

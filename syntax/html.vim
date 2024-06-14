@@ -43,7 +43,7 @@ hi clear htmlComponent
 hi def link htmlComponent Constant
 syn match htmlElem contained /[a-z0-9][a-zA-Z0-9]*/ skipwhite skipempty nextgroup=@htmlTagContents
 hi clear htmlElem
-hi def link htmlElem Identifier
+hi def link htmlElem Keyword
 
 syn match htmlAttribute contained /[-a-z]\+/ skipwhite skipempty nextgroup=htmlAttrEquals,@htmlTagContents
 " hi def link htmlAttribute htmlArg

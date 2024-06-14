@@ -42,32 +42,34 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
   }
 )
 
-lspconfig.tsserver.setup({
-  on_attach = onAttach,
-  capabilities = capabilities,
-  -- root_dir = lspconfig.util.root_pattern("tsconfig.json", "package.json", "jsconfig.json", ".git"),
-  root_dir = function (path)
-    local denoPath = lspconfig.util.root_pattern('deno.json', 'deno.jsonc')(path)
-    if denoPath then return end
-    return lspconfig.util.root_pattern('tsconfig.json')(path)
-      or lspconfig.util.root_pattern('package.json', 'jsconfig.json', '.git')(path)
-  end,
-  settings = {
-    typescript = {
-      format = {
-        enable = false,
-        trimTrailingWhitespace = false
-      }
-    },
-    diagnostics = {
-      ignoredCodes = {
-        2350, -- Only void function can be called with new
-        7043, 7044, 7045, 7056, 7047, 7048, 7049, 7050, -- Implicit any warnings
-        2365 -- Operator can't be applied to types
+if vim.fn.executable('typescript-language-server') == 1 then
+  lspconfig.tsserver.setup({
+    on_attach = onAttach,
+    capabilities = capabilities,
+    -- root_dir = lspconfig.util.root_pattern("tsconfig.json", "package.json", "jsconfig.json", ".git"),
+    root_dir = function (path)
+      local denoPath = lspconfig.util.root_pattern('deno.json', 'deno.jsonc')(path)
+      if denoPath then return end
+      return lspconfig.util.root_pattern('tsconfig.json')(path)
+        or lspconfig.util.root_pattern('package.json', 'jsconfig.json', '.git')(path)
+    end,
+    settings = {
+      typescript = {
+        format = {
+          enable = false,
+          trimTrailingWhitespace = false
+        }
+      },
+      diagnostics = {
+        ignoredCodes = {
+          2350, -- Only void function can be called with new
+          7043, 7044, 7045, 7056, 7047, 7048, 7049, 7050, -- Implicit any warnings
+          2365 -- Operator can't be applied to types
+        }
       }
     }
-  }
-})
+  })
+end
 
 -- lspconfig.denols.setup({
 --   on_attach = onAttach,
@@ -84,27 +86,37 @@ vim.g.markdown_fenced_languages = {
   'ts=typescript'
 }
 
--- lspconfig.pyright.setup({
---   on_attach = onAttach,
---   capabilities = capabilities
--- })
+if vim.fn.executable('pyright-langserver') == 1 then
+  lspconfig.pyright.setup({
+    on_attach = onAttach,
+    capabilities = capabilities
+  })
+end
 
-lspconfig.csharp_ls.setup({
-  on_attach = onAttach,
-  capabilities = capabilities
-})
+if vim.fn.executable('csharp-ls') == 1 then
+  lspconfig.csharp_ls.setup({
+    on_attach = onAttach,
+    capabilities = capabilities
+  })
+end
 
-lspconfig.rust_analyzer.setup({
-  on_attach = onAttach,
-  capabilities = capabilities
-})
+if vim.fn.executable('rust-analyzer') == 1 then
+  lspconfig.rust_analyzer.setup({
+    on_attach = onAttach,
+    capabilities = capabilities
+  })
+end
 
-lspconfig.clangd.setup({
-  on_attach = onAttach,
-  capabilities = capabilities
-})
+if vim.fn.executable('clangd') == 1 then
+  lspconfig.clangd.setup({
+    on_attach = onAttach,
+    capabilities = capabilities
+  })
+end
 
-lspconfig.hls.setup({
-  on_attach = onAttach,
-  capabilities = capabilites
-})
+if vim.fn.executable('haskell-language-server-wrapper') == 1 then
+  lspconfig.hls.setup({
+    on_attach = onAttach,
+    capabilities = capabilites
+  })
+end

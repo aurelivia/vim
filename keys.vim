@@ -16,7 +16,7 @@ no <silent> <C-;> :bnext<CR>
 nn <CR> a
 ino <CR> <ESC>
 nm <BS> <NOP>
-map <S-CR> <NOP>
+" map <S-CR> <NOP>
 
 no <Space><Space> :
 no <Space><CR> @:
