@@ -50,6 +50,23 @@ return {
   'chrisbra/unicode.vim',
   'neovim/nvim-lspconfig',
   {
+    'simrat39/rust-tools.nvim',
+    ft = 'rust',
+    dependencies = {
+      'neovim/nvim-lspconfig'
+    },
+    opts = {
+      tools = {
+        inlay_hints = {
+          show_parameter_hints = false
+        }
+      },
+      server = {
+        on_attach = require('lsp-onattach')
+      }
+    }
+  },
+  {
     'hrsh7th/nvim-cmp',
     event = 'InsertEnter',
     dependencies = {

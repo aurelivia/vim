@@ -4,15 +4,7 @@ local lspconfig = require('lspconfig')
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local opts = { noremap = true, silent = true }
 
-local onAttach = function (client, bufno)
-  client.server_capabilities.semanticTokensProvider = nil
-  local opts = { noremap = true, silent = true, buffer = bufno }
-  vim.keymap.set('n', '<C-h>', vim.lsp.buf.hover, opts)
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-  vim.keymap.set('n', 'ge', vim.diagnostic.goto_next, opts)
-  vim.keymap.set('n', 'gE', vim.diagnostic.goto_prev, opts)
-  vim.keymap.set('n', '<C-e>', vim.diagnostic.open_float, opts)
-end
+local on_attach = require('lsp-onattach')
 
 -- local chars = {}
 --
@@ -35,16 +27,16 @@ end
 --   end
 -- })
 
-vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
-    -- delay update diagnostics
-    update_in_insert = false,
-  }
-)
+-- vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
+--   vim.lsp.diagnostic.on_publish_diagnostics, {
+--     -- delay update diagnostics
+--     update_in_insert = false,
+--   }
+-- )
 
 if vim.fn.executable('typescript-language-server') == 1 then
-  lspconfig.tsserver.setup({
-    on_attach = onAttach,
+  lspconfig.ts_ls.setup({
+    on_attach = on_attach,
     capabilities = capabilities,
     -- root_dir = lspconfig.util.root_pattern("tsconfig.json", "package.json", "jsconfig.json", ".git"),
     root_dir = function (path)
@@ -72,7 +64,7 @@ if vim.fn.executable('typescript-language-server') == 1 then
 end
 
 -- lspconfig.denols.setup({
---   on_attach = onAttach,
+--   on_attach = on_attach,
 --   capabilities = capabilities,
 --   root_dir = lspconfig.util.root_pattern('deno.json', 'deno.jsonc'),
 --   init_options = {
@@ -88,35 +80,38 @@ vim.g.markdown_fenced_languages = {
 
 if vim.fn.executable('pyright-langserver') == 1 then
   lspconfig.pyright.setup({
-    on_attach = onAttach,
+    on_attach = on_attach,
     capabilities = capabilities
   })
 end
 
 if vim.fn.executable('csharp-ls') == 1 then
   lspconfig.csharp_ls.setup({
-    on_attach = onAttach,
+    on_attach = on_attach,
     capabilities = capabilities
   })
 end
 
-if vim.fn.executable('rust-analyzer') == 1 then
-  lspconfig.rust_analyzer.setup({
-    on_attach = onAttach,
-    capabilities = capabilities
-  })
-end
+-- if vim.fn.executable('rust-analyzer') == 1 then
+--   lspconfig.rust_analyzer.setup({
+--     on_attach = on_attach,
+--     capabilities = capabilities,
+--     root_dir = function (path)
+--       return lspconfig.util.root_pattern('Cargo.toml', '.git')(path)
+--     end
+--   })
+-- end
 
 if vim.fn.executable('clangd') == 1 then
   lspconfig.clangd.setup({
-    on_attach = onAttach,
+    on_attach = on_attach,
     capabilities = capabilities
   })
 end
 
 if vim.fn.executable('haskell-language-server-wrapper') == 1 then
   lspconfig.hls.setup({
-    on_attach = onAttach,
+    on_attach = on_attach,
     capabilities = capabilites
   })
 end

@@ -26,6 +26,7 @@
 <Multi_key> <Multi_key> <s> <f> : "¯\\_(ツ)_/¯" # Shrug
 <Multi_key> <Multi_key> <l> <e> <n> <n> <y> : "( ͡° ͜ʖ ͡°)" # Lenny
 <Multi_key> <Multi_key> <w> <t> <f> : "ಠ_ಠ" # Wot
+<Multi_key> <MUlti_Key> <g> <r> <r> : "(ง'̀-'́)ง" # Grr
 <Multi_key> <Multi_key> <a> <n> <g> <r> <y> : "ᕓ('̀-'́ᕓ)" # Angry
 <Multi_key> <Multi_key> <p> <a> <i> <n> : "👍ಠ‿↼" # Pain
 
@@ -67,6 +68,19 @@
 <Multi_key> <asterisk> <asterisk> : "•"
 <Multi_key> <asterisk> <o> : "∘"
 <Multi_key> <asterisk> <x> : "×" U00D7
+
+<Multi_key> <b> <d> <-> : "─" U2500 # Box Drawings Light Horizontal
+<Multi_key> <b> <d> <|> : "│" U2502 # Box Drawings Light Vertical
+<Multi_key> <b> <d> <s> : "╭" U256D # Box Drawings Light Arc Down and Right
+<Multi_key> <b> <d> <e> : "╯" U256F # Box Drawings Light Arc Up and Left
+<Multi_key> <b> <d> <t> <l> : "╭" U256D # Box Drawings Light Arc Down and Right
+<Multi_key> <b> <d> <t> <r> : "╮" U256E # Box Drawings Light Arc Down and Left
+<Multi_key> <b> <d> <b> <l> : "╰" U2570 # Box Drawings Light Arc Up and Right
+<Multi_key> <b> <d> <b> <r> : "╯" U256F # Box Drawings Light Arc Up and Left
+<Multi_key> <b> <d> <period> <v> : "⋮" U22EE # Vertical Ellipsis
+<Multi_key> <b> <d> <period> <h> : "⋯" U22EF # Midline Horizontal Ellipsis
+<Multi_key> <b> <d> <period> <d> : "⋱" U22F1 # Down Right Diagonal Ellipsis
+<Multi_key> <b> <d> <period> <u> : "⋰" U22F0 # Up Right Diagonal Ellipsis
 
 <Multi_key> <ampersand> <ampersand> : "∧" U2227 # Logical And
 <Multi_key> <bar> <bar> : "∨" U2228 # Logical Or

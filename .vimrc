@@ -131,7 +131,7 @@ function! <SID>ExTabs(...)
   set expandtab
   execute 'silent! set tabstop=' . l:width . ' softtabstop=' . l:width . ' shiftwidth=' . l:width
   execute 'silent! setlocal tabstop< softabstop< shiftwidth<'
-  echo 'Spaces'
+  echo 'Indentation ' . l:width . ' Spaces'
 endfunction
 command! -nargs=1 Spaces call <SID>ExTabs(<args>)
 function! <SID>NoExTabs(...)
@@ -144,7 +144,7 @@ function! <SID>NoExTabs(...)
   set noexpandtab
   execute 'silent! set tabstop=' . l:width . ' softtabstop=' . l:width . ' shiftwidth=' . l:width
   execute 'silent! setlocal tabstop< softabstop< shiftwidth<'
-  echo 'Tabs'
+  echo 'Indentation ' . l:width . ' Tabs'
 endfunction
 command! -nargs=1 Tabs call <SID>NoExTabs(<args>)
 
