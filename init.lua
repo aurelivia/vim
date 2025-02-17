@@ -32,7 +32,6 @@ if vim.g.dotvim == nil then
   error('No dotvim defined')
 end
 
-
 if system:find('Windows') then
   if vim.g.winrc == nil then
     vim.g.winrc = vim.g.dotvim .. '.winrc'

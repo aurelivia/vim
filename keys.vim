@@ -49,6 +49,9 @@ xmap <silent> iw <Plug>WordMotion_iw
 omap <silent> aw <Plug>WordMotion_aw
 xmap <silent> aw <Plug>WordMotion_aw
 
+nmap ga <Plug>(EasyAlign)
+xmap ga <Plug>(EasyAlign)
+
 nn <silent> <F11> :syntax sync fromstart<CR>
 
 nn <silent> \ :set list!<CR>

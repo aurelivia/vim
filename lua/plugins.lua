@@ -1,13 +1,22 @@
 return {
   {
+    'equalsraf/neovim-gui-shim',
+    lazy = false,
+    priority = 1000,
+    config = function ()
+      vim.cmd([[GuiFont! Noto\ Sans\ Mono:h10]])
+    end
+  },
+  {
     dir = vim.g.dotvim,
     lazy = false,
-    priority = 1000
+    priority = 999,
+    dependencies = { 'equalsraf/neovim-gui-shim' }
   },
   {
     'vim-airline/vim-airline',
     lazy = false,
-    priority = 999,
+    priority = 998,
     config = function ()
       vim.g.airline_theme = 'onedark'
       vim.g['airline#extensions#tabline#enabled'] = 1

@@ -115,3 +115,18 @@ if vim.fn.executable('haskell-language-server-wrapper') == 1 then
     capabilities = capabilites
   })
 end
+
+if vim.fn.executable('zls') == 1 then
+  lspconfig.zls.setup({
+    on_attach = on_attach,
+    capabilities = capabilites,
+    settings = {
+      zls = {
+        enable_build_on_save = false
+      }
+    }
+  })
+
+  vim.g.zig_fmt_parse_errors = 0
+  vim.g.zig_fmt_autosave = 0
+end
