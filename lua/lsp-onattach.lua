@@ -1,6 +1,7 @@
 return function (client, bufno)
   client.server_capabilities.semanticTokensProvider = nil
   local opts = { noremap = true, silent = true, buffer = bufno }
+  vim.opt.signcolumn = 'yes'
   vim.keymap.set('n', '<C-h>', vim.lsp.buf.hover, opts)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
   vim.keymap.set('n', 'ge', vim.diagnostic.goto_next, opts)
