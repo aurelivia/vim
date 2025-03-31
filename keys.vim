@@ -26,7 +26,7 @@ nn <silent> qq :Sayonara!<CR>
 nn <silent> qr :Sayonara<CR>
 nn qa :q!<CR>
 nm q <NOP>
-nn <C-@> q
+nn <C-m> q
 nn s <C-w>
 nn U <C-r>
 

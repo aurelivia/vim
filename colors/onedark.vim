@@ -139,7 +139,7 @@ let s:colors = {
 \  'foreground': { 'gui': '#AFAFAF', 'cterm': 'NONE', 'cterm16': 'NONE' },
 \  'white': { 'gui': '#AFAFAF', 'cterm': 'NONE', 'cterm16': 'NONE' },
 \  'comment_grey': { 'gui': '#5F5F5F', 'cterm': '59', 'cterm16': '7' },
-\  'gutter_fg_grey': { 'gui': '#444444', 'cterm': '238', 'cterm16': '8' },
+\  'gutter_fg_grey': { 'gui': '#737373', 'cterm': '242', 'cterm16': '8' },
 \  'cursor_grey': { 'gui': '#303030', 'cterm': '236', 'cterm16': '0' },
 \  'visual_grey': { 'gui': '#3A3A3A', 'cterm': '237', 'cterm16': '8' },
 \  'menu_grey': { 'gui': '#3A3A3A', 'cterm': '237', 'cterm16': '7' },

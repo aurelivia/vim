@@ -157,22 +157,5 @@ return {
     'nvim-telescope/telescope.nvim',
     tag = '0.1.5',
     dependencies = 'nvim-lua/plenary.nvim'
-  },
-  {
-    'epwalsh/obsidian.nvim',
-    version = '*',
-    dependencies = 'nvim-lua/plenary.nvim',
-    ft = 'markdown',
-    opts = {
-      completions = {
-        nvim_cmp = true
-      },
-      picker = {
-        name = 'telescope.nvim'
-      },
-      workspaces = {
-        { name = 'Language', path = '~/.drive/Lingua' }
-      }
-    }
   }
 }
