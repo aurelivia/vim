@@ -19,6 +19,8 @@ source <sfile>:h/jsts.vim
 
 syntax region jstsArrowFunction matchgroup=jstsArgumentParens start=`(\ze[^()]*)\_s*=>` end=/)/ extend contains=@jstsArgumentsContains skipwhite skipempty nextgroup=jstsArrow
 
+syntax keyword jstsClassVisibility contained static skipwhite skipempty nextgroup=jstsDefinitionLower,jstsDefinitionUpper
+
 let b:current_syntax = 'javascript'
 
 if main_syntax == 'javascript'

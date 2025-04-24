@@ -2,7 +2,7 @@ syntax iskeyword @,48-57,_,192-255,$
 
 syn cluster jstsNotObject contains=@jstsLiterals,jstsUpper,jstsRegExp,jstsParen,jstsBracket,jstsApply,jstsOperator,jstsGenericApply,jstsTernary,jstsThis,jstsFunction,jstsArrowFunction,jstsGlobals,jstsClass,tsxTag,jstsAsync,jstsAwait
 syn cluster jstsExpression contains=@jstsNotObject,jstsObject,jstsCast
-syn cluster jstsBlockContains contains=@jstsNotObject,jstsBlock,jstsDefinition,jstsStatement,jstsLabel,jstsConditional,jstsLoop,jstsThrow,jstsTry,jstsDelete,jstsNamespace,jstsAbstract,jstsCast,jstsTypedef
+syn cluster jstsBlockContains contains=@jstsNotObject,jstsBlock,jstsDefinition,jstsStatement,jstsLabel,jstsConditional,jstsSwitch,jstsLoop,jstsThrow,jstsTry,jstsDelete,jstsNamespace,jstsAbstract,jstsCast,jstsTypedef
 syn cluster jstsNoComment contains=jstsComment,jstsString,jstsTemplateLiteral,jstsRegExp,jstsRegExpGroup,jstsRegExpCharClass,jstsObjectKeyString
 
 syn region jstsBlock matchgroup=jstsBraces start=/{/ end=/}/ contains=@jstsBlockContains extend fold
@@ -58,6 +58,8 @@ hi def link jstsSpread Operator
 syn match jstsDelete /[^.]\s*\zsdelete /
 hi def link jstsDelete Operator
 
+syn match jstsDot /\.\ze\k/ skipwhite skipempty nextgroup=@jstsExpression
+
 syn region jstsGenericApply matchgroup=jstsOperator start=/<\ze[a-zA-Z, <>"']\+>\s*(/ end=/>\ze\s*(/ contains=@jstsGenericContains skipwhite skipempty nextgroup=jstsAppliedContents
 
 " RegExp
@@ -93,10 +95,16 @@ syn keyword jstsStatement yield debugger
 syn keyword jstsStatement return with skipwhite skipempty nextgroup=@jstsExpression
 syn keyword jstsStatement break continue skipwhite skipempty nextgroup=jstsLabelKey
 hi def link jstsStatement Statement
-syn keyword jstsConditional if else switch
+syn keyword jstsConditional if else
 hi def link jstsConditional Statement
-syn region jstsCase contained matchgroup=jstsConditional start=/\<\%(case\|default\)\>/ end=/:\@=/ contains=@jstsExpression keepend
+syn keyword jstsSwitch switch skipwhite skipempty nextgroup=jstsSwitchArg
+hi def link jstsSwitch jstsConditional
+syn region jstsSwitchArg contained matchgroup=jstsParens start=/(/ end=/)/ extend contains=@jstsExpression skipwhite skipempty nextgroup=jstsSwitchBody
+syn region jstsSwitchBody contained matchgroup=jstsBraces start=/{/ end=/}/ contains=jstsCase,@jstsBlockContains extend fold
+syn region jstsCase contained matchgroup=jstsConditional start=/\<case\>/ end=/:\@=/ contains=@jstsExpression keepend
 hi def link jstsCase Statement
+syn keyword jstsDefault contained default
+hi def link jstsDefault jstsLabel
 syn keyword jstsLoop while do
 syn keyword jstsLoop for skipwhite skipempty nextgroup=jstsForStatement
 hi def link jstsLoop Statement
@@ -122,11 +130,14 @@ hi def link jstsAbstract Keyword
 
 syn keyword jstsDefinition const var let skipwhite skipempty nextgroup=jstsDefinitionLower,jstsDefinitionUpper
 hi def link jstsDefinition Statement
-syn match jstsDefinitionLower contained /\<\K\k*/ skipwhite skipempty nextgroup=jstsDefinitionType
-syn match jstsDefinitionUpper contained /\<\u\k*/ skipwhite skipempty nextgroup=jstsDefinitionType
+syn match jstsDefinitionLower contained /\<\K\k*/ skipwhite skipempty nextgroup=jstsDefinitionType,jstsAssignment
+syn match jstsDefinitionUpper contained /\<\u\k*/ skipwhite skipempty nextgroup=jstsDefinitionType,jstsAssignment
 hi def link jstsDefinitionUpper Type
 syn match jstsDefinitionType contained /:/ skipwhite skipempty nextgroup=@jstsType
 hi def link jstsDefinitionType Operator
+
+syn match jstsAssignment contained /=/ skipwhite skipempty nextgroup=@jstsExpression
+hi def link jstsAssignment jstsOperator
 
 " Functions
 
@@ -345,7 +356,17 @@ syn match jstsDocTemplate contained /@template/ skipwhite skipempty nextgroup=js
 hi def link jstsDocTemplate Special
 syn region jstsDocTemplateBracket contained matchgroup=Special start=/\[/ end=/\]/ extend contains=jstsUpper,jstsTypedefEquals
 
+" Classes
 
+syn cluster jstsClassContains contains=jstsMethodKeyword,jstsClassVisibility,jstsDefinitionLower,jstsDefinitionUpper,jstsDot,jstsMethod,jstsComment
+syn keyword jstsClass class skipwhite skipempty nextgroup=jstsClassName,jstsClassExtends,tsClassImplements,jstsClassBody
+hi def link jstsClass jstsStatement
+syn match jstsClassName contained /\<\K\k*/ skipwhite skipempty nextgroup=jstsClassExtends,tsClassImplements,jstsClassBody
+hi def link jstsClassName jstsUpper
+syn keyword jstsClassExtends contained extends skipwhite skipempty nextgroup=jstsClassName
+hi def link jstsClassExtends jstsStatement
+syn region jstsClassBody contained matchgroup=jstsBraces start=/{/ end=/}/ contains=@jstsClassContains
+hi def link jstsClassVisibility jstsStatement
 
 
 

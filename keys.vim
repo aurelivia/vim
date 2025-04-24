@@ -140,15 +140,10 @@ call <SID>ToggleArrowsFn()
 " no <silent> <C-Right> :bnext<CR>
 
 " Numpad Motions
-no <kPlus> gk
-no <kEnter> gj
-no <kMinus> gg
-no = gk
-no - gj
-no <S-kPlus> 10gk
-no <S-kEnter> 10gj
-no + 10gk
-no _ 10gj
+no <kPlus> k
+no <kEnter> j
+no = k
+no - j
 
 no <PageUp> zz<C-u>
 no <PageDown> zz<C-d>
